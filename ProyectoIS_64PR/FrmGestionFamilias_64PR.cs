@@ -1,5 +1,4 @@
-﻿using Servicios_64PR;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,13 +10,13 @@ using System.Windows.Forms;
 
 namespace ProyectoIS_64PR
 {
-    public partial class FrmGestionFamilias_64PR : Form,IObservadorIdioma_64PR
+    public partial class FrmGestionFamilias_64PR : Form, Idioma.IObservadorIdioma_64PR
     {
-        BLL_64PR.Rol_64PR bllRol = new BLL_64PR.Rol_64PR();
-        BLL_64PR.Familia_64PR bllfamilia = new BLL_64PR.Familia_64PR();
-        BLL_64PR.Permiso_64PR bllpermiso = new BLL_64PR.Permiso_64PR();
-        List<Servicios_64PR.Rol_64PR> nodos = new List<Servicios_64PR.Rol_64PR>();
-        List<Servicios_64PR.Rol_64PR> nodos2 = new List<Servicios_64PR.Rol_64PR>();
+        Sesion.BLL_Rol_64PR bllRol = new Sesion.BLL_Rol_64PR();
+        Sesion.BLL_Familia_64PR bllfamilia = new Sesion.BLL_Familia_64PR();
+        Sesion.BLL_Permiso_64PR bllpermiso = new Sesion.BLL_Permiso_64PR();
+        List<Sesion.Rol_64PR> nodos = new List<Sesion.Rol_64PR>();
+        List<Sesion.Rol_64PR> nodos2 = new List<Sesion.Rol_64PR>();
         Dictionary<string, string> textos;
 
         private enum Modo { Crear, Modificar, Eliminar }
@@ -37,25 +36,18 @@ namespace ProyectoIS_64PR
             txtNombre.Visible = false;
             treeView2.Visible = false;
 
-            GestorIdioma_64PR.GetInstance.Suscribir(this); ///observer del cambio de idioma
+            Idioma.GestorIdioma_64PR.GetInstance.Suscribir(this); ///observer del cambio de idioma
                                                            ///Aplico el idioma que ya está cargado
-            textos = GestorIdioma_64PR.GetInstance.ObtenerTextos();
+            textos = Idioma.GestorIdioma_64PR.GetInstance.ObtenerTextos();
             if (textos.Count > 0)
                 ActualizarIdioma(textos);
         }
         public void ActualizarIdioma(Dictionary<string, string> textoss)
         {
             textos = textoss;
-            rbCrear.Text = textos["crear"];
-            rbModificar.Text = textos["modificar"];
-            rbEliminar.Text = textos["eliminar"];
-
-            btnAgregar.Text = textos["agregar"] + "-->";
-            btnQuitar.Text = textos["quitar"] + "<--";
-            btnAplicar.Text = textos["aplicar"];
-            btnEliminar.Text = textos["eliminar"];
-
-            label1.Text = textos["nombre"];
+            Traductor_64PR.Traducir(this, textos);
+            btnAgregar.Text += "-->";
+            btnQuitar.Text += "<--";
         }
 
         private void CargaPermisosYFamilias()
@@ -129,7 +121,7 @@ namespace ProyectoIS_64PR
         }
 
 
-        private TreeNode CrearNodoVisual(Servicios_64PR.Rol_64PR rol)
+        private TreeNode CrearNodoVisual(Sesion.Rol_64PR rol)
         {
             TreeNode tn = new TreeNode(rol.Nombre);
             tn.Tag = rol; /// guardamos el objeto para usarlo después
@@ -146,12 +138,12 @@ namespace ProyectoIS_64PR
         {
             if (treeView1.SelectedNode == null) return;
 
-            Servicios_64PR.Rol_64PR nodoSeleccionado = (Servicios_64PR.Rol_64PR)treeView1.SelectedNode.Tag;
+            Sesion.Rol_64PR nodoSeleccionado = (Sesion.Rol_64PR)treeView1.SelectedNode.Tag;
 
             /// Verificar duplicados y conflictos contra todo el TreeView2
             foreach (TreeNode tn in treeView2.Nodes)
             {
-                Servicios_64PR.Rol_64PR nodoExistente = (Servicios_64PR.Rol_64PR)tn.Tag;
+                Sesion.Rol_64PR nodoExistente = (Sesion.Rol_64PR)tn.Tag;
 
                 /// Mismo nodo exacto
                 if (nodoExistente.GetType() == nodoSeleccionado.GetType() &&
@@ -180,7 +172,7 @@ namespace ProyectoIS_64PR
             treeView2.ExpandAll();
         }
 
-        private bool EsHijo(Servicios_64PR.Rol_64PR padre, Servicios_64PR.Rol_64PR buscado)
+        private bool EsHijo(Sesion.Rol_64PR padre, Sesion.Rol_64PR buscado)
         {
             foreach (var hijo in padre.Hijos)
             {
@@ -203,7 +195,7 @@ namespace ProyectoIS_64PR
                 MessageBox.Show(textos["solo_quitar_raiz"]);
                 return;
             }
-            Servicios_64PR.Rol_64PR nodoSeleccionado = (Servicios_64PR.Rol_64PR)treeView2.SelectedNode.Tag;
+            Sesion.Rol_64PR nodoSeleccionado = (Sesion.Rol_64PR)treeView2.SelectedNode.Tag;
             nodos2.Remove(nodoSeleccionado);
             treeView2.Nodes.Remove(treeView2.SelectedNode);
         }
@@ -221,17 +213,17 @@ namespace ProyectoIS_64PR
                 return;
             }
 
-            List<Servicios_64PR.Rol_64PR> hijos = new List<Servicios_64PR.Rol_64PR>();
+            List<Sesion.Rol_64PR> hijos = new List<Sesion.Rol_64PR>();
             foreach (TreeNode tn in treeView2.Nodes)
-                hijos.Add((Servicios_64PR.Rol_64PR)tn.Tag);
+                hijos.Add((Sesion.Rol_64PR)tn.Tag);
 
             try
             {
                 if (modoActual == Modo.Crear)
                 {
                     bllfamilia.CrearFamilia(txtNombre.Text.Trim(), hijos);
-                    BLL_64PR.Bitacora_64PR bita = new BLL_64PR.Bitacora_64PR();
-                    Servicios_64PR.Evento_64PR ev = new Evento_64PR(SessionManager.GetInstance.Usuario.Login, ((int)BLL_64PR.Bitacora_64PR.ModuloBitacora_64PR.GestionFamilias).ToString(), ((int)BLL_64PR.Bitacora_64PR.TipoEventoBitacora_64PR.CreacionFamilia).ToString(), 4);
+                    Bitacora.Bitacora_64PR bita = new Bitacora.Bitacora_64PR();
+                    Bitacora.Evento_64PR ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionFamilias).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.CreacionFamilia).ToString(), 4);
                     bita.RegistrarEvento(ev);
                     MessageBox.Show(textos["familia_creada"]);
                 }
@@ -243,8 +235,8 @@ namespace ProyectoIS_64PR
                         return;
                     }
                     bllfamilia.ModificarFamilia(idFamiliaEnEdicion, txtNombre.Text.Trim(), hijos);
-                    BLL_64PR.Bitacora_64PR bita = new BLL_64PR.Bitacora_64PR();
-                    Servicios_64PR.Evento_64PR ev = new Evento_64PR(SessionManager.GetInstance.Usuario.Login, ((int)BLL_64PR.Bitacora_64PR.ModuloBitacora_64PR.GestionFamilias).ToString(), ((int)BLL_64PR.Bitacora_64PR.TipoEventoBitacora_64PR.ModificacionFamilia).ToString(), 4);
+                    Bitacora.Bitacora_64PR bita = new Bitacora.Bitacora_64PR();
+                    Bitacora.Evento_64PR ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionFamilias).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.ModificacionFamilia).ToString(), 4);
                     bita.RegistrarEvento(ev);
                     MessageBox.Show(textos["familia_modificada"]);
                 }
@@ -265,9 +257,9 @@ namespace ProyectoIS_64PR
         {
             if (treeView1.SelectedNode == null) return;
 
-            Servicios_64PR.Rol_64PR nodoSeleccionado = (Servicios_64PR.Rol_64PR)treeView1.SelectedNode.Tag;
+            Sesion.Rol_64PR nodoSeleccionado = (Sesion.Rol_64PR)treeView1.SelectedNode.Tag;
 
-            if (!(nodoSeleccionado is Servicios_64PR.Familia_64PR))
+            if (!(nodoSeleccionado is Sesion.Familia_64PR))
             {
                 MessageBox.Show(textos["solo_eliminar_familias"]);
                 return;
@@ -282,8 +274,8 @@ namespace ProyectoIS_64PR
             try
             {
                 bllfamilia.EliminarFamilia(nodoSeleccionado.Id);
-                BLL_64PR.Bitacora_64PR bita = new BLL_64PR.Bitacora_64PR();
-                Servicios_64PR.Evento_64PR ev = new Evento_64PR(SessionManager.GetInstance.Usuario.Login, ((int)BLL_64PR.Bitacora_64PR.ModuloBitacora_64PR.GestionFamilias).ToString(), ((int)BLL_64PR.Bitacora_64PR.TipoEventoBitacora_64PR.EliminacionFamilia).ToString(), 3);
+                Bitacora.Bitacora_64PR bita = new Bitacora.Bitacora_64PR();
+                Bitacora.Evento_64PR ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionFamilias).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.EliminacionFamilia).ToString(), 3);
                 bita.RegistrarEvento(ev);
                 MessageBox.Show(textos["familia_eliminada"]);
                 CargaPermisosYFamilias();
@@ -298,7 +290,7 @@ namespace ProyectoIS_64PR
         }
         private void FrmGestionFamilias_64PR_FormClosed(object sender, FormClosedEventArgs e)
         {
-            GestorIdioma_64PR.GetInstance.Desuscribir(this); ///observer del cambio de idioma
+            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this); ///observer del cambio de idioma
         }
 
         private void FrmGestionFamilias_64PR_Load(object sender, EventArgs e)
@@ -308,21 +300,21 @@ namespace ProyectoIS_64PR
 
         private void ConfigurarPermisos()
         {
-            Servicios_64PR.Rol_64PR rolUsuario = Servicios_64PR.SessionManager.GetInstance.Usuario.Rol;
+            Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
 
-            rbCrear.Visible = rolUsuario.TienePermiso(Patentes_64PR.CrearFamilias);
-            rbModificar.Visible = rolUsuario.TienePermiso(Patentes_64PR.ModificarFamilias);
-            rbEliminar.Visible = rolUsuario.TienePermiso(Patentes_64PR.EliminarFamilias);
+            rbCrear.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearFamilias);
+            rbModificar.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarFamilias);
+            rbEliminar.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarFamilias);
         }
 
         private void treeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             if (modoActual != Modo.Modificar) return;
 
-            Servicios_64PR.Rol_64PR nodoSeleccionado = (Servicios_64PR.Rol_64PR)e.Node.Tag;
+            Sesion.Rol_64PR nodoSeleccionado = (Sesion.Rol_64PR)e.Node.Tag;
 
             /// aca si es una patente, no tocamos nada, el usuario la va a agregar con btnAgregar
-            if (nodoSeleccionado is Servicios_64PR.Permiso_64PR) return;
+            if (nodoSeleccionado is Sesion.Permiso_64PR) return;
 
             /// pero si es una familia, la cargamos para editar
             idFamiliaEnEdicion = nodoSeleccionado.Id;

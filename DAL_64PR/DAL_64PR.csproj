@@ -43,21 +43,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Acceso.cs" />
-    <Compile Include="mpp_backup.cs" />
-    <Compile Include="mpp_DV.cs" />
-    <Compile Include="mpp_roles.cs" />
-    <Compile Include="mpp_usuario.cs" />
-    <Compile Include="mpp_bitacora.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BE\BE_64PR.csproj">
       <Project>{5617d18d-5092-478a-b619-b3adb88bbfc2}</Project>
       <Name>BE_64PR</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Servicios_64PR\Servicios_64PR.csproj">
-      <Project>{dab0e4e6-15e9-47f7-8d2e-baff06bf4876}</Project>
-      <Name>Servicios_64PR</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

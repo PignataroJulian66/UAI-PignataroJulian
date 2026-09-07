@@ -41,13 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Backup.cs" />
-    <Compile Include="Bitacora_64PR.cs" />
-    <Compile Include="DV_64PR.cs" />
-    <Compile Include="Familia_64PR.cs" />
-    <Compile Include="Permiso_64PR.cs" />
-    <Compile Include="Rol_64PR.cs" />
-    <Compile Include="Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -55,13 +48,21 @@
       <Project>{5617d18d-5092-478a-b619-b3adb88bbfc2}</Project>
       <Name>BE_64PR</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DAL_64PR\DAL_64PR.csproj">
-      <Project>{e990023a-fd21-4606-8fbe-e91ee7e8fd96}</Project>
-      <Name>DAL_64PR</Name>
+    <ProjectReference Include="..\Bitacora\Bitacora.csproj">
+      <Project>{958952e0-4119-415d-a393-8a202df2d22f}</Project>
+      <Name>Bitacora</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Servicios_64PR\Servicios_64PR.csproj">
-      <Project>{dab0e4e6-15e9-47f7-8d2e-baff06bf4876}</Project>
-      <Name>Servicios_64PR</Name>
+    <ProjectReference Include="..\DV\DV.csproj">
+      <Project>{b4301447-7b78-4dd7-8209-dfb4b3b5fabb}</Project>
+      <Name>DV</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mapper\Mapper.csproj">
+      <Project>{d4a244ea-ad1a-485f-97e8-942e226c4df7}</Project>
+      <Name>Mapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sesion\Sesion.csproj">
+      <Project>{e0ff1d5b-9f6b-406c-bc04-00d7e11061e5}</Project>
+      <Name>Sesion</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

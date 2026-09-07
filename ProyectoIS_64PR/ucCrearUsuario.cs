@@ -1,5 +1,4 @@
-﻿using Servicios_64PR;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,11 +11,11 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ProyectoIS_64PR
 {
-    public partial class ucCrearUsuario : UserControl, IObservadorIdioma_64PR
+    public partial class ucCrearUsuario : UserControl, Idioma.IObservadorIdioma_64PR
     {
-        BLL_64PR.Rol_64PR groles = new BLL_64PR.Rol_64PR();
+        Sesion.BLL_Rol_64PR groles = new Sesion.BLL_Rol_64PR();
         Dictionary<string, string> textos;
-        List<Servicios_64PR.Rol_64PR> lst;
+        List<Sesion.Rol_64PR> lst;
         public ucCrearUsuario()
         {
             InitializeComponent();
@@ -25,9 +24,9 @@ namespace ProyectoIS_64PR
             cmbRol.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbRol.SelectedIndex = 0;
 
-            GestorIdioma_64PR.GetInstance.Suscribir(this); ///Evento del observer
+            Idioma.GestorIdioma_64PR.GetInstance.Suscribir(this); ///Evento del observer
 
-            textos = GestorIdioma_64PR.GetInstance.ObtenerTextos();
+            textos = Idioma.GestorIdioma_64PR.GetInstance.ObtenerTextos();
             if (textos.Count > 0)
                 ActualizarIdioma(textos);
         }
@@ -54,7 +53,7 @@ namespace ProyectoIS_64PR
 
         public int Rol()
         {
-            Servicios_64PR.Rol_64PR rol = cmbRol.SelectedItem as Servicios_64PR.Rol_64PR;
+            Sesion.Rol_64PR rol = cmbRol.SelectedItem as Sesion.Rol_64PR;
             return rol.Id;
         }
 

@@ -103,6 +103,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Traductor_64PR.cs" />
     <Compile Include="ucCrearUsuario.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -158,10 +159,10 @@
       <DependentUpon>ucModificarUsuario.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="idiomas\en.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="idiomas\es.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -181,13 +182,33 @@
       <Project>{5617d18d-5092-478a-b619-b3adb88bbfc2}</Project>
       <Name>BE_64PR</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Bitacora\Bitacora.csproj">
+      <Project>{958952e0-4119-415d-a393-8a202df2d22f}</Project>
+      <Name>Bitacora</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BLL_64PR\BLL_64PR.csproj">
       <Project>{a744f8d5-c890-4362-89e0-b603579a601c}</Project>
       <Name>BLL_64PR</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Servicios_64PR\Servicios_64PR.csproj">
-      <Project>{dab0e4e6-15e9-47f7-8d2e-baff06bf4876}</Project>
-      <Name>Servicios_64PR</Name>
+    <ProjectReference Include="..\DV\DV.csproj">
+      <Project>{b4301447-7b78-4dd7-8209-dfb4b3b5fabb}</Project>
+      <Name>DV</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Encriptacion\Encriptacion.csproj">
+      <Project>{dbf9fef3-464b-442a-98ea-3b7e38c51de0}</Project>
+      <Name>Encriptacion</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Idioma\Idioma.csproj">
+      <Project>{1fd8bd37-3015-407c-bda8-14195a6416c5}</Project>
+      <Name>Idioma</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Respaldos\Respaldos.csproj">
+      <Project>{adad126c-639b-4d13-ba8d-fadfe7e5ddd8}</Project>
+      <Name>Respaldos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Sesion\Sesion.csproj">
+      <Project>{e0ff1d5b-9f6b-406c-bc04-00d7e11061e5}</Project>
+      <Name>Sesion</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

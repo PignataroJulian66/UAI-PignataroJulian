@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DV
+{
+    public class FilaInconsistente_64PR
+    {
+        public string Tabla { get; set; }
+        public string IdFila { get; set; }
+        public TipoAnomalia_64PR Tipo { get; set; }
+    }
+}

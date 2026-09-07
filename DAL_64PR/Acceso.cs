@@ -44,7 +44,7 @@ namespace DAL_64PR
                 if (conexion.State == System.Data.ConnectionState.Closed)
                 {
                     //conexion.ConnectionString = ConfigurationManager.ConnectionStrings["ConexionBD"].ConnectionString;
-                    conexion.ConnectionString = @"Data Source=.\SQLEXPRESS;Initial Catalog=BD_64PR;Integrated Security=True;TrustServerCertificate=True";
+                    conexion.ConnectionString = @"Data Source=.;Initial Catalog=BD_64PR;Integrated Security=True;TrustServerCertificate=True";
                     conexion.Open();
                     Console.WriteLine("Conexión exitosa");
                 }

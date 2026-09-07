@@ -35,12 +35,12 @@
             this.idiomaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.cerrarSesionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.respaldoBaseDeDatosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.restaurarBaseDeDatosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gestionarUsuariosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gestionarPermisosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gestionarRolesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.eventosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlContenidoMenu = new System.Windows.Forms.Panel();
-            this.restaurarBaseDeDatosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -106,6 +106,13 @@
             this.respaldoBaseDeDatosToolStripMenuItem.Text = "Respaldo base de datos";
             this.respaldoBaseDeDatosToolStripMenuItem.Click += new System.EventHandler(this.respaldoBaseDeDatosToolStripMenuItem_Click);
             // 
+            // restaurarBaseDeDatosToolStripMenuItem
+            // 
+            this.restaurarBaseDeDatosToolStripMenuItem.Name = "restaurarBaseDeDatosToolStripMenuItem";
+            this.restaurarBaseDeDatosToolStripMenuItem.Size = new System.Drawing.Size(251, 26);
+            this.restaurarBaseDeDatosToolStripMenuItem.Text = "Restaurar base de datos";
+            this.restaurarBaseDeDatosToolStripMenuItem.Click += new System.EventHandler(this.restaurarBaseDeDatosToolStripMenuItem_Click);
+            // 
             // gestionarUsuariosToolStripMenuItem
             // 
             this.gestionarUsuariosToolStripMenuItem.Name = "gestionarUsuariosToolStripMenuItem";
@@ -141,13 +148,6 @@
             this.pnlContenidoMenu.Name = "pnlContenidoMenu";
             this.pnlContenidoMenu.Size = new System.Drawing.Size(1373, 535);
             this.pnlContenidoMenu.TabIndex = 2;
-            // 
-            // restaurarBaseDeDatosToolStripMenuItem
-            // 
-            this.restaurarBaseDeDatosToolStripMenuItem.Name = "restaurarBaseDeDatosToolStripMenuItem";
-            this.restaurarBaseDeDatosToolStripMenuItem.Size = new System.Drawing.Size(251, 26);
-            this.restaurarBaseDeDatosToolStripMenuItem.Text = "Restaurar base de datos";
-            this.restaurarBaseDeDatosToolStripMenuItem.Click += new System.EventHandler(this.restaurarBaseDeDatosToolStripMenuItem_Click);
             // 
             // FrmMenu
             // 

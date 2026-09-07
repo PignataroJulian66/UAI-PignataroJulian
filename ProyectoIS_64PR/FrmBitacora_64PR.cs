@@ -1,6 +1,4 @@
-﻿using BLL_64PR;
-using Servicios_64PR;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,10 +11,10 @@ using System.Windows.Forms;
 
 namespace ProyectoIS_64PR
 {
-    public partial class FrmBitacora_64PR : Form, IObservadorIdioma_64PR
+    public partial class FrmBitacora_64PR : Form, Idioma.IObservadorIdioma_64PR
     {
-        Bitacora_64PR bita = new Bitacora_64PR();
-        List<Evento_64PR> lst = new List<Evento_64PR>();
+        Bitacora.Bitacora_64PR bita = new Bitacora.Bitacora_64PR();
+        List<Bitacora.Evento_64PR> lst = new List<Bitacora.Evento_64PR>();
         Dictionary<string, string> textos;
         public FrmBitacora_64PR()
         {
@@ -42,10 +40,10 @@ namespace ProyectoIS_64PR
             dgvEventos.BackgroundColor = SystemColors.Menu;
             dgvEventos.BorderStyle = BorderStyle.None;
 
-            GestorIdioma_64PR.GetInstance.Suscribir(this); ///observer del cambio de idioma
+            Idioma.GestorIdioma_64PR.GetInstance.Suscribir(this); ///observer del cambio de idioma
 
             ///Aplico el idioma que ya está cargado
-            textos = GestorIdioma_64PR.GetInstance.ObtenerTextos();
+            textos = Idioma.GestorIdioma_64PR.GetInstance.ObtenerTextos();
             if (textos.Count > 0)
                 ActualizarIdioma(textos);
         }
@@ -96,7 +94,7 @@ namespace ProyectoIS_64PR
                 MessageBox.Show(textos["fechas_filtros"]);
                 return;
             }
-            IEnumerable<Evento_64PR> resultado = lst;
+            IEnumerable<Bitacora.Evento_64PR> resultado = lst;
             if (cbLogin.Checked)
                 resultado = resultado.Where(e => e.Login == cmbLogins.SelectedItem.ToString());
 
@@ -275,29 +273,12 @@ namespace ProyectoIS_64PR
         public void ActualizarIdioma(Dictionary<string, string> textoss)
         {
             textos = textoss;
-            label1.Text = textos["lbl_BitacoraEventos"];
-            label2.Text = textos["lbl_Login"];
-            label3.Text = textos["lbl_FechaInicio"];
-            label4.Text = textos["lbl_FechaFin"];
-            label5.Text = textos["lbl_Modulo"];
-            label6.Text = textos["lbl_Evento"];
-            label7.Text = textos["lbl_Criticidad"];
-
-            btnLimpiar.Text = textos["btn_Limpiar"];
-            btnAplicar.Text = textos["btn_Aplicar"];
-            btnImprimir.Text = textos["btn_Imprimir"];
-
-            dgvEventos.Columns["Login"].HeaderText = textos["lbl_Login"];
-            dgvEventos.Columns["FechaHora"].HeaderText = textos["Fecha_y_hora"];
-            dgvEventos.Columns["Modulo"].HeaderText = textos["lbl_Modulo"];
-            dgvEventos.Columns["Tipo"].HeaderText = textos["lbl_Evento"];
-            dgvEventos.Columns["Criticidad"].HeaderText = textos["lbl_Criticidad"];
-
+            Traductor_64PR.Traducir(this, textos);
         }
 
         private void FrmBitacora_64PR_FormClosed(object sender, FormClosedEventArgs e)
         {
-            GestorIdioma_64PR.GetInstance.Desuscribir(this); ///observer del cambio de idioma
+            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this); ///observer del cambio de idioma
         }
     }
 }

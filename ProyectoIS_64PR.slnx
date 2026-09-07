@@ -1,7 +1,13 @@
 <Solution>
   <Project Path="BE/BE_64PR.csproj" Id="5617d18d-5092-478a-b619-b3adb88bbfc2" />
+  <Project Path="Bitacora/Bitacora.csproj" Id="958952e0-4119-415d-a393-8a202df2d22f" />
   <Project Path="BLL_64PR/BLL_64PR.csproj" Id="a744f8d5-c890-4362-89e0-b603579a601c" />
   <Project Path="DAL_64PR/DAL_64PR.csproj" Id="e990023a-fd21-4606-8fbe-e91ee7e8fd96" />
+  <Project Path="DV/DV.csproj" Id="b4301447-7b78-4dd7-8209-dfb4b3b5fabb" />
+  <Project Path="Encriptacion/Encriptacion.csproj" Id="dbf9fef3-464b-442a-98ea-3b7e38c51de0" />
+  <Project Path="Idioma/Idioma.csproj" Id="1fd8bd37-3015-407c-bda8-14195a6416c5" />
+  <Project Path="Mapper/Mapper.csproj" Id="d4a244ea-ad1a-485f-97e8-942e226c4df7" />
   <Project Path="ProyectoIS_64PR/ProyectoIS_64PR.csproj" Id="9588eeec-6ca7-43df-820e-06a0f3423a0e" />
-  <Project Path="Servicios_64PR/Servicios_64PR.csproj" Id="dab0e4e6-15e9-47f7-8d2e-baff06bf4876" />
+  <Project Path="Respaldos/Respaldos.csproj" Id="adad126c-639b-4d13-ba8d-fadfe7e5ddd8" />
+  <Project Path="Sesion/Sesion.csproj" Id="e0ff1d5b-9f6b-406c-bc04-00d7e11061e5" />
 </Solution>

@@ -13,7 +13,7 @@ namespace ProyectoIS_64PR
 {
     public partial class ucModificarUsuario : UserControl
     {
-        BLL_64PR.Rol_64PR groles = new BLL_64PR.Rol_64PR();
+        Sesion.BLL_Rol_64PR groles = new Sesion.BLL_Rol_64PR();
         public ucModificarUsuario()
         {
             InitializeComponent();
@@ -28,7 +28,7 @@ namespace ProyectoIS_64PR
         /// acceder a los valores de los controles del diseñador, ya que,
         /// no se lo puede acceder de otra forma
         /// </summary>
-        public void EscribirControles(Servicios_64PR.Usuario u)
+        public void EscribirControles(Sesion.Usuario u)
         {
             cmbRol.Text = u.Rol.Nombre;
             txtEmail.Text = u.Email;
@@ -36,7 +36,7 @@ namespace ProyectoIS_64PR
 
         public int Rol()
         {
-            Servicios_64PR.Rol_64PR rol = cmbRol.SelectedItem as Servicios_64PR.Rol_64PR;
+            Sesion.Rol_64PR rol = cmbRol.SelectedItem as Sesion.Rol_64PR;
             return rol.Id;
         }
 
