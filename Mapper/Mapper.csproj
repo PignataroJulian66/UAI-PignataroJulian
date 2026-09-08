@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="mpp_categoria.cs" />
+    <Compile Include="mpp_vehiculo.cs" />
+    <Compile Include="mpp_cliente.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

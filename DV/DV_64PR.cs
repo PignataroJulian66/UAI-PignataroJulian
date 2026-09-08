@@ -18,7 +18,9 @@ namespace DV
             { "RolFamilia_64PR",    new string[] { "ID_Rol", "ID_Familia" } },
             { "RolPatente_64PR",    new string[] { "ID_Rol", "ID_Patente" } },
             { "USUARIO_64PR",       new string[] { "DNI" } },
-            { "Categoria_64PR",     new string[] { "ID_Categoria" } }
+            { "Categoria_64PR",     new string[] { "ID_Categoria" } },
+            { "VehiculoJP86",       new string[] { "Patente" } },
+            { "ClienteJP86",        new string[] { "DNI" } }
         };
 
         DV.mpp_DV mpp = new DV.mpp_DV();

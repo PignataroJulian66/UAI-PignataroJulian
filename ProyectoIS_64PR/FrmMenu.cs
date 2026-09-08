@@ -144,6 +144,16 @@ namespace ProyectoIS_64PR
         {
             AbrirFormularioHijo(new FrmGestionarCategorias_64PR());
         }
+
+        private void vehiculosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioHijo(new FrmGestionarVehiculosJP86());
+        }
+
+        private void clientesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioHijo(new FrmGestionarClientesJP86());
+        }
         private void FrmMenu_FormClosed(object sender, FormClosedEventArgs e)
         {
             Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this); ///observer del cambio de idioma
@@ -186,7 +196,19 @@ namespace ProyectoIS_64PR
                                              rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarCategoria) ||
                                              rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarCategoria);
             categoriasToolStripMenuItem.Visible = puedeGestionarCategorias;
-            maestrosToolStripMenuItem.Visible = puedeGestionarCategorias;
+
+            bool puedeGestionarVehiculos = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearVehiculo) ||
+                                            rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarVehiculo) ||
+                                            rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarVehiculo) ||
+                                            rolUsuario.TienePermiso(Sesion.Patentes_64PR.CambiarEstadoVehiculo);
+            vehiculosToolStripMenuItem.Visible = puedeGestionarVehiculos;
+
+            bool puedeGestionarClientes = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearCliente) ||
+                                           rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarCliente) ||
+                                           rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarCliente);
+            clientesToolStripMenuItem.Visible = puedeGestionarClientes;
+
+            maestrosToolStripMenuItem.Visible = puedeGestionarCategorias || puedeGestionarVehiculos || puedeGestionarClientes;
         }
 
         private void respaldoBaseDeDatosToolStripMenuItem_Click(object sender, EventArgs e)

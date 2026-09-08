@@ -32,5 +32,16 @@ namespace Sesion
         public const string CrearCategoria = "Crear categoria";
         public const string ModificarCategoria = "Modificar categoria";
         public const string EliminarCategoria = "Eliminar categoria";
+
+        ///Maestro de Vehiculos (RF1)
+        public const string CrearVehiculo = "Crear vehiculo";
+        public const string ModificarVehiculo = "Modificar vehiculo";
+        public const string EliminarVehiculo = "Eliminar vehiculo";
+        public const string CambiarEstadoVehiculo = "Cambiar estado vehiculo";
+
+        ///Maestro de Clientes (RF1)
+        public const string CrearCliente = "Crear cliente";
+        public const string ModificarCliente = "Modificar cliente";
+        public const string EliminarCliente = "Eliminar cliente";
     }
 }

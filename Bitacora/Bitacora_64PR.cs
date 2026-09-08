@@ -29,7 +29,14 @@ namespace Bitacora
             Restore=16,
             AltaCategoria = 17,
             ModificacionCategoria = 18,
-            BajaCategoria = 19
+            BajaCategoria = 19,
+            AltaVehiculo = 20,
+            ModificacionVehiculo = 21,
+            BajaVehiculo = 22,
+            CambioEstadoVehiculo = 23,
+            AltaCliente = 24,
+            ModificacionCliente = 25,
+            BajaCliente = 26
         }
         public enum ModuloBitacora_64PR
         {
@@ -37,7 +44,9 @@ namespace Bitacora
             GestionUsuarios = 2,
             GestionRoles = 3,
             GestionFamilias = 4,
-            GestionCategorias = 5
+            GestionCategorias = 5,
+            GestionVehiculos = 6,
+            GestionClientes = 7
         }
 
         Bitacora.mpp_bitacora mpp = new Bitacora.mpp_bitacora();
