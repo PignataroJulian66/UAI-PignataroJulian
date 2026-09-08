@@ -41,9 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="mpp_categoria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BE\BE_64PR.csproj">
+      <Project>{5617d18d-5092-478a-b619-b3adb88bbfc2}</Project>
+      <Name>BE_64PR</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Bitacora\Bitacora.csproj">
       <Project>{958952e0-4119-415d-a393-8a202df2d22f}</Project>
       <Name>Bitacora</Name>

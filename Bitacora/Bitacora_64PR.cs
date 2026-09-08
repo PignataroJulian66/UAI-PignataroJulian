@@ -26,14 +26,18 @@ namespace Bitacora
             EliminacionFamilia = 13,
             ModificacionFamilia = 14,
             Backup = 15,
-            Restore=16
+            Restore=16,
+            AltaCategoria = 17,
+            ModificacionCategoria = 18,
+            BajaCategoria = 19
         }
         public enum ModuloBitacora_64PR
         {
             Login = 1,
             GestionUsuarios = 2,
             GestionRoles = 3,
-            GestionFamilias = 4
+            GestionFamilias = 4,
+            GestionCategorias = 5
         }
 
         Bitacora.mpp_bitacora mpp = new Bitacora.mpp_bitacora();

@@ -40,6 +40,8 @@
             this.gestionarPermisosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gestionarRolesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.eventosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.maestrosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.categoriasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlContenidoMenu = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -52,7 +54,8 @@
             this.gestionarUsuariosToolStripMenuItem,
             this.gestionarPermisosToolStripMenuItem,
             this.gestionarRolesToolStripMenuItem,
-            this.eventosToolStripMenuItem});
+            this.eventosToolStripMenuItem,
+            this.maestrosToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1373, 28);
@@ -141,6 +144,21 @@
             this.eventosToolStripMenuItem.Text = "Eventos";
             this.eventosToolStripMenuItem.Click += new System.EventHandler(this.eventosToolStripMenuItem_Click);
             // 
+            // maestrosToolStripMenuItem
+            //
+            this.maestrosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.categoriasToolStripMenuItem});
+            this.maestrosToolStripMenuItem.Name = "maestrosToolStripMenuItem";
+            this.maestrosToolStripMenuItem.Size = new System.Drawing.Size(96, 24);
+            this.maestrosToolStripMenuItem.Text = "Maestros";
+            //
+            // categoriasToolStripMenuItem
+            //
+            this.categoriasToolStripMenuItem.Name = "categoriasToolStripMenuItem";
+            this.categoriasToolStripMenuItem.Size = new System.Drawing.Size(180, 26);
+            this.categoriasToolStripMenuItem.Text = "Categorias";
+            this.categoriasToolStripMenuItem.Click += new System.EventHandler(this.categoriasToolStripMenuItem_Click);
+            //
             // pnlContenidoMenu
             // 
             this.pnlContenidoMenu.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -183,5 +201,7 @@
         private System.Windows.Forms.Panel pnlContenidoMenu;
         private System.Windows.Forms.ToolStripMenuItem respaldoBaseDeDatosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem restaurarBaseDeDatosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem maestrosToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem categoriasToolStripMenuItem;
     }
 }

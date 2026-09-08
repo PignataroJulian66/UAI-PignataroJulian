@@ -135,5 +135,32 @@
   "Recalcular integridad": "Recalculate integrity",
   "dvs_recalculados": "Check digits recalculated successfully.",
   "respaldo": "Data base backup",
-  "restaurar2": "Data base restore"
+  "restaurar2": "Data base restore",
+
+  "FrmMenu.maestrosToolStripMenuItem": "Masters",
+  "FrmMenu.categoriasToolStripMenuItem": "Categories",
+
+  "frmGestionCategorias_lblModoConsulta": "View mode",
+  "frmGestionCategorias_lblModoCrear": "Create mode",
+  "frmGestionCategorias_lblModoModificar": "Edit mode",
+  "frmGestionCategorias_lblCantidad": "Category count: ",
+  "FrmGestionarCategorias_64PR.btnCrear": "Create",
+  "FrmGestionarCategorias_64PR.btnModificar": "Edit",
+  "FrmGestionarCategorias_64PR.btnEliminar": "Delete",
+  "FrmGestionarCategorias_64PR.btnGuardar": "Save",
+  "FrmGestionarCategorias_64PR.radioButton1": "Inactive",
+  "FrmGestionarCategorias_64PR.radioButton2": "Active",
+  "FrmGestionarCategorias_64PR.radioButton3": "All",
+  "FrmGestionarCategorias_64PR.lblBuscar": "Search:",
+
+  "ucCategoria_lblNombre": "Name:",
+  "ucCategoria_lblDescripcion": "Description:",
+  "ucCategoria_lblTarifaDiaria": "Daily rate:",
+
+  "categoria_creada": "Category created successfully.",
+  "categoria_modificada": "Category updated successfully.",
+  "seleccionar_categoria": "Select a category from the list.",
+  "msg_NombreCategoriaValido": "Please enter a name for the category.",
+  "msg_NombreCategoriaDuplicado": "The category name is already registered in the system.",
+  "activar": "Activate"
 }

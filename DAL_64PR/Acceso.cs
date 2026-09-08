@@ -112,7 +112,7 @@ namespace DAL_64PR
             }
         }
 
-        public int escribirQuery(string query, SqlParameter[] parametro)
+        public int escribirQuery(string query, SqlParameter[] parametro, CommandType tipoComando = CommandType.Text)
         {
             SqlTransaction tx = null;
             int filasAfectadas = 0;
@@ -122,7 +122,7 @@ namespace DAL_64PR
                 tx = IniciarTransaccion();
                 comando.Connection = tx.Connection; // Asignar la conexión de la transacción al comando
                 comando.Transaction = tx; // Asignar la transacción al comando
-                comando.CommandType = System.Data.CommandType.Text;
+                comando.CommandType = tipoComando;
                 comando.CommandText = query;
                 if (parametro != null)
                 {
@@ -143,13 +143,13 @@ namespace DAL_64PR
             }
         }
 
-        public DataTable leerQuery(string query, SqlParameter[] parametro)
+        public DataTable leerQuery(string query, SqlParameter[] parametro, CommandType tipoComando = CommandType.Text)
         {
             DataTable dt = new DataTable();
             SqlDataAdapter adaptador = new SqlDataAdapter();
             conectar();
             comando.Connection = conexion;
-            comando.CommandType = System.Data.CommandType.Text;
+            comando.CommandType = tipoComando;
             comando.CommandText = query;
             comando.Parameters.Clear();
 
@@ -167,14 +167,14 @@ namespace DAL_64PR
             return dt;
         }
 
-        public object leerEscalar(string query, SqlParameter[] parametro)
+        public object leerEscalar(string query, SqlParameter[] parametro, CommandType tipoComando = CommandType.Text)
         {
             object resultado = null;
             try
             {
                 conectar();
                 comando.Connection = conexion;
-                comando.CommandType = System.Data.CommandType.Text;
+                comando.CommandType = tipoComando;
                 comando.CommandText = query;
 
                 if (parametro != null)

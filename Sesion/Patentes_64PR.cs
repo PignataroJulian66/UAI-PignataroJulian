@@ -27,5 +27,10 @@ namespace Sesion
         public const string CambiarIdioma = "Cambiar idioma";
         public const string Respaldos = "Hacer respaldos";
         public const string Restauraciones = "Hacer restauraciones";
+
+        ///Maestro de Categorias (RF1)
+        public const string CrearCategoria = "Crear categoria";
+        public const string ModificarCategoria = "Modificar categoria";
+        public const string EliminarCategoria = "Eliminar categoria";
     }
 }

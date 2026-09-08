@@ -139,6 +139,11 @@ namespace ProyectoIS_64PR
         {
             AbrirFormularioHijo(new FrmGestionarRoles_64PR());
         }
+
+        private void categoriasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioHijo(new FrmGestionarCategorias_64PR());
+        }
         private void FrmMenu_FormClosed(object sender, FormClosedEventArgs e)
         {
             Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this); ///observer del cambio de idioma
@@ -176,6 +181,12 @@ namespace ProyectoIS_64PR
             respaldoBaseDeDatosToolStripMenuItem.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.Respaldos);
 
             restaurarBaseDeDatosToolStripMenuItem.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.Restauraciones);
+
+            bool puedeGestionarCategorias = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearCategoria) ||
+                                             rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarCategoria) ||
+                                             rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarCategoria);
+            categoriasToolStripMenuItem.Visible = puedeGestionarCategorias;
+            maestrosToolStripMenuItem.Visible = puedeGestionarCategorias;
         }
 
         private void respaldoBaseDeDatosToolStripMenuItem_Click(object sender, EventArgs e)
