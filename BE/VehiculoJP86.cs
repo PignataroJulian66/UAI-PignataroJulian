@@ -6,13 +6,6 @@ using System.Threading.Tasks;
 
 namespace BE
 {
-    public enum EstadoVehiculoJP86
-    {
-        DISPONIBLE,
-        ALQUILADO,
-        EN_REVISION
-    }
-
     public class VehiculoJP86
     {
         public string Patente { get; set; }

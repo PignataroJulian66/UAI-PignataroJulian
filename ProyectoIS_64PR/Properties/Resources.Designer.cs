@@ -61,12 +61,12 @@ namespace ProyectoIS_64PR.Properties {
         }
         
         /// <summary>
-        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        ///   Busca un recurso adaptado de tipo System.Resources.ResXFileRef.
         /// </summary>
-        internal static System.Drawing.Bitmap davinci {
+        internal static System.Resources.ResXFileRef davinci {
             get {
                 object obj = ResourceManager.GetObject("davinci", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ((System.Resources.ResXFileRef)(obj));
             }
         }
         
