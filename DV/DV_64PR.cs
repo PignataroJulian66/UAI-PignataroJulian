@@ -20,7 +20,10 @@ namespace DV
             { "USUARIO_64PR",       new string[] { "DNI" } },
             { "Categoria_64PR",     new string[] { "ID_Categoria" } },
             { "VehiculoJP86",       new string[] { "Patente" } },
-            { "ClienteJP86",        new string[] { "DNI" } }
+            { "ClienteJP86",        new string[] { "DNI" } },
+            { "ContratoJP86",       new string[] { "NumeroContrato" } },
+            { "FacturaJP86",        new string[] { "NumeroFactura" } },
+            { "ReporteJP86",        new string[] { "NumeroReporte" } }
         };
 
         DV.mpp_DV mpp = new DV.mpp_DV();

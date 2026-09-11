@@ -36,7 +36,15 @@ namespace Bitacora
             CambioEstadoVehiculo = 23,
             AltaCliente = 24,
             ModificacionCliente = 25,
-            BajaCliente = 26
+            BajaCliente = 26,
+            AltaContrato = 27,
+            FacturacionContrato = 28,
+            DevolucionVehiculo = 29,
+            AltaReporte = 30,
+            AsignacionCriticidad = 31,
+            DeterminacionModalidad = 32,
+            AcreditacionReparacion = 33,
+            LiberacionVehiculo = 34
         }
         public enum ModuloBitacora_64PR
         {
@@ -46,7 +54,9 @@ namespace Bitacora
             GestionFamilias = 4,
             GestionCategorias = 5,
             GestionVehiculos = 6,
-            GestionClientes = 7
+            GestionClientes = 7,
+            GestionAlquileres = 8,
+            GestionMantenimiento = 9
         }
 
         Bitacora.mpp_bitacora mpp = new Bitacora.mpp_bitacora();

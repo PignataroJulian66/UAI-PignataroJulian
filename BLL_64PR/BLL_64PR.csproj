@@ -44,6 +44,8 @@
     <Compile Include="Categoria_64PR.cs" />
     <Compile Include="VehiculoJP86.cs" />
     <Compile Include="ClienteJP86.cs" />
+    <Compile Include="ContratoJP86.cs" />
+    <Compile Include="ReporteJP86.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

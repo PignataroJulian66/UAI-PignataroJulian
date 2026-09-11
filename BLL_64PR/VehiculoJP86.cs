@@ -28,9 +28,13 @@ namespace BLL_64PR
             recalculador.RecalcularTabla("VehiculoJP86");
         }
 
-        public void CambiarEstado(string patente, BE.EstadoVehiculoJP86 estado)
+        public void CambiarEstado(string patente, BE.EstadoVehiculoJP86 estado, int? nuevoKilometraje = null)
         {
-            mpp.CambiarEstado(patente, estado);
+            ///Regla de negocio: al pasar a EN_REVISION, el vehiculo se desactiva automaticamente
+            ///(no depende de que se destilde a mano en el maestro). Unico lugar donde se aplica.
+            bool? nuevoActivo = estado == BE.EstadoVehiculoJP86.EN_REVISION ? (bool?)false : null;
+
+            mpp.CambiarEstado(patente, estado, nuevoKilometraje, nuevoActivo);
             recalculador.RecalcularTabla("VehiculoJP86");
         }
 

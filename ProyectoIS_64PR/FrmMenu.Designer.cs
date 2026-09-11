@@ -44,6 +44,14 @@
             this.categoriasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vehiculosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.alquileresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.generarContratoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.generarFacturaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.registrarDevolucionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mantenimientoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.nuevoReporteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reportesPendientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reparacionesEnCursoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnlContenidoMenu = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -57,7 +65,9 @@
             this.gestionarPermisosToolStripMenuItem,
             this.gestionarRolesToolStripMenuItem,
             this.eventosToolStripMenuItem,
-            this.maestrosToolStripMenuItem});
+            this.maestrosToolStripMenuItem,
+            this.alquileresToolStripMenuItem,
+            this.mantenimientoToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
@@ -177,7 +187,69 @@
             this.clientesToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.clientesToolStripMenuItem.Text = "Clientes";
             this.clientesToolStripMenuItem.Click += new System.EventHandler(this.clientesToolStripMenuItem_Click);
-            // 
+            //
+            // alquileresToolStripMenuItem
+            //
+            this.alquileresToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.generarContratoToolStripMenuItem,
+            this.generarFacturaToolStripMenuItem,
+            this.registrarDevolucionToolStripMenuItem});
+            this.alquileresToolStripMenuItem.Name = "alquileresToolStripMenuItem";
+            this.alquileresToolStripMenuItem.Size = new System.Drawing.Size(80, 20);
+            this.alquileresToolStripMenuItem.Text = "Alquileres";
+            //
+            // generarContratoToolStripMenuItem
+            //
+            this.generarContratoToolStripMenuItem.Name = "generarContratoToolStripMenuItem";
+            this.generarContratoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.generarContratoToolStripMenuItem.Text = "Generar contrato";
+            this.generarContratoToolStripMenuItem.Click += new System.EventHandler(this.generarContratoToolStripMenuItem_Click);
+            //
+            // generarFacturaToolStripMenuItem
+            //
+            this.generarFacturaToolStripMenuItem.Name = "generarFacturaToolStripMenuItem";
+            this.generarFacturaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.generarFacturaToolStripMenuItem.Text = "Generar factura";
+            this.generarFacturaToolStripMenuItem.Click += new System.EventHandler(this.generarFacturaToolStripMenuItem_Click);
+            //
+            // registrarDevolucionToolStripMenuItem
+            //
+            this.registrarDevolucionToolStripMenuItem.Name = "registrarDevolucionToolStripMenuItem";
+            this.registrarDevolucionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.registrarDevolucionToolStripMenuItem.Text = "Registrar devolucion";
+            this.registrarDevolucionToolStripMenuItem.Click += new System.EventHandler(this.registrarDevolucionToolStripMenuItem_Click);
+            //
+            // mantenimientoToolStripMenuItem
+            //
+            this.mantenimientoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.nuevoReporteToolStripMenuItem,
+            this.reportesPendientesToolStripMenuItem,
+            this.reparacionesEnCursoToolStripMenuItem});
+            this.mantenimientoToolStripMenuItem.Name = "mantenimientoToolStripMenuItem";
+            this.mantenimientoToolStripMenuItem.Size = new System.Drawing.Size(110, 20);
+            this.mantenimientoToolStripMenuItem.Text = "Mantenimiento";
+            //
+            // nuevoReporteToolStripMenuItem
+            //
+            this.nuevoReporteToolStripMenuItem.Name = "nuevoReporteToolStripMenuItem";
+            this.nuevoReporteToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.nuevoReporteToolStripMenuItem.Text = "Nuevo reporte";
+            this.nuevoReporteToolStripMenuItem.Click += new System.EventHandler(this.nuevoReporteToolStripMenuItem_Click);
+            //
+            // reportesPendientesToolStripMenuItem
+            //
+            this.reportesPendientesToolStripMenuItem.Name = "reportesPendientesToolStripMenuItem";
+            this.reportesPendientesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.reportesPendientesToolStripMenuItem.Text = "Reportes pendientes";
+            this.reportesPendientesToolStripMenuItem.Click += new System.EventHandler(this.reportesPendientesToolStripMenuItem_Click);
+            //
+            // reparacionesEnCursoToolStripMenuItem
+            //
+            this.reparacionesEnCursoToolStripMenuItem.Name = "reparacionesEnCursoToolStripMenuItem";
+            this.reparacionesEnCursoToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.reparacionesEnCursoToolStripMenuItem.Text = "Reparaciones en curso";
+            this.reparacionesEnCursoToolStripMenuItem.Click += new System.EventHandler(this.reparacionesEnCursoToolStripMenuItem_Click);
+            //
             // pnlContenidoMenu
             // 
             this.pnlContenidoMenu.BackgroundImage = global::ProyectoIS_64PR.Properties.Resources.Gemini_Generated_Image_b8i13eb8i13eb8i1;
@@ -228,5 +300,13 @@
         private System.Windows.Forms.ToolStripMenuItem categoriasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem vehiculosToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clientesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem alquileresToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem generarContratoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem generarFacturaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem registrarDevolucionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mantenimientoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem nuevoReporteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reportesPendientesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reparacionesEnCursoToolStripMenuItem;
     }
 }

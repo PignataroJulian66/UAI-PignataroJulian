@@ -43,5 +43,16 @@ namespace Sesion
         public const string CrearCliente = "Crear cliente";
         public const string ModificarCliente = "Modificar cliente";
         public const string EliminarCliente = "Eliminar cliente";
+
+        ///Gestion de Alquileres (RFN1)
+        public const string GenerarContrato = "Generar contrato";
+        public const string GenerarFactura = "Generar factura";
+        public const string RegistrarDevolucion = "Registrar devolucion";
+
+        ///Gestion de Mantenimiento (RFN2)
+        public const string RegistrarReporte = "Registrar reporte";
+        public const string AsignarCriticidad = "Asignar criticidad";
+        public const string DeterminarModalidad = "Determinar modalidad";
+        public const string RegistrarAcreditacion = "Registrar acreditacion";
     }
 }

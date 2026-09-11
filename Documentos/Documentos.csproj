@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D4A244EA-AD1A-485F-97E8-942E226C4DF7}</ProjectGuid>
+    <ProjectGuid>{1E7A5123-F8E5-40C5-B750-79F6FB64CEB5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mapper</RootNamespace>
-    <AssemblyName>Mapper</AssemblyName>
+    <RootNamespace>Documentos</RootNamespace>
+    <AssemblyName>Documentos</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -39,40 +39,19 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="mpp_categoria.cs" />
-    <Compile Include="mpp_vehiculo.cs" />
-    <Compile Include="mpp_cliente.cs" />
-    <Compile Include="mpp_contrato.cs" />
-    <Compile Include="mpp_factura.cs" />
-    <Compile Include="mpp_reporte.cs" />
+    <Compile Include="GeneradorReciboContrato.cs" />
+    <Compile Include="GeneradorFactura.cs" />
+    <Compile Include="GeneradorReporteDesperfecto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BE\BE_64PR.csproj">
       <Project>{5617d18d-5092-478a-b619-b3adb88bbfc2}</Project>
       <Name>BE_64PR</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Bitacora\Bitacora.csproj">
-      <Project>{958952e0-4119-415d-a393-8a202df2d22f}</Project>
-      <Name>Bitacora</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DAL_64PR\DAL_64PR.csproj">
-      <Project>{e990023a-fd21-4606-8fbe-e91ee7e8fd96}</Project>
-      <Name>DAL_64PR</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\DV\DV.csproj">
-      <Project>{b4301447-7b78-4dd7-8209-dfb4b3b5fabb}</Project>
-      <Name>DV</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Encriptacion\Encriptacion.csproj">
-      <Project>{dbf9fef3-464b-442a-98ea-3b7e38c51de0}</Project>
-      <Name>Encriptacion</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Sesion\Sesion.csproj">
-      <Project>{e0ff1d5b-9f6b-406c-bc04-00d7e11061e5}</Project>
-      <Name>Sesion</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

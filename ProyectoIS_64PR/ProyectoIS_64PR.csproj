@@ -95,6 +95,42 @@
     <Compile Include="FrmGestionarUsuarios_64PR.Designer.cs">
       <DependentUpon>FrmGestionarUsuarios_64PR.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmGenerarContratoJP86.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmGenerarContratoJP86.Designer.cs">
+      <DependentUpon>FrmGenerarContratoJP86.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmGenerarFacturaJP86.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmGenerarFacturaJP86.Designer.cs">
+      <DependentUpon>FrmGenerarFacturaJP86.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmRegistrarDevolucionJP86.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmRegistrarDevolucionJP86.Designer.cs">
+      <DependentUpon>FrmRegistrarDevolucionJP86.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmNuevoReporteJP86.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmNuevoReporteJP86.Designer.cs">
+      <DependentUpon>FrmNuevoReporteJP86.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmReportesPendientesJP86.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmReportesPendientesJP86.Designer.cs">
+      <DependentUpon>FrmReportesPendientesJP86.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmReparacionesEnCursoJP86.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmReparacionesEnCursoJP86.Designer.cs">
+      <DependentUpon>FrmReparacionesEnCursoJP86.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmGestionFamilias_64PR.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -244,6 +280,10 @@
     <ProjectReference Include="..\BLL_64PR\BLL_64PR.csproj">
       <Project>{a744f8d5-c890-4362-89e0-b603579a601c}</Project>
       <Name>BLL_64PR</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Documentos\Documentos.csproj">
+      <Project>{1e7a5123-f8e5-40c5-b750-79f6fb64ceb5}</Project>
+      <Name>Documentos</Name>
     </ProjectReference>
     <ProjectReference Include="..\DV\DV.csproj">
       <Project>{b4301447-7b78-4dd7-8209-dfb4b3b5fabb}</Project>

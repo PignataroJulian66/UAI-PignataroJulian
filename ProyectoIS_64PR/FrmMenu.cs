@@ -154,6 +154,36 @@ namespace ProyectoIS_64PR
         {
             AbrirFormularioHijo(new FrmGestionarClientesJP86());
         }
+
+        private void generarContratoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioHijo(new FrmGenerarContratoJP86());
+        }
+
+        private void generarFacturaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioHijo(new FrmGenerarFacturaJP86());
+        }
+
+        private void registrarDevolucionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioHijo(new FrmRegistrarDevolucionJP86());
+        }
+
+        private void nuevoReporteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioHijo(new FrmNuevoReporteJP86());
+        }
+
+        private void reportesPendientesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioHijo(new FrmReportesPendientesJP86());
+        }
+
+        private void reparacionesEnCursoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioHijo(new FrmReparacionesEnCursoJP86());
+        }
         private void FrmMenu_FormClosed(object sender, FormClosedEventArgs e)
         {
             Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this); ///observer del cambio de idioma
@@ -209,6 +239,29 @@ namespace ProyectoIS_64PR
             clientesToolStripMenuItem.Visible = puedeGestionarClientes;
 
             maestrosToolStripMenuItem.Visible = puedeGestionarCategorias || puedeGestionarVehiculos || puedeGestionarClientes;
+
+            bool puedeGenerarContrato = rolUsuario.TienePermiso(Sesion.Patentes_64PR.GenerarContrato);
+            generarContratoToolStripMenuItem.Visible = puedeGenerarContrato;
+
+            bool puedeGenerarFactura = rolUsuario.TienePermiso(Sesion.Patentes_64PR.GenerarFactura);
+            generarFacturaToolStripMenuItem.Visible = puedeGenerarFactura;
+
+            bool puedeRegistrarDevolucion = rolUsuario.TienePermiso(Sesion.Patentes_64PR.RegistrarDevolucion);
+            registrarDevolucionToolStripMenuItem.Visible = puedeRegistrarDevolucion;
+
+            alquileresToolStripMenuItem.Visible = puedeGenerarContrato || puedeGenerarFactura || puedeRegistrarDevolucion;
+
+            bool puedeRegistrarReporte = rolUsuario.TienePermiso(Sesion.Patentes_64PR.RegistrarReporte);
+            nuevoReporteToolStripMenuItem.Visible = puedeRegistrarReporte;
+
+            bool puedeAsignarCriticidad = rolUsuario.TienePermiso(Sesion.Patentes_64PR.AsignarCriticidad);
+            bool puedeDeterminarModalidad = rolUsuario.TienePermiso(Sesion.Patentes_64PR.DeterminarModalidad);
+            reportesPendientesToolStripMenuItem.Visible = puedeAsignarCriticidad || puedeDeterminarModalidad;
+
+            bool puedeRegistrarAcreditacion = rolUsuario.TienePermiso(Sesion.Patentes_64PR.RegistrarAcreditacion);
+            reparacionesEnCursoToolStripMenuItem.Visible = puedeRegistrarAcreditacion;
+
+            mantenimientoToolStripMenuItem.Visible = puedeRegistrarReporte || puedeAsignarCriticidad || puedeDeterminarModalidad || puedeRegistrarAcreditacion;
         }
 
         private void respaldoBaseDeDatosToolStripMenuItem_Click(object sender, EventArgs e)

@@ -45,6 +45,16 @@
     <Compile Include="VehiculoJP86.cs" />
     <Compile Include="EstadoVehiculoJP86.cs" />
     <Compile Include="ClienteJP86.cs" />
+    <Compile Include="ContratoJP86.cs" />
+    <Compile Include="EstadoContratoJP86.cs" />
+    <Compile Include="EstadoUnidadDevolucionJP86.cs" />
+    <Compile Include="MetodoPagoJP86.cs" />
+    <Compile Include="FacturaJP86.cs" />
+    <Compile Include="ReporteJP86.cs" />
+    <Compile Include="EstadoReporteJP86.cs" />
+    <Compile Include="FuenteReporteJP86.cs" />
+    <Compile Include="CriticidadReporteJP86.cs" />
+    <Compile Include="ModalidadReparacionJP86.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

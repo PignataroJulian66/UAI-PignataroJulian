@@ -62,12 +62,14 @@ namespace Mapper
             DAL_64PR.Acceso.Instancia.escribirQuery("SP_VehiculoJP86_Modificar", parametros, CommandType.StoredProcedure);
         }
 
-        public void CambiarEstado(string patente, BE.EstadoVehiculoJP86 estado)
+        public void CambiarEstado(string patente, BE.EstadoVehiculoJP86 estado, int? kilometraje, bool? activo)
         {
             SqlParameter[] parametros = new SqlParameter[]
             {
                 new SqlParameter("@Patente", patente),
-                new SqlParameter("@Estado", estado.ToString())
+                new SqlParameter("@Estado", estado.ToString()),
+                new SqlParameter("@Kilometraje", (object)kilometraje ?? DBNull.Value),
+                new SqlParameter("@Activo", (object)activo ?? DBNull.Value)
             };
             DAL_64PR.Acceso.Instancia.escribirQuery("SP_VehiculoJP86_CambiarEstado", parametros, CommandType.StoredProcedure);
         }
