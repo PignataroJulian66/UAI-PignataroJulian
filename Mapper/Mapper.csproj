@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="mpp_categoria.cs" />
     <Compile Include="mpp_vehiculo.cs" />
+    <Compile Include="mpp_vehiculoBitacoraCambios.cs" />
     <Compile Include="mpp_cliente.cs" />
     <Compile Include="mpp_contrato.cs" />
     <Compile Include="mpp_factura.cs" />

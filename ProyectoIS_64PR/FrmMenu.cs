@@ -88,6 +88,11 @@ namespace ProyectoIS_64PR
             AbrirFormularioHijo(new FrmBitacora_64PR());
         }
 
+        private void bitacoraCambiosVehiculoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioHijo(new FrmBitacoraCambiosVehiculo());
+        }
+
         private void gestionarPermisosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbrirFormularioHijo(new FrmGestionFamilias_64PR());
@@ -213,6 +218,8 @@ namespace ProyectoIS_64PR
             gestionarRolesToolStripMenuItem.Visible = puedeGestionarRoles;
 
             eventosToolStripMenuItem.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.Bitacora);
+
+            bitacoraCambiosVehiculoToolStripMenuItem.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.VerBitacoraCambiosVehiculo);
 
             cambiarContraseñaToolStripMenuItem1.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CambiarContra);
 

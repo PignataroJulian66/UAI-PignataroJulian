@@ -83,6 +83,12 @@
     <Compile Include="FrmGestionarClientesJP86.Designer.cs">
       <DependentUpon>FrmGestionarClientesJP86.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmBitacoraCambiosVehiculo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmBitacoraCambiosVehiculo.Designer.cs">
+      <DependentUpon>FrmBitacoraCambiosVehiculo.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmGestionarVehiculosJP86.cs">
       <SubType>Form</SubType>
     </Compile>

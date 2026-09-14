@@ -69,6 +69,7 @@
   "FrmMenu.gestionarPermisosToolStripMenuItem": "Gestionar permisos",
   "FrmMenu.gestionarRolesToolStripMenuItem": "Gestionar roles",
   "FrmMenu.eventosToolStripMenuItem": "Eventos",
+  "FrmMenu.bitacoraCambiosVehiculoToolStripMenuItem": "Bitacora de Cambios de Vehiculo",
   "FrmMenu.loginToolStripMenuItem1": "Login",
   "FrmMenu.cambiarContraseñaToolStripMenuItem1": "Cambiar contraseña",
   "FrmMenu.idiomaToolStripMenuItem1": "Idioma",
@@ -404,5 +405,32 @@
 
   "msg_sinReparacionesEnCurso": "No hay reparaciones en curso (reportes en estado EN_REPARACION).",
   "msg_descripcionCierreValida": "Ingrese una descripcion de cierre de la reparacion.",
-  "acreditacion_registrada": "Acreditacion registrada correctamente. El vehiculo queda Disponible."
+  "acreditacion_registrada": "Acreditacion registrada correctamente. El vehiculo queda Disponible.",
+
+  "FrmBitacoraCambiosVehiculo.lblTitulo": "Bitacora de cambios de vehiculo",
+  "FrmBitacoraCambiosVehiculo.lblPatente": "Patente",
+  "FrmBitacoraCambiosVehiculo.lblMarcaModelo": "Marca/Modelo",
+  "FrmBitacoraCambiosVehiculo.lblFechaInicio": "Fecha inicio",
+  "FrmBitacoraCambiosVehiculo.lblFechaFin": "Fecha fin",
+  "FrmBitacoraCambiosVehiculo.btnAplicar": "Aplicar",
+  "FrmBitacoraCambiosVehiculo.btnLimpiar": "Limpiar",
+  "FrmBitacoraCambiosVehiculo.btnActivar": "Activar",
+  "FrmBitacoraCambiosVehiculo.btnSalir": "Salir",
+  "FrmBitacoraCambiosVehiculo.dgvBitacora.IdBitacora": "Id",
+  "FrmBitacoraCambiosVehiculo.dgvBitacora.Patente": "Patente",
+  "FrmBitacoraCambiosVehiculo.dgvBitacora.Marca": "Marca",
+  "FrmBitacoraCambiosVehiculo.dgvBitacora.Modelo": "Modelo",
+  "FrmBitacoraCambiosVehiculo.dgvBitacora.ID_Categoria": "Id Categoria",
+  "FrmBitacoraCambiosVehiculo.dgvBitacora.Kilometraje": "Kilometraje",
+  "FrmBitacoraCambiosVehiculo.dgvBitacora.Estado": "Estado",
+  "FrmBitacoraCambiosVehiculo.dgvBitacora.Activo": "Activo",
+  "FrmBitacoraCambiosVehiculo.dgvBitacora.Fecha": "Fecha",
+  "FrmBitacoraCambiosVehiculo.dgvBitacora.Hora": "Hora",
+  "FrmBitacoraCambiosVehiculo.dgvBitacora.Act": "Vigente",
+
+  "seleccionar_registro_bitacora": "Seleccione un registro de la lista.",
+  "bitacoraCambios_yaVigente": "El registro seleccionado ya es la version vigente del vehiculo.",
+  "confirmar_activacion_bitacoraCambios": "¿Seguro que desea restablecer el vehiculo a este estado historico?",
+  "confirmar_activacion_titulo": "Confirmar activacion",
+  "bitacoraCambios_activado": "El vehiculo fue actualizado con los valores historicos seleccionados."
 }

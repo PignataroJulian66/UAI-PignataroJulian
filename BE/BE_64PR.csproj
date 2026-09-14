@@ -44,6 +44,7 @@
     <Compile Include="Categoria_64PR.cs" />
     <Compile Include="VehiculoJP86.cs" />
     <Compile Include="EstadoVehiculoJP86.cs" />
+    <Compile Include="VehiculoBitacoraCambios.cs" />
     <Compile Include="ClienteJP86.cs" />
     <Compile Include="ContratoJP86.cs" />
     <Compile Include="EstadoContratoJP86.cs" />

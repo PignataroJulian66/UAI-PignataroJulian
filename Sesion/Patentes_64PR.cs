@@ -38,6 +38,7 @@ namespace Sesion
         public const string ModificarVehiculo = "Modificar vehiculo";
         public const string EliminarVehiculo = "Eliminar vehiculo";
         public const string CambiarEstadoVehiculo = "Cambiar estado vehiculo";
+        public const string VerBitacoraCambiosVehiculo = "Ver bitacora de cambios de vehiculo";
 
         ///Maestro de Clientes (RF1)
         public const string CrearCliente = "Crear cliente";
