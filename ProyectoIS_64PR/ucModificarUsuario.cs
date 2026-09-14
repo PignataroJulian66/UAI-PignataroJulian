@@ -11,15 +11,22 @@ using System.Windows.Forms;
 
 namespace ProyectoIS_64PR
 {
-    public partial class ucModificarUsuario : UserControl
+    public partial class ucModificarUsuario : UserControl, Idioma.IObservadorIdioma_64PR
     {
         Sesion.BLL_Rol_64PR groles = new Sesion.BLL_Rol_64PR();
+        Dictionary<string, string> textos;
         public ucModificarUsuario()
         {
             InitializeComponent();
             cmbRol.DataSource = groles.ListarRoles();
             cmbRol.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbRol.SelectedIndex = 0;
+
+            Idioma.GestorIdioma_64PR.GetInstance.Suscribir(this);
+
+            textos = Idioma.GestorIdioma_64PR.GetInstance.ObtenerTextos();
+            if (textos.Count > 0)
+                ActualizarIdioma(textos);
         }
 
         /// <summary>
@@ -51,6 +58,12 @@ namespace ProyectoIS_64PR
             txtEmail.Text = string.Empty;
         }
 
+        public void ActualizarIdioma(Dictionary<string, string> textoss)
+        {
+            textos = textoss;
+            label4.Text = textos["ucModificarUsuario_lblRol"];
+            label5.Text = textos["ucModificarUsuario_lblEmail"];
+        }
 
     }
 }

@@ -1,6 +1,8 @@
 {
   "ucCrear_Nombre": "First Name: ",
   "ucCrear_Apellido": "Last Name: ",
+  "ucModificarUsuario_lblRol": "Role: ",
+  "ucModificarUsuario_lblEmail": "Email: ",
 
   "FrmMenu.configuracionToolStripMenuItem": "Settings",
   "FrmMenu.gestionarUsuariosToolStripMenuItem": "Manage users",

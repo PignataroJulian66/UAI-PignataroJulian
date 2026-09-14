@@ -1,6 +1,8 @@
 {
   "ucCrear_Nombre": "Nombre: ",
   "ucCrear_Apellido": "Apellido: ",
+  "ucModificarUsuario_lblRol": "Rol: ",
+  "ucModificarUsuario_lblEmail": "Email: ",
   "usuario_creado": "Usuario creado con exito. El login asignado es: ",
   "mail_invalido": "Ingrese un email valido",
   "usuario_modificado": "Usuario modificado con exito.",
@@ -113,6 +115,7 @@
   "frmGestionUsuarios_lblModoConsulta": "Modo consulta",
   "frmGestionUsuarios_lblModoCrear": "Modo crear",
   "frmGestionUsuarios_lblModoModificar": "Modo modificar",
+  "frmGestionUsuarios_lblCantidad": "Cantidad: ",
   "FrmGestionarUsuarios_64PR.btnGuardar": "Guardar",
   "FrmGestionarUsuarios_64PR.btnActDesact": "Act./Desact.",
   "FrmGestionarUsuarios_64PR.btnModificar": "Modificar",
