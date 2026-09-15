@@ -21,6 +21,16 @@ namespace ProyectoIS_64PR
         {
             InitializeComponent();
 
+            this.Font = UI.TemaVisual.FuenteTexto;
+            this.BackColor = UI.TemaVisual.FondoPagina;
+            UI.EstilosUI.AplicarEstiloGrilla(dgvContratos);
+            UI.EstilosUI.AplicarBadgeColumna(dgvContratos, "Estado", UI.EstilosUI.ColorEstadoContrato);
+            UI.EstilosUI.EstiloBotonSecundario(btnEfectivo);
+            UI.EstilosUI.EstiloBotonSecundario(btnTarjeta);
+            UI.EstilosUI.EstiloBotonSecundario(btnTransferencia);
+            UI.EstilosUI.EstiloBotonSecundario(btnMercadoPago);
+            UI.EstilosUI.EstiloBotonSecundario(btnImprimirFactura);
+
             dgvContratos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
             CargaData();
@@ -68,6 +78,8 @@ namespace ProyectoIS_64PR
 
             dgvContratos.DataSource = null;
             dgvContratos.DataSource = lst;
+            ///Rebindear regenera las columnas (autogeneradas) y pisa cualquier traduccion previa: hay que reaplicarla
+            Traductor_64PR.TraducirGrilla(this, dgvContratos, textos);
 
             if (dgvContratos.Columns.Contains("FechaInicio")) dgvContratos.Columns["FechaInicio"].Visible = false;
             if (dgvContratos.Columns.Contains("FechaFin")) dgvContratos.Columns["FechaFin"].Visible = false;
@@ -138,7 +150,7 @@ namespace ProyectoIS_64PR
             {
                 BE.FacturaJP86 factura = gcontratos.GenerarFactura(contratoSeleccionado, metodoPago);
 
-                ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionAlquileres).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.FacturacionContrato).ToString(), 4);
+                ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionAlquileres).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.FacturacionContrato).ToString(), 2);
                 bita.RegistrarEvento(ev);
 
                 MessageBox.Show(textos["factura_generada"]);

@@ -27,6 +27,14 @@ namespace ProyectoIS_64PR
         {
             InitializeComponent();
 
+            this.Font = UI.TemaVisual.FuenteTexto;
+            this.BackColor = UI.TemaVisual.FondoPagina;
+            UI.EstilosUI.AplicarTarjeta(pnlContenedor);
+            UI.EstilosUI.EstiloBotonPrimario(btnCrear);
+            UI.EstilosUI.EstiloBotonPrimario(btnGuardar);
+            UI.EstilosUI.EstiloBotonSecundario(btnModificar);
+            UI.EstilosUI.EstiloBotonPeligro(btnEliminar);
+
             radioButton3.Checked = true;
             dgvCategorias.ReadOnly = true;
             dgvCategorias.MultiSelect = false;
@@ -34,6 +42,7 @@ namespace ProyectoIS_64PR
             dgvCategorias.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dgvCategorias.BackgroundColor = SystemColors.Menu;
             dgvCategorias.BorderStyle = BorderStyle.None;
+            UI.EstilosUI.AplicarEstiloGrilla(dgvCategorias);
             CargaData();
 
             btnGuardar.Enabled = false;
@@ -100,6 +109,8 @@ namespace ProyectoIS_64PR
 
             dgvCategorias.DataSource = null;
             dgvCategorias.DataSource = resultado;
+            ///Rebindear regenera las columnas (autogeneradas) y pisa cualquier traduccion previa: hay que reaplicarla
+            Traductor_64PR.TraducirGrilla(this, dgvCategorias, textos);
 
             if (textos != null && textos.Count > 0)
                 lblCantidad.Text = textos["frmGestionCategorias_lblCantidad"] + resultado.Count.ToString();
@@ -251,7 +262,7 @@ namespace ProyectoIS_64PR
             string tipoEvento = vaAQuedarActivo
                 ? ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.AltaCategoria).ToString()
                 : ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.BajaCategoria).ToString();
-            ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionCategorias).ToString(), tipoEvento, 4);
+            ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionCategorias).ToString(), tipoEvento, vaAQuedarActivo ? 4 : 3);
             bita.RegistrarEvento(ev);
 
             MessageBox.Show(textos["operacion exitosa"]);

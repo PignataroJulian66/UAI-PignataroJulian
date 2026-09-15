@@ -21,6 +21,14 @@ namespace ProyectoIS_64PR
         {
             InitializeComponent();
 
+            this.Font = UI.TemaVisual.FuenteTexto;
+            this.BackColor = UI.TemaVisual.FondoPagina;
+            UI.EstilosUI.AplicarEstiloGrilla(dgvVehiculos);
+            UI.EstilosUI.AplicarBadgeColumna(dgvVehiculos, "Estado", UI.EstilosUI.ColorEstadoVehiculo);
+            UI.EstilosUI.EstiloBotonPrimario(btnConfirmar);
+            UI.EstilosUI.EstiloBotonSecundario(btnImprimirReporte);
+            UI.EstilosUI.EstiloBotonPeligro(btnCancelar);
+
             cmbFuente.DataSource = Enum.GetValues(typeof(BE.FuenteReporteJP86));
 
             Idioma.GestorIdioma_64PR.GetInstance.Suscribir(this);
@@ -64,6 +72,8 @@ namespace ProyectoIS_64PR
 
             dgvVehiculos.DataSource = null;
             dgvVehiculos.DataSource = disponibles;
+            ///Rebindear regenera las columnas (autogeneradas) y pisa cualquier traduccion previa: hay que reaplicarla
+            Traductor_64PR.TraducirGrilla(this, dgvVehiculos, textos);
 
             vehiculoSeleccionado = null;
             btnConfirmar.Enabled = false;
@@ -107,7 +117,7 @@ namespace ProyectoIS_64PR
             {
                 BE.ReporteJP86 reporte = greportes.RegistrarReporte(vehiculoSeleccionado, txtDescripcion.Text.Trim(), fuente);
 
-                ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionMantenimiento).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.AltaReporte).ToString(), 4);
+                ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionMantenimiento).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.AltaReporte).ToString(), 3);
                 bita.RegistrarEvento(ev);
 
                 MessageBox.Show(textos["reporte_generado"] + reporte.NumeroReporte.ToString());

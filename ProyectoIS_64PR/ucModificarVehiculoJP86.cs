@@ -19,6 +19,8 @@ namespace ProyectoIS_64PR
         {
             InitializeComponent();
 
+            UI.EstilosUI.AplicarEstiloFormulario(this);
+
             cmbCategoria.DataSource = gcategorias.Listar().Where(c => c.Activo).ToList();
             cmbCategoria.DropDownStyle = ComboBoxStyle.DropDownList;
 

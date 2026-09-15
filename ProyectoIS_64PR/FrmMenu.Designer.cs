@@ -1,4 +1,4 @@
-﻿namespace ProyectoIS_64PR
+namespace ProyectoIS_64PR
 {
     partial class FrmMenu
     {
@@ -28,295 +28,275 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.configuracionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loginToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.cambiarContraseñaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.idiomaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.cerrarSesionToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.respaldoBaseDeDatosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.restaurarBaseDeDatosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gestionarUsuariosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gestionarPermisosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gestionarRolesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.eventosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bitacoraCambiosVehiculoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.maestrosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.categoriasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.vehiculosToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.clientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.alquileresToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.generarContratoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.generarFacturaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.registrarDevolucionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mantenimientoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nuevoReporteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.reportesPendientesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.reparacionesEnCursoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pnlMain = new System.Windows.Forms.Panel();
             this.pnlContenidoMenu = new System.Windows.Forms.Panel();
-            this.menuStrip1.SuspendLayout();
+            this.pnlTopbar = new System.Windows.Forms.Panel();
+            this.lblCrumb = new System.Windows.Forms.Label();
+            this.lblIdiomaPill = new System.Windows.Forms.Label();
+            this.pnlSidebar = new System.Windows.Forms.Panel();
+            this.pnlSidebarNav = new System.Windows.Forms.FlowLayoutPanel();
+            this.pnlSidebarHeader = new System.Windows.Forms.Panel();
+            this.pnlIconoMarca = new System.Windows.Forms.Label();
+            this.lblLogo = new System.Windows.Forms.Label();
+            this.lblSubtitulo = new System.Windows.Forms.Label();
+            this.pnlSidebarFooter = new System.Windows.Forms.Panel();
+            this.lblAvatar = new System.Windows.Forms.Label();
+            this.lblUsuarioActual = new System.Windows.Forms.Label();
+            this.lblRolActual = new System.Windows.Forms.Label();
+            this.btnCerrarSesionFooter = new System.Windows.Forms.Button();
+            this.pnlMain.SuspendLayout();
+            this.pnlTopbar.SuspendLayout();
+            this.pnlSidebar.SuspendLayout();
+            this.pnlSidebarHeader.SuspendLayout();
+            this.pnlSidebarFooter.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.configuracionToolStripMenuItem,
-            this.gestionarUsuariosToolStripMenuItem,
-            this.gestionarPermisosToolStripMenuItem,
-            this.gestionarRolesToolStripMenuItem,
-            this.eventosToolStripMenuItem,
-            this.maestrosToolStripMenuItem,
-            this.alquileresToolStripMenuItem,
-            this.mantenimientoToolStripMenuItem,
-            this.bitacoraCambiosVehiculoToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1030, 24);
-            this.menuStrip1.TabIndex = 1;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // configuracionToolStripMenuItem
-            // 
-            this.configuracionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loginToolStripMenuItem1,
-            this.cambiarContraseñaToolStripMenuItem1,
-            this.idiomaToolStripMenuItem1,
-            this.cerrarSesionToolStripMenuItem1,
-            this.respaldoBaseDeDatosToolStripMenuItem,
-            this.restaurarBaseDeDatosToolStripMenuItem});
-            this.configuracionToolStripMenuItem.Name = "configuracionToolStripMenuItem";
-            this.configuracionToolStripMenuItem.Size = new System.Drawing.Size(95, 20);
-            this.configuracionToolStripMenuItem.Text = "Configuracion";
-            // 
-            // loginToolStripMenuItem1
-            // 
-            this.loginToolStripMenuItem1.Name = "loginToolStripMenuItem1";
-            this.loginToolStripMenuItem1.Size = new System.Drawing.Size(198, 22);
-            this.loginToolStripMenuItem1.Text = "Login";
-            this.loginToolStripMenuItem1.Click += new System.EventHandler(this.loginToolStripMenuItem1_Click);
-            // 
-            // cambiarContraseñaToolStripMenuItem1
-            // 
-            this.cambiarContraseñaToolStripMenuItem1.Name = "cambiarContraseñaToolStripMenuItem1";
-            this.cambiarContraseñaToolStripMenuItem1.Size = new System.Drawing.Size(198, 22);
-            this.cambiarContraseñaToolStripMenuItem1.Text = "Cambiar Contraseña";
-            this.cambiarContraseñaToolStripMenuItem1.Click += new System.EventHandler(this.cambiarContraseñaToolStripMenuItem1_Click);
-            // 
-            // idiomaToolStripMenuItem1
-            // 
-            this.idiomaToolStripMenuItem1.Name = "idiomaToolStripMenuItem1";
-            this.idiomaToolStripMenuItem1.Size = new System.Drawing.Size(198, 22);
-            this.idiomaToolStripMenuItem1.Text = "Idioma";
-            // 
-            // cerrarSesionToolStripMenuItem1
-            // 
-            this.cerrarSesionToolStripMenuItem1.Name = "cerrarSesionToolStripMenuItem1";
-            this.cerrarSesionToolStripMenuItem1.Size = new System.Drawing.Size(198, 22);
-            this.cerrarSesionToolStripMenuItem1.Text = "Cerrar sesion";
-            this.cerrarSesionToolStripMenuItem1.Click += new System.EventHandler(this.cerrarSesionToolStripMenuItem1_Click);
-            // 
-            // respaldoBaseDeDatosToolStripMenuItem
-            // 
-            this.respaldoBaseDeDatosToolStripMenuItem.Name = "respaldoBaseDeDatosToolStripMenuItem";
-            this.respaldoBaseDeDatosToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.respaldoBaseDeDatosToolStripMenuItem.Text = "Respaldo base de datos";
-            this.respaldoBaseDeDatosToolStripMenuItem.Click += new System.EventHandler(this.respaldoBaseDeDatosToolStripMenuItem_Click);
-            // 
-            // restaurarBaseDeDatosToolStripMenuItem
-            // 
-            this.restaurarBaseDeDatosToolStripMenuItem.Name = "restaurarBaseDeDatosToolStripMenuItem";
-            this.restaurarBaseDeDatosToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
-            this.restaurarBaseDeDatosToolStripMenuItem.Text = "Restaurar base de datos";
-            this.restaurarBaseDeDatosToolStripMenuItem.Click += new System.EventHandler(this.restaurarBaseDeDatosToolStripMenuItem_Click);
-            // 
-            // gestionarUsuariosToolStripMenuItem
-            // 
-            this.gestionarUsuariosToolStripMenuItem.Name = "gestionarUsuariosToolStripMenuItem";
-            this.gestionarUsuariosToolStripMenuItem.Size = new System.Drawing.Size(116, 20);
-            this.gestionarUsuariosToolStripMenuItem.Text = "Gestionar usuarios";
-            this.gestionarUsuariosToolStripMenuItem.Click += new System.EventHandler(this.gestionarUsuariosToolStripMenuItem_Click);
-            // 
-            // gestionarPermisosToolStripMenuItem
-            // 
-            this.gestionarPermisosToolStripMenuItem.Name = "gestionarPermisosToolStripMenuItem";
-            this.gestionarPermisosToolStripMenuItem.Size = new System.Drawing.Size(120, 20);
-            this.gestionarPermisosToolStripMenuItem.Text = "Gestionar permisos";
-            this.gestionarPermisosToolStripMenuItem.Click += new System.EventHandler(this.gestionarPermisosToolStripMenuItem_Click);
-            // 
-            // gestionarRolesToolStripMenuItem
-            // 
-            this.gestionarRolesToolStripMenuItem.Name = "gestionarRolesToolStripMenuItem";
-            this.gestionarRolesToolStripMenuItem.Size = new System.Drawing.Size(97, 20);
-            this.gestionarRolesToolStripMenuItem.Text = "Gestionar roles";
-            this.gestionarRolesToolStripMenuItem.Click += new System.EventHandler(this.gestionarRolesToolStripMenuItem_Click);
-            // 
-            // eventosToolStripMenuItem
-            // 
-            this.eventosToolStripMenuItem.Name = "eventosToolStripMenuItem";
-            this.eventosToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
-            this.eventosToolStripMenuItem.Text = "Eventos";
-            this.eventosToolStripMenuItem.Click += new System.EventHandler(this.eventosToolStripMenuItem_Click);
-            // 
-            // bitacoraCambiosVehiculoToolStripMenuItem
-            // 
-            this.bitacoraCambiosVehiculoToolStripMenuItem.Name = "bitacoraCambiosVehiculoToolStripMenuItem";
-            this.bitacoraCambiosVehiculoToolStripMenuItem.Size = new System.Drawing.Size(192, 20);
-            this.bitacoraCambiosVehiculoToolStripMenuItem.Text = "Bitacora de Cambios de Vehiculo";
-            this.bitacoraCambiosVehiculoToolStripMenuItem.Click += new System.EventHandler(this.bitacoraCambiosVehiculoToolStripMenuItem_Click);
-            // 
-            // maestrosToolStripMenuItem
-            // 
-            this.maestrosToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.categoriasToolStripMenuItem,
-            this.vehiculosToolStripMenuItem,
-            this.clientesToolStripMenuItem});
-            this.maestrosToolStripMenuItem.Name = "maestrosToolStripMenuItem";
-            this.maestrosToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
-            this.maestrosToolStripMenuItem.Text = "Maestros";
-            // 
-            // categoriasToolStripMenuItem
-            // 
-            this.categoriasToolStripMenuItem.Name = "categoriasToolStripMenuItem";
-            this.categoriasToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
-            this.categoriasToolStripMenuItem.Text = "Categorias";
-            this.categoriasToolStripMenuItem.Click += new System.EventHandler(this.categoriasToolStripMenuItem_Click);
-            // 
-            // vehiculosToolStripMenuItem
-            // 
-            this.vehiculosToolStripMenuItem.Name = "vehiculosToolStripMenuItem";
-            this.vehiculosToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
-            this.vehiculosToolStripMenuItem.Text = "Vehiculos";
-            this.vehiculosToolStripMenuItem.Click += new System.EventHandler(this.vehiculosToolStripMenuItem_Click);
-            // 
-            // clientesToolStripMenuItem
-            // 
-            this.clientesToolStripMenuItem.Name = "clientesToolStripMenuItem";
-            this.clientesToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
-            this.clientesToolStripMenuItem.Text = "Clientes";
-            this.clientesToolStripMenuItem.Click += new System.EventHandler(this.clientesToolStripMenuItem_Click);
-            // 
-            // alquileresToolStripMenuItem
-            // 
-            this.alquileresToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.generarContratoToolStripMenuItem,
-            this.generarFacturaToolStripMenuItem,
-            this.registrarDevolucionToolStripMenuItem});
-            this.alquileresToolStripMenuItem.Name = "alquileresToolStripMenuItem";
-            this.alquileresToolStripMenuItem.Size = new System.Drawing.Size(71, 20);
-            this.alquileresToolStripMenuItem.Text = "Alquileres";
-            // 
-            // generarContratoToolStripMenuItem
-            // 
-            this.generarContratoToolStripMenuItem.Name = "generarContratoToolStripMenuItem";
-            this.generarContratoToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
-            this.generarContratoToolStripMenuItem.Text = "Generar contrato";
-            this.generarContratoToolStripMenuItem.Click += new System.EventHandler(this.generarContratoToolStripMenuItem_Click);
-            // 
-            // generarFacturaToolStripMenuItem
-            // 
-            this.generarFacturaToolStripMenuItem.Name = "generarFacturaToolStripMenuItem";
-            this.generarFacturaToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
-            this.generarFacturaToolStripMenuItem.Text = "Generar factura";
-            this.generarFacturaToolStripMenuItem.Click += new System.EventHandler(this.generarFacturaToolStripMenuItem_Click);
-            // 
-            // registrarDevolucionToolStripMenuItem
-            // 
-            this.registrarDevolucionToolStripMenuItem.Name = "registrarDevolucionToolStripMenuItem";
-            this.registrarDevolucionToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
-            this.registrarDevolucionToolStripMenuItem.Text = "Registrar devolucion";
-            this.registrarDevolucionToolStripMenuItem.Click += new System.EventHandler(this.registrarDevolucionToolStripMenuItem_Click);
-            // 
-            // mantenimientoToolStripMenuItem
-            // 
-            this.mantenimientoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.nuevoReporteToolStripMenuItem,
-            this.reportesPendientesToolStripMenuItem,
-            this.reparacionesEnCursoToolStripMenuItem});
-            this.mantenimientoToolStripMenuItem.Name = "mantenimientoToolStripMenuItem";
-            this.mantenimientoToolStripMenuItem.Size = new System.Drawing.Size(101, 20);
-            this.mantenimientoToolStripMenuItem.Text = "Mantenimiento";
-            // 
-            // nuevoReporteToolStripMenuItem
-            // 
-            this.nuevoReporteToolStripMenuItem.Name = "nuevoReporteToolStripMenuItem";
-            this.nuevoReporteToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
-            this.nuevoReporteToolStripMenuItem.Text = "Nuevo reporte";
-            this.nuevoReporteToolStripMenuItem.Click += new System.EventHandler(this.nuevoReporteToolStripMenuItem_Click);
-            // 
-            // reportesPendientesToolStripMenuItem
-            // 
-            this.reportesPendientesToolStripMenuItem.Name = "reportesPendientesToolStripMenuItem";
-            this.reportesPendientesToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
-            this.reportesPendientesToolStripMenuItem.Text = "Reportes pendientes";
-            this.reportesPendientesToolStripMenuItem.Click += new System.EventHandler(this.reportesPendientesToolStripMenuItem_Click);
-            // 
-            // reparacionesEnCursoToolStripMenuItem
-            // 
-            this.reparacionesEnCursoToolStripMenuItem.Name = "reparacionesEnCursoToolStripMenuItem";
-            this.reparacionesEnCursoToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
-            this.reparacionesEnCursoToolStripMenuItem.Text = "Reparaciones en curso";
-            this.reparacionesEnCursoToolStripMenuItem.Click += new System.EventHandler(this.reparacionesEnCursoToolStripMenuItem_Click);
-            // 
+            //
             // pnlContenidoMenu
-            // 
-            this.pnlContenidoMenu.BackgroundImage = global::ProyectoIS_64PR.Properties.Resources.Gemini_Generated_Image_b8i13eb8i13eb8i1;
-            this.pnlContenidoMenu.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            //
+            this.pnlContenidoMenu.AutoScroll = true;
+            this.pnlContenidoMenu.BackColor = ProyectoIS_64PR.UI.TemaVisual.FondoPagina;
             this.pnlContenidoMenu.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlContenidoMenu.Location = new System.Drawing.Point(0, 24);
+            this.pnlContenidoMenu.Location = new System.Drawing.Point(0, 58);
             this.pnlContenidoMenu.Margin = new System.Windows.Forms.Padding(2);
             this.pnlContenidoMenu.Name = "pnlContenidoMenu";
-            this.pnlContenidoMenu.Size = new System.Drawing.Size(1030, 433);
-            this.pnlContenidoMenu.TabIndex = 2;
-            // 
+            this.pnlContenidoMenu.Size = new System.Drawing.Size(766, 399);
+            this.pnlContenidoMenu.TabIndex = 0;
+            //
+            // lblCrumb
+            //
+            this.lblCrumb.AutoSize = true;
+            this.lblCrumb.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.lblCrumb.ForeColor = ProyectoIS_64PR.UI.TemaVisual.TextoSecundario;
+            this.lblCrumb.Location = new System.Drawing.Point(26, 20);
+            this.lblCrumb.Name = "lblCrumb";
+            this.lblCrumb.Size = new System.Drawing.Size(45, 17);
+            this.lblCrumb.TabIndex = 0;
+            this.lblCrumb.Text = "Panel";
+            //
+            // lblIdiomaPill
+            //
+            this.lblIdiomaPill.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblIdiomaPill.AutoSize = true;
+            this.lblIdiomaPill.BackColor = ProyectoIS_64PR.UI.TemaVisual.FondoPagina;
+            this.lblIdiomaPill.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblIdiomaPill.Font = new System.Drawing.Font("Segoe UI", 8.5F);
+            this.lblIdiomaPill.ForeColor = ProyectoIS_64PR.UI.TemaVisual.TextoSecundario;
+            this.lblIdiomaPill.Location = new System.Drawing.Point(700, 18);
+            this.lblIdiomaPill.Name = "lblIdiomaPill";
+            this.lblIdiomaPill.Padding = new System.Windows.Forms.Padding(10, 5, 10, 5);
+            this.lblIdiomaPill.Size = new System.Drawing.Size(40, 21);
+            this.lblIdiomaPill.TabIndex = 1;
+            this.lblIdiomaPill.Text = "ES";
+            //
+            // pnlTopbar
+            //
+            this.pnlTopbar.BackColor = ProyectoIS_64PR.UI.TemaVisual.FondoTarjeta;
+            this.pnlTopbar.Controls.Add(this.lblCrumb);
+            this.pnlTopbar.Controls.Add(this.lblIdiomaPill);
+            this.pnlTopbar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlTopbar.Location = new System.Drawing.Point(0, 0);
+            this.pnlTopbar.Name = "pnlTopbar";
+            this.pnlTopbar.Size = new System.Drawing.Size(766, 58);
+            this.pnlTopbar.TabIndex = 1;
+            this.pnlTopbar.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlTopbar_Paint);
+            //
+            // pnlMain
+            //
+            this.pnlMain.Controls.Add(this.pnlContenidoMenu);
+            this.pnlMain.Controls.Add(this.pnlTopbar);
+            this.pnlMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlMain.Location = new System.Drawing.Point(264, 0);
+            this.pnlMain.Name = "pnlMain";
+            this.pnlMain.Size = new System.Drawing.Size(766, 457);
+            this.pnlMain.TabIndex = 0;
+            //
+            // pnlIconoMarca
+            //
+            this.pnlIconoMarca.BackColor = ProyectoIS_64PR.UI.TemaVisual.AzulPrimario;
+            this.pnlIconoMarca.Font = new System.Drawing.Font("Segoe UI", 15F);
+            this.pnlIconoMarca.ForeColor = System.Drawing.Color.White;
+            this.pnlIconoMarca.Location = new System.Drawing.Point(22, 20);
+            this.pnlIconoMarca.Name = "pnlIconoMarca";
+            this.pnlIconoMarca.Size = new System.Drawing.Size(34, 34);
+            this.pnlIconoMarca.TabIndex = 0;
+            this.pnlIconoMarca.Text = "🚗";
+            this.pnlIconoMarca.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            //
+            // lblLogo
+            //
+            this.lblLogo.AutoSize = true;
+            this.lblLogo.Font = new System.Drawing.Font("Segoe UI", 12.5F, System.Drawing.FontStyle.Bold);
+            this.lblLogo.ForeColor = System.Drawing.Color.White;
+            this.lblLogo.Location = new System.Drawing.Point(66, 19);
+            this.lblLogo.Name = "lblLogo";
+            this.lblLogo.Size = new System.Drawing.Size(70, 21);
+            this.lblLogo.TabIndex = 1;
+            this.lblLogo.Text = "SIGAM";
+            //
+            // lblSubtitulo
+            //
+            this.lblSubtitulo.AutoSize = true;
+            this.lblSubtitulo.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.lblSubtitulo.ForeColor = System.Drawing.Color.FromArgb(180, 195, 215);
+            this.lblSubtitulo.Location = new System.Drawing.Point(67, 41);
+            this.lblSubtitulo.MaximumSize = new System.Drawing.Size(180, 0);
+            this.lblSubtitulo.Name = "lblSubtitulo";
+            this.lblSubtitulo.Size = new System.Drawing.Size(112, 13);
+            this.lblSubtitulo.TabIndex = 2;
+            this.lblSubtitulo.Text = "Gestión de Alquileres";
+            //
+            // pnlSidebarHeader
+            //
+            this.pnlSidebarHeader.BackColor = ProyectoIS_64PR.UI.TemaVisual.AzulPrimario;
+            this.pnlSidebarHeader.Controls.Add(this.pnlIconoMarca);
+            this.pnlSidebarHeader.Controls.Add(this.lblLogo);
+            this.pnlSidebarHeader.Controls.Add(this.lblSubtitulo);
+            this.pnlSidebarHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlSidebarHeader.Location = new System.Drawing.Point(0, 0);
+            this.pnlSidebarHeader.Name = "pnlSidebarHeader";
+            this.pnlSidebarHeader.Size = new System.Drawing.Size(264, 74);
+            this.pnlSidebarHeader.TabIndex = 0;
+            this.pnlSidebarHeader.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlSidebarHeader_Paint);
+            //
+            // pnlSidebarNav
+            //
+            this.pnlSidebarNav.AutoScroll = true;
+            this.pnlSidebarNav.BackColor = ProyectoIS_64PR.UI.TemaVisual.AzulPrimario;
+            ///NO uso Dock=Fill aca a proposito: con Header(Top)+Footer(Bottom)+Nav(Fill) los
+            ///3 juntos, el orden de Controls.Add para resolver el Fill es ambiguo y ya causo
+            ///overlaps. Uso limites explicitos + Anchor en las 4 puntas, sin depender de Dock.
+            this.pnlSidebarNav.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlSidebarNav.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.pnlSidebarNav.Location = new System.Drawing.Point(0, 74);
+            this.pnlSidebarNav.Name = "pnlSidebarNav";
+            this.pnlSidebarNav.Padding = new System.Windows.Forms.Padding(10, 10, 10, 10);
+            this.pnlSidebarNav.Size = new System.Drawing.Size(264, 315);
+            this.pnlSidebarNav.TabIndex = 1;
+            this.pnlSidebarNav.WrapContents = false;
+            //
+            // lblAvatar
+            //
+            this.lblAvatar.BackColor = ProyectoIS_64PR.UI.TemaVisual.Info;
+            this.lblAvatar.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            this.lblAvatar.ForeColor = System.Drawing.Color.White;
+            this.lblAvatar.Location = new System.Drawing.Point(16, 15);
+            this.lblAvatar.Name = "lblAvatar";
+            this.lblAvatar.Size = new System.Drawing.Size(34, 34);
+            this.lblAvatar.TabIndex = 0;
+            this.lblAvatar.Text = "?";
+            this.lblAvatar.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            //
+            // lblUsuarioActual
+            //
+            this.lblUsuarioActual.AutoSize = true;
+            this.lblUsuarioActual.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblUsuarioActual.ForeColor = System.Drawing.Color.White;
+            this.lblUsuarioActual.Location = new System.Drawing.Point(58, 13);
+            this.lblUsuarioActual.Name = "lblUsuarioActual";
+            this.lblUsuarioActual.Size = new System.Drawing.Size(0, 15);
+            this.lblUsuarioActual.TabIndex = 1;
+            //
+            // lblRolActual
+            //
+            this.lblRolActual.AutoSize = true;
+            this.lblRolActual.Font = new System.Drawing.Font("Segoe UI", 7.75F);
+            this.lblRolActual.ForeColor = System.Drawing.Color.FromArgb(180, 195, 215);
+            this.lblRolActual.Location = new System.Drawing.Point(58, 30);
+            this.lblRolActual.Name = "lblRolActual";
+            this.lblRolActual.Size = new System.Drawing.Size(0, 13);
+            this.lblRolActual.TabIndex = 2;
+            //
+            // btnCerrarSesionFooter
+            //
+            this.btnCerrarSesionFooter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCerrarSesionFooter.BackColor = ProyectoIS_64PR.UI.TemaVisual.AzulOscuro;
+            this.btnCerrarSesionFooter.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCerrarSesionFooter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCerrarSesionFooter.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.btnCerrarSesionFooter.ForeColor = System.Drawing.Color.FromArgb(200, 210, 225);
+            this.btnCerrarSesionFooter.Location = new System.Drawing.Point(218, 17);
+            this.btnCerrarSesionFooter.Name = "btnCerrarSesionFooter";
+            this.btnCerrarSesionFooter.Size = new System.Drawing.Size(30, 30);
+            this.btnCerrarSesionFooter.TabIndex = 3;
+            this.btnCerrarSesionFooter.Text = "⏻";
+            this.btnCerrarSesionFooter.UseVisualStyleBackColor = false;
+            //
+            // pnlSidebarFooter
+            //
+            this.pnlSidebarFooter.BackColor = ProyectoIS_64PR.UI.TemaVisual.AzulOscuro;
+            this.pnlSidebarFooter.Controls.Add(this.lblAvatar);
+            this.pnlSidebarFooter.Controls.Add(this.lblUsuarioActual);
+            this.pnlSidebarFooter.Controls.Add(this.lblRolActual);
+            this.pnlSidebarFooter.Controls.Add(this.btnCerrarSesionFooter);
+            this.pnlSidebarFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlSidebarFooter.Location = new System.Drawing.Point(0, 389);
+            this.pnlSidebarFooter.Name = "pnlSidebarFooter";
+            this.pnlSidebarFooter.Size = new System.Drawing.Size(264, 68);
+            this.pnlSidebarFooter.TabIndex = 2;
+            this.pnlSidebarFooter.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlSidebarFooter_Paint);
+            //
+            // pnlSidebar
+            //
+            this.pnlSidebar.BackColor = ProyectoIS_64PR.UI.TemaVisual.AzulPrimario;
+            this.pnlSidebar.Location = new System.Drawing.Point(0, 0);
+            this.pnlSidebar.Name = "pnlSidebar";
+            ///Ancho fijo (264px, tomado del mockup) seteado ANTES de Dock; Nav (Fill) se
+            ///agrega primero, Header/Footer despues para que reclamen su franja arriba/abajo.
+            this.pnlSidebar.Size = new System.Drawing.Size(264, 457);
+            this.pnlSidebar.Controls.Add(this.pnlSidebarNav);
+            this.pnlSidebar.Controls.Add(this.pnlSidebarHeader);
+            this.pnlSidebar.Controls.Add(this.pnlSidebarFooter);
+            this.pnlSidebarHeader.BringToFront();
+            this.pnlSidebarFooter.BringToFront();
+            this.pnlSidebar.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pnlSidebar.TabIndex = 1;
+            //
             // FrmMenu
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            //
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackColor = ProyectoIS_64PR.UI.TemaVisual.FondoPagina;
             this.ClientSize = new System.Drawing.Size(1030, 457);
-            this.Controls.Add(this.pnlContenidoMenu);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
+            ///pnlMain.Dock queda declarado Fill acá pero se pisa a None en el constructor de
+            ///FrmMenu (AjustarPanelPrincipal se encarga de su Bounds a mano) -- el Dock=Fill
+            ///automático no excluía el ancho de pnlSidebar. Ver comentario en FrmMenu.cs.
+            this.Controls.Add(this.pnlSidebar);
+            this.Controls.Add(this.pnlMain);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FrmMenu";
-            this.Text = "FrmMenu";
+            this.Text = "SIGAM";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmMenu_FormClosed);
             this.Load += new System.EventHandler(this.FrmMenu_Load);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.pnlMain.ResumeLayout(false);
+            this.pnlTopbar.ResumeLayout(false);
+            this.pnlTopbar.PerformLayout();
+            this.pnlSidebar.ResumeLayout(false);
+            this.pnlSidebarHeader.ResumeLayout(false);
+            this.pnlSidebarHeader.PerformLayout();
+            this.pnlSidebarFooter.ResumeLayout(false);
+            this.pnlSidebarFooter.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem gestionarUsuariosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem eventosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem bitacoraCambiosVehiculoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem gestionarPermisosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem configuracionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loginToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem cambiarContraseñaToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem idiomaToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem cerrarSesionToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem gestionarRolesToolStripMenuItem;
+        private System.Windows.Forms.Panel pnlMain;
         private System.Windows.Forms.Panel pnlContenidoMenu;
-        private System.Windows.Forms.ToolStripMenuItem respaldoBaseDeDatosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem restaurarBaseDeDatosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem maestrosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem categoriasToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem vehiculosToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem clientesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem alquileresToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem generarContratoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem generarFacturaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem registrarDevolucionToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem mantenimientoToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem nuevoReporteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem reportesPendientesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem reparacionesEnCursoToolStripMenuItem;
+        private System.Windows.Forms.Panel pnlTopbar;
+        private System.Windows.Forms.Label lblCrumb;
+        private System.Windows.Forms.Label lblIdiomaPill;
+        private System.Windows.Forms.Panel pnlSidebar;
+        private System.Windows.Forms.Panel pnlSidebarHeader;
+        private System.Windows.Forms.Label pnlIconoMarca;
+        private System.Windows.Forms.Label lblLogo;
+        private System.Windows.Forms.Label lblSubtitulo;
+        private System.Windows.Forms.FlowLayoutPanel pnlSidebarNav;
+        private System.Windows.Forms.Panel pnlSidebarFooter;
+        private System.Windows.Forms.Label lblAvatar;
+        private System.Windows.Forms.Label lblUsuarioActual;
+        private System.Windows.Forms.Label lblRolActual;
+        private System.Windows.Forms.Button btnCerrarSesionFooter;
     }
 }

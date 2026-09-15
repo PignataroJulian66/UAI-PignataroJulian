@@ -26,6 +26,8 @@ namespace ProyectoIS_64PR
             //
             // dgvReportes
             //
+            this.dgvReportes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right))));
             this.dgvReportes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvReportes.Location = new System.Drawing.Point(12, 12);
             this.dgvReportes.MultiSelect = false;
@@ -49,6 +51,8 @@ namespace ProyectoIS_64PR
             //
             // txtDescripcionCierre
             //
+            this.txtDescripcionCierre.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right))));
             this.txtDescripcionCierre.Location = new System.Drawing.Point(12, 264);
             this.txtDescripcionCierre.Multiline = true;
             this.txtDescripcionCierre.Name = "txtDescripcionCierre";
@@ -67,8 +71,7 @@ namespace ProyectoIS_64PR
             //
             // FrmReparacionesEnCursoJP86
             //
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(900, 400);
             this.Controls.Add(this.btnAcreditar);
             this.Controls.Add(this.txtDescripcionCierre);

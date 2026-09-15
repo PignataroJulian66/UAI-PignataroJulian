@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,6 +17,14 @@ namespace ProyectoIS_64PR
         public FrmLogin_64PR()
         {
             InitializeComponent();
+
+            UI.EstilosUI.EstiloBotonPrimario(btnIniciarSesion);
+
+            ///El alto real de lblLogoLogin (AutoSize) depende de la fuente y no coincide
+            ///necesariamente con el Size que puso el Designer; reposiciono el subtitulo
+            ///relativo al Bottom real para que nunca se pisen.
+            lblSubtituloLogin.Location = new Point(lblLogoLogin.Left, lblLogoLogin.Bottom + 10);
+
             this.AcceptButton = btnIniciarSesion;
             txtContra.UseSystemPasswordChar = true;
             lblMensaje.Enabled = false;
@@ -58,12 +66,24 @@ namespace ProyectoIS_64PR
         {
             ///Esto me actualiza los textos visibles
             textos = textoss;
-            Traductor_64PR.Traducir(this, textos);
+
+            ///Guardo el contador ANTES de traducir: Traductor_64PR pisa lblMensaje.Text
+            ///con solo la etiqueta (sin ":" ni el contador), asi que si lo leemos despues
+            ///de traducir, el Split(':') ya no tiene el segundo elemento.
+            string contadorActual = null;
             if (lblMensaje.Enabled)
             {
-                string[] aux = lblMensaje.Text.Split(':');
-                aux[0]= textos.ContainsKey("FrmLogin_64PR.lblMensaje") ? textos["FrmLogin_64PR.lblMensaje"] : "Intentos";
-                lblMensaje.Text = aux[0]+":" + aux[1];
+                string[] auxPrevio = lblMensaje.Text.Split(':');
+                if (auxPrevio.Length > 1)
+                    contadorActual = auxPrevio[1];
+            }
+
+            Traductor_64PR.Traducir(this, textos);
+
+            if (lblMensaje.Enabled && contadorActual != null)
+            {
+                string etiqueta = textos.ContainsKey("FrmLogin_64PR.lblMensaje") ? textos["FrmLogin_64PR.lblMensaje"] : "Intentos";
+                lblMensaje.Text = etiqueta + ":" + contadorActual;
             }
         }
         private void btnIniciarSesion_Click(object sender, EventArgs e)
@@ -164,7 +184,7 @@ namespace ProyectoIS_64PR
                 ///Si la contraseña no es correcta entra aca y sumamos un intento, registrandolo en bitacora
                 gusuarios.SumarIntento(txtLogin.Text.Trim());
                 Bitacora.Bitacora_64PR bita2 = new Bitacora.Bitacora_64PR();
-                Bitacora.Evento_64PR ev2 = new Bitacora.Evento_64PR(txtLogin.Text, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.Login).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.LoginFallido).ToString(), 4);
+                Bitacora.Evento_64PR ev2 = new Bitacora.Evento_64PR(txtLogin.Text, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.Login).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.LoginFallido).ToString(), 3);
                 bita2.RegistrarEvento(ev2);
 
                 ///Obtenemos los intentos del usuario en base de datos y lo volcamos en el label
@@ -176,7 +196,7 @@ namespace ProyectoIS_64PR
                 if (Convert.ToInt16(temp) == 3)
                 {
                     ///Si los intentos llegan a 3 el bloqueo se hace desde la BD, aca lo que hago en registrar en la bitaora nomas
-                    ev2 = new Bitacora.Evento_64PR(txtLogin.Text, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.Login).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.UsuarioBloqueado).ToString(), 5);
+                    ev2 = new Bitacora.Evento_64PR(txtLogin.Text, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.Login).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.UsuarioBloqueado).ToString(), 1);
                     bita2.RegistrarEvento(ev2);
                 }
 

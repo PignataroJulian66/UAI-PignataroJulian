@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>fleetdrive.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -164,6 +167,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Traductor_64PR.cs" />
+    <Compile Include="UI\TemaVisual.cs" />
+    <Compile Include="UI\EstilosUI.cs" />
     <Compile Include="ucCrearCategoria.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -314,6 +319,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Gemini_Generated_Image_b8i13eb8i13eb8i1.png" />
+    <None Include="Resources\fleetdrive.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fleetdrive.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

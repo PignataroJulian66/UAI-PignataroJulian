@@ -30,6 +30,15 @@ namespace ProyectoIS_64PR
         {
             InitializeComponent();
 
+            this.Font = UI.TemaVisual.FuenteTexto;
+            this.BackColor = UI.TemaVisual.FondoPagina;
+            UI.EstilosUI.AplicarTarjeta(pnlContenedor);
+            UI.EstilosUI.EstiloBotonPrimario(btnCrear);
+            UI.EstilosUI.EstiloBotonPrimario(btnGuardar);
+            UI.EstilosUI.EstiloBotonSecundario(btnModificar);
+            UI.EstilosUI.EstiloBotonSecundario(btnCambiarEstado);
+            UI.EstilosUI.EstiloBotonPeligro(btnEliminar);
+
             radioButton3.Checked = true;
             dgvVehiculos.ReadOnly = true;
             dgvVehiculos.MultiSelect = false;
@@ -37,6 +46,8 @@ namespace ProyectoIS_64PR
             dgvVehiculos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dgvVehiculos.BackgroundColor = SystemColors.Menu;
             dgvVehiculos.BorderStyle = BorderStyle.None;
+            UI.EstilosUI.AplicarEstiloGrilla(dgvVehiculos);
+            UI.EstilosUI.AplicarBadgeColumna(dgvVehiculos, "Estado", UI.EstilosUI.ColorEstadoVehiculo);
 
             cmbEstado.DataSource = Enum.GetValues(typeof(BE.EstadoVehiculoJP86));
 
@@ -113,6 +124,8 @@ namespace ProyectoIS_64PR
 
             dgvVehiculos.DataSource = null;
             dgvVehiculos.DataSource = resultado;
+            ///Rebindear regenera las columnas (autogeneradas) y pisa cualquier traduccion previa: hay que reaplicarla
+            Traductor_64PR.TraducirGrilla(this, dgvVehiculos, textos);
 
             if (textos != null && textos.Count > 0)
                 lblCantidad.Text = textos["frmGestionVehiculos_lblCantidad"] + resultado.Count.ToString();
@@ -184,7 +197,7 @@ namespace ProyectoIS_64PR
 
                             gvehiculos.Crear(v);
 
-                            ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionVehiculos).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.AltaVehiculo).ToString(), 4);
+                            ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionVehiculos).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.AltaVehiculo).ToString(), 3);
                             bita.RegistrarEvento(ev);
 
                             MessageBox.Show(textos["vehiculo_creado"]);
@@ -284,7 +297,7 @@ namespace ProyectoIS_64PR
             string tipoEvento = vaAQuedarActivo
                 ? ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.AltaVehiculo).ToString()
                 : ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.BajaVehiculo).ToString();
-            ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionVehiculos).ToString(), tipoEvento, 4);
+            ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionVehiculos).ToString(), tipoEvento, vaAQuedarActivo ? 3 : 2);
             bita.RegistrarEvento(ev);
 
             MessageBox.Show(textos["operacion exitosa"]);
@@ -311,7 +324,7 @@ namespace ProyectoIS_64PR
 
             gvehiculos.CambiarEstado(v.Patente, nuevoEstado);
 
-            ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionVehiculos).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.CambioEstadoVehiculo).ToString(), 4);
+            ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionVehiculos).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.CambioEstadoVehiculo).ToString(), 3);
             bita.RegistrarEvento(ev);
 
             MessageBox.Show(textos["estado_cambiado"]);

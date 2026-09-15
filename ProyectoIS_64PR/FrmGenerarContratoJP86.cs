@@ -29,6 +29,18 @@ namespace ProyectoIS_64PR
         {
             InitializeComponent();
 
+            this.Font = UI.TemaVisual.FuenteTexto;
+            this.BackColor = UI.TemaVisual.FondoPagina;
+            UI.EstilosUI.AplicarEstiloGrilla(dgvUnidades);
+            UI.EstilosUI.AplicarEstiloGrilla(dgvClientes);
+            UI.EstilosUI.AplicarBadgeColumna(dgvUnidades, "Estado", UI.EstilosUI.ColorEstadoVehiculo);
+            UI.EstilosUI.EstiloBotonPrimario(btnConfirmar);
+            UI.EstilosUI.EstiloBotonPrimario(btnGuardarCliente);
+            UI.EstilosUI.EstiloBotonSecundario(btnBuscarUnidades);
+            UI.EstilosUI.EstiloBotonSecundario(btnClienteNuevo);
+            UI.EstilosUI.EstiloBotonSecundario(btnImprimirRecibo);
+            UI.EstilosUI.EstiloBotonPeligro(btnCancelar);
+
             ucNuevoCliente = new ucCrearClienteJP86();
             ucNuevoCliente.Dock = DockStyle.Fill;
             pnlNuevoCliente.Controls.Add(ucNuevoCliente);
@@ -43,15 +55,17 @@ namespace ProyectoIS_64PR
             dtpFechaInicio.ValueChanged += (s, e) => ActualizarImporte();
             dtpFechaFin.ValueChanged += (s, e) => ActualizarImporte();
 
+            ///Los DataGridView se bindean ANTES de traducir: Traductor_64PR recorre dgv.Columns,
+            ///y esas columnas recien existen (autogeneradas) despues de asignar el DataSource.
+            ///Sin filtros aplicados todavia: la grilla arranca mostrando TODAS las unidades disponibles
+            CargarUnidadesDisponibles(false);
+            CargarClientes();
+
             Idioma.GestorIdioma_64PR.GetInstance.Suscribir(this);
 
             textos = Idioma.GestorIdioma_64PR.GetInstance.ObtenerTextos();
             if (textos.Count > 0)
                 ActualizarIdioma(textos);
-
-            ///Sin filtros aplicados todavia: la grilla arranca mostrando TODAS las unidades disponibles
-            CargarUnidadesDisponibles(false);
-            CargarClientes();
         }
 
         public void ActualizarIdioma(Dictionary<string, string> textoss)
@@ -103,6 +117,8 @@ namespace ProyectoIS_64PR
 
             dgvUnidades.DataSource = null;
             dgvUnidades.DataSource = disponibles;
+            ///Rebindear regenera las columnas (autogeneradas) y pisa cualquier traduccion previa: hay que reaplicarla
+            Traductor_64PR.TraducirGrilla(this, dgvUnidades, textos);
 
             if (mostrarMensajeSiVacio && disponibles.Count == 0)
                 MessageBox.Show(textos["msg_sinUnidadesDisponibles"]);
@@ -121,6 +137,8 @@ namespace ProyectoIS_64PR
         {
             dgvClientes.DataSource = null;
             dgvClientes.DataSource = gclientes.Listar();
+            ///Rebindear regenera las columnas (autogeneradas) y pisa cualquier traduccion previa: hay que reaplicarla
+            Traductor_64PR.TraducirGrilla(this, dgvClientes, textos);
         }
 
         private void dgvClientes_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -242,7 +260,7 @@ namespace ProyectoIS_64PR
             {
                 BE.ContratoJP86 contrato = gcontratos.GenerarContrato(clienteSeleccionado, unidadSeleccionada, dtpFechaInicio.Value.Date, dtpFechaFin.Value.Date, chkCargosAdicionales.Checked);
 
-                ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionAlquileres).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.AltaContrato).ToString(), 4);
+                ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionAlquileres).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.AltaContrato).ToString(), 3);
                 bita.RegistrarEvento(ev);
 
                 MessageBox.Show(textos["contrato_generado"] + contrato.NumeroContrato.ToString());

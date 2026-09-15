@@ -110,8 +110,7 @@ namespace ProyectoIS_64PR
             //
             // FrmNuevoReporteJP86
             //
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(900, 400);
             this.Controls.Add(this.btnImprimirReporte);
             this.Controls.Add(this.btnCancelar);

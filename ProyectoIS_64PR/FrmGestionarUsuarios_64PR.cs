@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -32,7 +32,16 @@ namespace ProyectoIS_64PR
         List<Sesion.Usuario> lst;
         public FrmGestionarUsuarios_64PR()
         {
-            InitializeComponent(); 
+            InitializeComponent();
+
+            this.Font = UI.TemaVisual.FuenteTexto;
+            this.BackColor = UI.TemaVisual.FondoPagina;
+            UI.EstilosUI.AplicarTarjeta(pnlContenedor);
+            UI.EstilosUI.EstiloBotonPrimario(btnCrear);
+            UI.EstilosUI.EstiloBotonPrimario(btnGuardar);
+            UI.EstilosUI.EstiloBotonSecundario(btnModificar);
+            UI.EstilosUI.EstiloBotonSecundario(btnDesbloquear);
+            UI.EstilosUI.EstiloBotonPeligro(btnActDesact);
 
             radioButton3.Checked = true;
             dgvUsuarios.ReadOnly = true;
@@ -42,6 +51,7 @@ namespace ProyectoIS_64PR
             dgvUsuarios.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             dgvUsuarios.BackgroundColor = SystemColors.Menu;
             dgvUsuarios.BorderStyle = BorderStyle.None;
+            UI.EstilosUI.AplicarEstiloGrilla(dgvUsuarios);
             CargaData();
 
             btnGuardar.Enabled = false;
@@ -64,7 +74,8 @@ namespace ProyectoIS_64PR
             string[] aux = lblCantidad.Text.Split(':');
 
             Traductor_64PR.Traducir(this, textos);
-            lblCantidad.Text += aux[1];
+            //if (aux.Length > 1)
+                //lblCantidad.Text += aux[1];
 
             ///Necesario para no perder el modo al momento de actualizar el idioma
             switch (modo)
@@ -81,6 +92,8 @@ namespace ProyectoIS_64PR
                 default:
                     break;
             }
+            if (aux.Length > 1)
+                lblCantidad.Text += aux[1];
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
@@ -94,6 +107,8 @@ namespace ProyectoIS_64PR
             dgvUsuarios.DataSource = null;
             lst = gusuarios.Listar();
             dgvUsuarios.DataSource = lst;
+            ///Rebindear regenera las columnas (autogeneradas) y pisa cualquier traduccion previa: hay que reaplicarla
+            Traductor_64PR.TraducirGrilla(this, dgvUsuarios, textos);
 
             if (radioButton1.Checked == true)
             {
@@ -164,7 +179,7 @@ namespace ProyectoIS_64PR
                             gusuarios.Crear(u);
 
                             ///Registro el evento en bitacora
-                            Bitacora.Evento_64PR ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionUsuarios).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.AltaUsuario).ToString(), 4);
+                            Bitacora.Evento_64PR ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionUsuarios).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.AltaUsuario).ToString(), 2);
                             MessageBox.Show(textos["usuario_creado"] + u.Login);
                             bita.RegistrarEvento(ev);
 
@@ -213,7 +228,7 @@ namespace ProyectoIS_64PR
                             gusuarios.Modificar(u);
 
                             ///Registro el evento en bitacora
-                            ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionUsuarios).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.ModificacionUsuario).ToString(), 4);
+                            ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionUsuarios).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.ModificacionUsuario).ToString(), 3);
                             MessageBox.Show(textos["usuario_modificado"]);
                             bita.RegistrarEvento(ev);
 
@@ -252,7 +267,7 @@ namespace ProyectoIS_64PR
                 gusuarios.Desbloquear(u);
 
                 ///Registro el evento en bitacora
-                ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionUsuarios).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.UsuarioBloqueado).ToString(), 4);
+                ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionUsuarios).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.UsuarioBloqueado).ToString(), 1);
                 MessageBox.Show(textos["usuario_desbloqueado"]);
                 bita.RegistrarEvento(ev);
 
@@ -276,7 +291,7 @@ namespace ProyectoIS_64PR
 
             ///Linea que me cambia el estado del usuario
             gusuarios.Actdesact(u);
-            ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionUsuarios).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.ModificacionUsuario).ToString(), 4);
+            ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionUsuarios).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.ModificacionUsuario).ToString(), 3);
             bita.RegistrarEvento(ev);
             MessageBox.Show(textos["operacion exitosa"]);
             CargaData();
@@ -314,6 +329,7 @@ namespace ProyectoIS_64PR
                 radioButton3.Checked = false;
                 dgvUsuarios.DataSource = null;
                 dgvUsuarios.DataSource = lst.Where(u => u.Activo == true).ToList();
+                Traductor_64PR.TraducirGrilla(this, dgvUsuarios, textos);
                 lblCantidad.Text = textos["frmGestionUsuarios_lblCantidad"] + lst.Where(u => u.Activo == true).ToList().Count();
             }
         }
@@ -327,6 +343,7 @@ namespace ProyectoIS_64PR
                 radioButton3.Checked = false;
                 dgvUsuarios.DataSource = null;
                 dgvUsuarios.DataSource = lst.Where(u => u.Activo == false).ToList();
+                Traductor_64PR.TraducirGrilla(this, dgvUsuarios, textos);
                 lblCantidad.Text = textos["frmGestionUsuarios_lblCantidad"] + lst.Where(u => u.Activo == false).ToList().Count();
 
             }
@@ -340,6 +357,7 @@ namespace ProyectoIS_64PR
                 radioButton2.Checked = false;
                 dgvUsuarios.DataSource = null;
                 dgvUsuarios.DataSource = lst;
+                Traductor_64PR.TraducirGrilla(this, dgvUsuarios, textos);
                 if(lst != null)  ///Condicional necesario para que no ejecute esta linea de codigo durante la construccion del frm
                 {
                     lblCantidad.Text = textos["frmGestionUsuarios_lblCantidad"] + lst.Count.ToString();

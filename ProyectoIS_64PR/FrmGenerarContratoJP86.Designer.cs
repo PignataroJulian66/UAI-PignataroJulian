@@ -142,6 +142,8 @@ namespace ProyectoIS_64PR
             //
             // dgvUnidades
             //
+            this.dgvUnidades.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right))));
             this.dgvUnidades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvUnidades.Location = new System.Drawing.Point(12, 106);
             this.dgvUnidades.MultiSelect = false;
@@ -268,8 +270,7 @@ namespace ProyectoIS_64PR
             //
             // FrmGenerarContratoJP86
             //
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(900, 560);
             this.Controls.Add(this.btnImprimirRecibo);
             this.Controls.Add(this.btnCancelar);

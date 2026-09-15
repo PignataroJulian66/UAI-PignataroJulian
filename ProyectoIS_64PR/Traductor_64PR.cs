@@ -97,5 +97,26 @@ namespace ProyectoIS_64PR
             if (clavesFaltantes.Count > 0)
                 Idioma.GestorIdioma_64PR.GetInstance.RegistrarClavesFaltantes(clavesFaltantes);
         }
+
+        ///Traduce solo las columnas de UNA grilla puntual. Se usa despues de un rebind (DataSource = ...),
+        ///que regenera las columnas autogeneradas y pisa la traduccion previa. A diferencia de Traducir(),
+        ///no toca el resto de los controles del formulario (evita pisar labels con contenido dinamico).
+        public static void TraducirGrilla(Form form, DataGridView dgv, Dictionary<string, string> textos)
+        {
+            if (textos == null || textos.Count == 0) return;
+
+            var clavesFaltantes = new List<string>();
+            foreach (DataGridViewColumn column in dgv.Columns)
+            {
+                string clave = form.Name + "." + dgv.Name + "." + column.Name;
+                if (textos.ContainsKey(clave))
+                    column.HeaderText = textos[clave];
+                else
+                    clavesFaltantes.Add(clave);
+            }
+
+            if (clavesFaltantes.Count > 0)
+                Idioma.GestorIdioma_64PR.GetInstance.RegistrarClavesFaltantes(clavesFaltantes);
+        }
     }
 }

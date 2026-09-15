@@ -18,6 +18,8 @@ namespace ProyectoIS_64PR
         {
             InitializeComponent();
 
+            UI.EstilosUI.AplicarEstiloFormulario(this);
+
             txtDNI.ReadOnly = true;
 
             Idioma.GestorIdioma_64PR.GetInstance.Suscribir(this);

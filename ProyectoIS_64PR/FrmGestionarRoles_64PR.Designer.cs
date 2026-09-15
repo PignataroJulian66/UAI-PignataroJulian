@@ -137,14 +137,19 @@
             this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
             // 
             // treeView1
-            // 
+            //
+            this.treeView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left))));
             this.treeView1.Location = new System.Drawing.Point(12, 250);
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(227, 188);
             this.treeView1.TabIndex = 11;
             // 
             // treeView2
-            // 
+            //
+            this.treeView2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.treeView2.Location = new System.Drawing.Point(417, 71);
             this.treeView2.Name = "treeView2";
             this.treeView2.Size = new System.Drawing.Size(227, 318);
@@ -180,8 +185,7 @@
             // 
             // FrmGestionarRoles_64PR
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);

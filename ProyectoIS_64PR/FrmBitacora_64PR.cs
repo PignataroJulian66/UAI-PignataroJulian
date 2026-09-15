@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,6 +20,9 @@ namespace ProyectoIS_64PR
         {
             InitializeComponent();
 
+            this.Font = UI.TemaVisual.FuenteTexto;
+            this.BackColor = UI.TemaVisual.FondoPagina;
+
             cmbCriticidad.DropDownStyle = ComboBoxStyle.DropDownList;  //esto es para que no se pueda escribir en los cmb
             cmbLogins.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbModulos.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -39,6 +42,12 @@ namespace ProyectoIS_64PR
             dgvEventos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvEventos.BackgroundColor = SystemColors.Menu;
             dgvEventos.BorderStyle = BorderStyle.None;
+            UI.EstilosUI.AplicarEstiloGrilla(dgvEventos);
+            ///Fila entera en rojo cuando Criticidad == 1 (secc. 8.1.a)
+            UI.EstilosUI.AplicarFilaCritica(dgvEventos, "Criticidad", valor => Convert.ToInt32(valor) == 1);
+            UI.EstilosUI.EstiloBotonPrimario(btnAplicar);
+            UI.EstilosUI.EstiloBotonSecundario(btnLimpiar);
+            UI.EstilosUI.EstiloBotonSecundario(btnImprimir);
 
             Idioma.GestorIdioma_64PR.GetInstance.Suscribir(this); ///observer del cambio de idioma
 
@@ -62,6 +71,8 @@ namespace ProyectoIS_64PR
 
             dgvEventos.DataSource = null;
             dgvEventos.DataSource = lst;
+            ///Rebindear regenera las columnas (autogeneradas) y pisa cualquier traduccion previa: hay que reaplicarla
+            Traductor_64PR.TraducirGrilla(this, dgvEventos, textos);
 
             cbLogin.Checked = false;
             cmbLogins.Enabled = false;
@@ -115,6 +126,8 @@ namespace ProyectoIS_64PR
 
             ///Voy aplicando filtros y sumando
             dgvEventos.DataSource = resultado.ToList();
+            ///Por las dudas: si el rebind regenera las columnas, hay que reaplicar la traduccion
+            Traductor_64PR.TraducirGrilla(this, dgvEventos, textos);
         }
 
         private void cbLogin_CheckedChanged(object sender, EventArgs e)

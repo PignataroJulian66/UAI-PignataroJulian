@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SIGAM — Vista previa de diseño</title>
+<style>
+  :root{
+    --azul-primario:#0E3357;
+    --azul-oscuro:#0A2740;
+    --azul-medio:#1F3864;
+    --azul-acento:#2E5FA3;
+    --info:#2E9BB0;
+    --fondo-pagina:#F4F6FA;
+    --fondo-tarjeta:#FFFFFF;
+    --texto-principal:#1B1F27;
+    --texto-secundario:#69707E;
+    --borde:#E2E5EB;
+    --exito:#1F9D6B;
+    --exito-bg:#E4F6EE;
+    --advertencia:#B4790C;
+    --advertencia-bg:#FBF0DC;
+    --peligro:#C0392E;
+    --peligro-bg:#FBE9E7;
+    --info-bg:#E4F3F6;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:"Segoe UI","Segoe UI Variable",-apple-system,BlinkMacSystemFont,sans-serif;
+    background:var(--fondo-pagina);
+    color:var(--texto-principal);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  /* ---------- shell ---------- */
+  .shell{display:flex;min-height:100vh;}
+
+  /* ---------- sidebar ---------- */
+  .sidebar{
+    width:264px;flex-shrink:0;
+    background:linear-gradient(180deg, var(--azul-primario) 0%, var(--azul-oscuro) 100%);
+    display:flex;flex-direction:column;
+    color:#fff;
+  }
+  .brand{
+    display:flex;align-items:center;gap:11px;
+    padding:22px 20px 20px 22px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .brand svg{flex-shrink:0;}
+  .brand-text{line-height:1.1;}
+  .brand-text strong{display:block;font-size:17px;letter-spacing:.3px;font-weight:600;}
+  .brand-text span{display:block;font-size:10.5px;color:rgba(255,255,255,.55);margin-top:2px;letter-spacing:.2px;}
+
+  nav.menu{flex:1;overflow-y:auto;padding:14px 10px;}
+  .nav-item{margin-bottom:2px;}
+  .nav-btn{
+    width:100%;display:flex;align-items:center;gap:11px;
+    background:none;border:none;color:rgba(255,255,255,.82);
+    padding:10px 12px;border-radius:8px;cursor:pointer;
+    font-size:13.5px;font-family:inherit;text-align:left;
+    position:relative;transition:background .12s ease,color .12s ease;
+  }
+  .nav-btn .ico{width:18px;height:18px;flex-shrink:0;opacity:.85;}
+  .nav-btn:hover{background:rgba(255,255,255,.07);color:#fff;}
+  .nav-btn.active{background:rgba(255,255,255,.12);color:#fff;}
+  .nav-btn.active::before{
+    content:"";position:absolute;left:-10px;top:8px;bottom:8px;width:3px;
+    border-radius:0 3px 3px 0;background:var(--info);
+  }
+  .nav-btn .chev{margin-left:auto;width:13px;height:13px;opacity:.6;transition:transform .15s ease;}
+  .group.open .chev{transform:rotate(90deg);}
+  .submenu{
+    max-height:0;overflow:hidden;transition:max-height .18s ease;
+    padding-left:8px;
+  }
+  .group.open .submenu{max-height:220px;}
+  .submenu .nav-btn{font-size:13px;padding-left:32px;color:rgba(255,255,255,.68);}
+  .submenu .nav-btn::after{
+    content:"";position:absolute;left:22px;top:50%;width:5px;height:5px;
+    border-radius:50%;background:currentColor;opacity:.5;transform:translateY(-50%);
+  }
+  .nav-section-label{
+    font-size:10.5px;color:rgba(255,255,255,.38);letter-spacing:.6px;
+    padding:16px 12px 6px;
+  }
+
+  .sidebar-footer{
+    padding:14px 16px;border-top:1px solid rgba(255,255,255,.08);
+    display:flex;align-items:center;gap:10px;
+  }
+  .avatar{
+    width:34px;height:34px;border-radius:50%;background:var(--info);
+    display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;flex-shrink:0;
+  }
+  .user-meta{line-height:1.15;flex:1;min-width:0;}
+  .user-meta strong{display:block;font-size:13px;}
+  .user-meta span{display:block;font-size:11px;color:rgba(255,255,255,.5);}
+  .logout-btn{
+    background:none;border:none;color:rgba(255,255,255,.55);cursor:pointer;
+    width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;
+  }
+  .logout-btn:hover{background:rgba(255,255,255,.08);color:#fff;}
+
+  /* ---------- main ---------- */
+  .main{flex:1;min-width:0;display:flex;flex-direction:column;}
+  .topbar{
+    height:58px;background:var(--fondo-tarjeta);border-bottom:1px solid var(--borde);
+    display:flex;align-items:center;justify-content:space-between;padding:0 26px;
+    flex-shrink:0;
+  }
+  .crumb{font-size:13px;color:var(--texto-secundario);}
+  .crumb b{color:var(--texto-principal);font-weight:600;}
+  .topbar-right{display:flex;align-items:center;gap:14px;}
+  .lang-pill{
+    font-size:12px;border:1px solid var(--borde);border-radius:20px;padding:5px 12px;
+    color:var(--texto-secundario);background:var(--fondo-pagina);
+  }
+
+  .content{padding:26px 28px 40px;}
+  .page-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:18px;}
+  .page-head h1{font-size:21px;margin:0 0 4px;font-weight:600;color:var(--azul-primario);}
+  .page-head p{margin:0;font-size:13px;color:var(--texto-secundario);}
+
+  .toolbar{
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    margin-bottom:14px;flex-wrap:wrap;
+  }
+  .search{
+    display:flex;align-items:center;gap:9px;background:var(--fondo-tarjeta);
+    border:1px solid var(--borde);border-radius:9px;padding:9px 14px;width:320px;
+  }
+  .search svg{opacity:.45;flex-shrink:0;}
+  .search input{border:none;outline:none;font-size:13.5px;background:none;width:100%;font-family:inherit;color:var(--texto-principal);}
+  .filters{display:flex;gap:8px;}
+  .chip{
+    font-size:12.5px;padding:7px 13px;border-radius:8px;border:1px solid var(--borde);
+    background:var(--fondo-tarjeta);color:var(--texto-secundario);cursor:pointer;
+  }
+  .chip.active{background:var(--azul-medio);color:#fff;border-color:var(--azul-medio);}
+
+  .actions{display:flex;gap:10px;}
+  .btn{
+    font-family:inherit;font-size:13px;font-weight:600;border-radius:8px;padding:9px 16px;
+    border:1px solid transparent;cursor:pointer;display:inline-flex;align-items:center;gap:7px;
+  }
+  .btn-primary{background:var(--azul-medio);color:#fff;}
+  .btn-primary:hover{background:var(--azul-primario);}
+  .btn-ghost{background:var(--fondo-tarjeta);color:var(--azul-medio);border-color:var(--azul-medio);}
+  .btn-ghost:hover{background:#EEF3FA;}
+  .btn-danger{background:var(--fondo-tarjeta);color:var(--peligro);border-color:var(--peligro);}
+  .btn-danger:hover{background:var(--peligro-bg);}
+
+  /* ---------- card + table ---------- */
+  .card{
+    background:var(--fondo-tarjeta);border:1px solid var(--borde);border-radius:12px;
+    overflow:hidden;
+  }
+  table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  thead th{
+    background:var(--azul-medio);color:#fff;text-align:left;
+    padding:12px 16px;font-weight:600;font-size:12.5px;letter-spacing:.2px;
+  }
+  thead th:first-child{border-top-left-radius:0;}
+  tbody td{padding:12px 16px;border-bottom:1px solid var(--borde);color:var(--texto-principal);}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:hover{background:#F7F9FC;}
+  tbody tr:nth-child(even){background:#FAFBFD;}
+  tbody tr:nth-child(even):hover{background:#F3F6FA;}
+
+  .badge{
+    display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;
+    padding:4px 10px;border-radius:6px;letter-spacing:.2px;
+  }
+  .badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;}
+  .badge-exito{background:var(--exito-bg);color:var(--exito);}
+  .badge-advertencia{background:var(--advertencia-bg);color:var(--advertencia);}
+  .badge-peligro{background:var(--peligro-bg);color:var(--peligro);}
+  .badge-info{background:var(--info-bg);color:var(--info);}
+
+  .row-actions{display:flex;gap:6px;}
+  .icon-btn{
+    width:30px;height:30px;border-radius:7px;border:1px solid var(--borde);background:#fff;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--texto-secundario);
+  }
+  .icon-btn:hover{border-color:var(--azul-medio);color:var(--azul-medio);}
+
+  .veh-cell{display:flex;align-items:center;gap:10px;}
+  .veh-swatch{
+    width:34px;height:34px;border-radius:8px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;color:#fff;
+  }
+  .veh-name{font-weight:600;}
+  .veh-sub{font-size:11.5px;color:var(--texto-secundario);}
+
+  .table-footer{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:12px 16px;font-size:12.5px;color:var(--texto-secundario);
+  }
+
+  /* ---------- toggle switcher (solo para esta preview) ---------- */
+  .preview-switch{
+    position:fixed;top:14px;right:16px;z-index:50;
+    background:#111;border-radius:999px;padding:4px;display:flex;gap:2px;
+    box-shadow:0 6px 18px rgba(0,0,0,.25);
+  }
+  .preview-switch button{
+    font-family:inherit;font-size:12px;font-weight:600;border:none;background:none;color:rgba(255,255,255,.55);
+    padding:7px 14px;border-radius:999px;cursor:pointer;
+  }
+  .preview-switch button.on{background:#fff;color:#111;}
+
+  /* ---------- login ---------- */
+  .login-screen{display:none;min-height:100vh;}
+  .login-screen.show{display:flex;}
+  .shell.hide{display:none;}
+  .login-side{
+    flex:1;background:linear-gradient(160deg, var(--azul-primario), var(--azul-oscuro));
+    display:flex;flex-direction:column;justify-content:center;align-items:center;color:#fff;padding:40px;
+    position:relative;overflow:hidden;
+  }
+  .login-side::after{
+    content:"";position:absolute;width:520px;height:520px;border-radius:50%;
+    border:1px solid rgba(255,255,255,.08);top:-160px;right:-180px;
+  }
+  .login-side::before{
+    content:"";position:absolute;width:340px;height:340px;border-radius:50%;
+    border:1px solid rgba(255,255,255,.06);bottom:-140px;left:-120px;
+  }
+  .login-brand{display:flex;flex-direction:column;align-items:center;gap:16px;z-index:1;}
+  .login-brand strong{font-size:30px;letter-spacing:.5px;font-weight:700;}
+  .login-brand span{font-size:13.5px;color:rgba(255,255,255,.6);letter-spacing:.3px;}
+  .login-form-side{
+    width:440px;flex-shrink:0;background:#fff;display:flex;flex-direction:column;
+    justify-content:center;padding:60px;
+  }
+  .login-form-side h2{font-size:22px;margin:0 0 6px;color:var(--azul-primario);}
+  .login-form-side p.sub{margin:0 0 30px;font-size:13.5px;color:var(--texto-secundario);}
+  .field{margin-bottom:18px;}
+  .field label{display:block;font-size:12.5px;color:var(--texto-secundario);margin-bottom:6px;font-weight:600;}
+  .field input, .field select{
+    width:100%;border:1px solid var(--borde);border-radius:8px;padding:11px 13px;
+    font-size:13.5px;font-family:inherit;outline:none;color:var(--texto-principal);
+  }
+  .field input:focus, .field select:focus{border-color:var(--azul-acento);box-shadow:0 0 0 3px rgba(46,95,163,.12);}
+  .login-btn{
+    width:100%;background:var(--azul-medio);color:#fff;border:none;border-radius:8px;
+    padding:12px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:6px;
+  }
+  .login-btn:hover{background:var(--azul-primario);}
+  .login-foot{margin-top:22px;font-size:12px;color:var(--texto-secundario);display:flex;justify-content:space-between;}
+</style>
+</head>
+<body>
+
+<div class="preview-switch">
+  <button id="btnDash" class="on" onclick="showView('dash')">Panel</button>
+  <button id="btnLogin" onclick="showView('login')">Login</button>
+</div>
+
+<!-- ============ PANEL ============ -->
+<div class="shell" id="shellDash">
+  <aside class="sidebar">
+    <div class="brand">
+      <svg width="34" height="34" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="21" stroke="#fff" stroke-opacity=".9" stroke-width="2"/>
+        <path d="M13 27c1-6 5-10 11-10s10 4 11 10" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+        <path d="M15 27h18l-2-6c-.5-1.3-1.7-2-3-2h-8c-1.3 0-2.5.7-3 2l-2 6z" fill="#fff" fill-opacity=".92"/>
+        <circle cx="18.5" cy="29" r="2.3" fill="#0E3357"/>
+        <circle cx="29.5" cy="29" r="2.3" fill="#0E3357"/>
+      </svg>
+      <div class="brand-text">
+        <strong>SIGAM</strong>
+        <span>Gestión de Alquileres</span>
+      </div>
+    </div>
+
+    <nav class="menu">
+      <div class="nav-item">
+        <button class="nav-btn active">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+          Vehículos
+        </button>
+      </div>
+      <div class="nav-item">
+        <button class="nav-btn">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c1.2-4 4-6 7-6s5.8 2 7 6"/></svg>
+          Clientes
+        </button>
+      </div>
+
+      <div class="nav-section-label">MAESTROS</div>
+      <div class="nav-item group open">
+        <button class="nav-btn" onclick="toggleGroup(this)">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 10h16"/></svg>
+          Maestros
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+        <div class="submenu">
+          <button class="nav-btn">Categorías</button>
+          <button class="nav-btn active">Vehículos</button>
+          <button class="nav-btn">Clientes</button>
+        </div>
+      </div>
+
+      <div class="nav-section-label">OPERACIÓN</div>
+      <div class="nav-item group">
+        <button class="nav-btn" onclick="toggleGroup(this)">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h13l3 4v6h-3"/><circle cx="7.5" cy="17.5" r="1.8"/><circle cx="16.5" cy="17.5" r="1.8"/></svg>
+          Alquileres
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+        <div class="submenu">
+          <button class="nav-btn">Generar contrato</button>
+          <button class="nav-btn">Generar factura</button>
+          <button class="nav-btn">Registrar devolución</button>
+        </div>
+      </div>
+      <div class="nav-item group">
+        <button class="nav-btn" onclick="toggleGroup(this)">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l1.6 3.6L17 8l-3.4 1.4L12 13l-1.6-3.6L7 8l3.4-1.4L12 3z"/><path d="M5 16l.9 2 2 .9-2 .9-.9 2-.9-2-2-.9 2-.9.9-2z"/></svg>
+          Mantenimiento
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+        <div class="submenu">
+          <button class="nav-btn">Nuevo reporte</button>
+          <button class="nav-btn">Reportes pendientes</button>
+          <button class="nav-btn">Reparaciones en curso</button>
+        </div>
+      </div>
+
+      <div class="nav-section-label">SISTEMA</div>
+      <div class="nav-item"><button class="nav-btn"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="7" r="3"/><path d="M5 21c.8-4.2 3.6-6.5 7-6.5s6.2 2.3 7 6.5"/></svg>Usuarios</button></div>
+      <div class="nav-item"><button class="nav-btn"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v5c0 4.5-2.9 7.7-7 9-4.1-1.3-7-4.5-7-9V6l7-3z"/></svg>Roles y permisos</button></div>
+      <div class="nav-item"><button class="nav-btn"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>Eventos</button></div>
+      <div class="nav-item group">
+        <button class="nav-btn" onclick="toggleGroup(this)">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 00-.1-1.2l2-1.6-2-3.4-2.3.9a7 7 0 00-2-1.2L14.2 3h-4.4l-.4 2.5a7 7 0 00-2 1.2l-2.3-.9-2 3.4 2 1.6A7 7 0 005 12"/></svg>
+          Configuración
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+        <div class="submenu">
+          <button class="nav-btn">Cambiar contraseña</button>
+          <button class="nav-btn">Idioma</button>
+          <button class="nav-btn">Respaldo de base de datos</button>
+          <button class="nav-btn">Restaurar base de datos</button>
+        </div>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="avatar">JP</div>
+      <div class="user-meta">
+        <strong>Julián Pignataro</strong>
+        <span>Administrador</span>
+      </div>
+      <button class="logout-btn" title="Cerrar sesión">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+      </button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="crumb">Maestros / <b>Vehículos</b></div>
+      <div class="topbar-right">
+        <span class="lang-pill">ES · Español</span>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="page-head">
+        <div>
+          <h1>Vehículos</h1>
+          <p>Flota registrada en FleetDrive S.A. — 6 de 6 vehículos mostrados</p>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="search">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input type="text" placeholder="Buscar por patente, marca o modelo...">
+        </div>
+        <div class="filters">
+          <div class="chip active">Todos</div>
+          <div class="chip">Activos</div>
+          <div class="chip">No activos</div>
+        </div>
+        <div class="actions">
+          <button class="btn btn-ghost">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M4 6h16M4 18h11"/></svg>
+            Cambiar estado
+          </button>
+          <button class="btn btn-primary">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+            Nuevo vehículo
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <table>
+          <thead>
+            <tr>
+              <th>Vehículo</th>
+              <th>Categoría</th>
+              <th>Patente</th>
+              <th>Km actual</th>
+              <th>Precio/día</th>
+              <th>Estado</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="veh-cell">
+                  <div class="veh-swatch" style="background:#2E5FA3;">🚗</div>
+                  <div><div class="veh-name">Toyota Corolla</div><div class="veh-sub">SUV · Automática</div></div>
+                </div>
+              </td>
+              <td>Ejecutivo</td>
+              <td>AC 210 KP</td>
+              <td>18.420 km</td>
+              <td>$ 24.500</td>
+              <td><span class="badge badge-exito">Disponible</span></td>
+              <td><div class="row-actions">
+                <button class="icon-btn">✎</button><button class="icon-btn">⋮</button>
+              </div></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="veh-cell">
+                  <div class="veh-swatch" style="background:#1F3864;">🚙</div>
+                  <div><div class="veh-name">Chevrolet Tracker</div><div class="veh-sub">SUV · Manual</div></div>
+                </div>
+              </td>
+              <td>Familiar</td>
+              <td>AE 774 XT</td>
+              <td>42.980 km</td>
+              <td>$ 27.900</td>
+              <td><span class="badge badge-info">Alquilado</span></td>
+              <td><div class="row-actions">
+                <button class="icon-btn">✎</button><button class="icon-btn">⋮</button>
+              </div></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="veh-cell">
+                  <div class="veh-swatch" style="background:#0E3357;">🚗</div>
+                  <div><div class="veh-name">Fiat Cronos</div><div class="veh-sub">Sedán · Manual</div></div>
+                </div>
+              </td>
+              <td>Económico</td>
+              <td>AF 330 PL</td>
+              <td>61.203 km</td>
+              <td>$ 18.200</td>
+              <td><span class="badge badge-advertencia">En mantenimiento</span></td>
+              <td><div class="row-actions">
+                <button class="icon-btn">✎</button><button class="icon-btn">⋮</button>
+              </div></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="veh-cell">
+                  <div class="veh-swatch" style="background:#69707E;">🚐</div>
+                  <div><div class="veh-name">Renault Kangoo</div><div class="veh-sub">Utilitario · Manual</div></div>
+                </div>
+              </td>
+              <td>Utilitario</td>
+              <td>AB 118 NM</td>
+              <td>78.005 km</td>
+              <td>$ 21.000</td>
+              <td><span class="badge badge-peligro">En reparación</span></td>
+              <td><div class="row-actions">
+                <button class="icon-btn">✎</button><button class="icon-btn">⋮</button>
+              </div></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="veh-cell">
+                  <div class="veh-swatch" style="background:#2E9BB0;">🚗</div>
+                  <div><div class="veh-name">Peugeot 208</div><div class="veh-sub">Hatchback · Automática</div></div>
+                </div>
+              </td>
+              <td>Económico</td>
+              <td>AD 552 QR</td>
+              <td>9.140 km</td>
+              <td>$ 19.800</td>
+              <td><span class="badge badge-exito">Disponible</span></td>
+              <td><div class="row-actions">
+                <button class="icon-btn">✎</button><button class="icon-btn">⋮</button>
+              </div></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="veh-cell">
+                  <div class="veh-swatch" style="background:#2E5FA3;">🚙</div>
+                  <div><div class="veh-name">Ford Territory</div><div class="veh-sub">SUV · Automática</div></div>
+                </div>
+              </td>
+              <td>Premium</td>
+              <td>AG 901 VB</td>
+              <td>5.760 km</td>
+              <td>$ 34.600</td>
+              <td><span class="badge badge-info">Alquilado</span></td>
+              <td><div class="row-actions">
+                <button class="icon-btn">✎</button><button class="icon-btn">⋮</button>
+              </div></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="table-footer">
+          <span>Mostrando 6 de 6 vehículos</span>
+          <span>SIGAM · FleetDrive S.A.</span>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ============ LOGIN ============ -->
+<div class="login-screen" id="shellLogin">
+  <div class="login-side">
+    <div class="login-brand">
+      <svg width="72" height="72" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="21" stroke="#fff" stroke-opacity=".9" stroke-width="2"/>
+        <path d="M13 27c1-6 5-10 11-10s10 4 11 10" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+        <path d="M15 27h18l-2-6c-.5-1.3-1.7-2-3-2h-8c-1.3 0-2.5.7-3 2l-2 6z" fill="#fff" fill-opacity=".92"/>
+        <circle cx="18.5" cy="29" r="2.3" fill="#0E3357"/>
+        <circle cx="29.5" cy="29" r="2.3" fill="#0E3357"/>
+      </svg>
+      <strong>SIGAM</strong>
+      <span>Sistema de Gestión de Alquileres y Mantenimiento de Vehículos</span>
+    </div>
+  </div>
+  <div class="login-form-side">
+    <h2>Iniciar sesión</h2>
+    <p class="sub">Ingresá tus credenciales para acceder al panel de FleetDrive S.A.</p>
+    <div class="field">
+      <label>Nombre de usuario</label>
+      <input type="text" placeholder="usuario.apellido">
+    </div>
+    <div class="field">
+      <label>Contraseña</label>
+      <input type="password" placeholder="••••••••••">
+    </div>
+    <div class="field">
+      <label>Idioma</label>
+      <select><option>Español</option><option>English</option></select>
+    </div>
+    <button class="login-btn">Iniciar sesión</button>
+    <div class="login-foot">
+      <span>SIGAM v2 — Trabajo de Diploma</span>
+      <span>UAI · Fac. de Informática</span>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleGroup(btn){
+  btn.parentElement.classList.toggle('open');
+}
+function showView(view){
+  const dash = document.getElementById('shellDash');
+  const login = document.getElementById('shellLogin');
+  const bD = document.getElementById('btnDash');
+  const bL = document.getElementById('btnLogin');
+  if(view==='dash'){
+    dash.style.display='flex'; login.classList.remove('show');
+    bD.classList.add('on'); bL.classList.remove('on');
+  }else{
+    dash.style.display='none'; login.classList.add('show');
+    bL.classList.add('on'); bD.classList.remove('on');
+  }
+}
+</script>
+</body>
+</html>

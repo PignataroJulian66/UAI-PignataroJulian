@@ -21,6 +21,13 @@ namespace ProyectoIS_64PR
         {
             InitializeComponent();
 
+            this.Font = UI.TemaVisual.FuenteTexto;
+            this.BackColor = UI.TemaVisual.FondoPagina;
+            UI.EstilosUI.AplicarEstiloGrilla(dgvContratos);
+            UI.EstilosUI.AplicarBadgeColumna(dgvContratos, "Estado", UI.EstilosUI.ColorEstadoContrato);
+            UI.EstilosUI.EstiloBotonPrimario(btnRegistrarDevolucion);
+            UI.EstilosUI.EstiloBotonSecundario(btnImprimirRecibo);
+
             dgvContratos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
             cmbEstadoUnidad.DataSource = Enum.GetValues(typeof(BE.EstadoUnidadDevolucionJP86));
@@ -85,6 +92,8 @@ namespace ProyectoIS_64PR
 
             dgvContratos.DataSource = null;
             dgvContratos.DataSource = resultado;
+            ///Rebindear regenera las columnas (autogeneradas) y pisa cualquier traduccion previa: hay que reaplicarla
+            Traductor_64PR.TraducirGrilla(this, dgvContratos, textos);
 
             if (dgvContratos.Columns.Contains("TarifaDiaria")) dgvContratos.Columns["TarifaDiaria"].Visible = false;
             if (dgvContratos.Columns.Contains("CargosAdicionales")) dgvContratos.Columns["CargosAdicionales"].Visible = false;
@@ -157,7 +166,7 @@ namespace ProyectoIS_64PR
             {
                 gcontratos.RegistrarDevolucion(contratoSeleccionado, kilometrajeRetorno, estadoUnidad);
 
-                ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionAlquileres).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.DevolucionVehiculo).ToString(), 4);
+                ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionAlquileres).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.DevolucionVehiculo).ToString(), 3);
                 bita.RegistrarEvento(ev);
 
                 MessageBox.Show(textos["devolucion_registrada"]);

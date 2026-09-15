@@ -19,6 +19,9 @@ namespace ProyectoIS_64PR
         public ucCrearUsuario()
         {
             InitializeComponent();
+
+            UI.EstilosUI.AplicarEstiloFormulario(this);
+
             lst = groles.ListarRoles();
             cmbRol.DataSource = lst;
             cmbRol.DropDownStyle = ComboBoxStyle.DropDownList;

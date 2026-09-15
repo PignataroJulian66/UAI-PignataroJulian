@@ -17,12 +17,21 @@ namespace ProyectoIS_64PR
         {
             InitializeComponent();
 
+            this.Font = UI.TemaVisual.FuenteTexto;
+            this.BackColor = UI.TemaVisual.FondoPagina;
+
             dgvBitacora.ReadOnly = true;
             dgvBitacora.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvBitacora.MultiSelect = false;
             dgvBitacora.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvBitacora.BackgroundColor = SystemColors.Menu;
             dgvBitacora.BorderStyle = BorderStyle.None;
+            UI.EstilosUI.AplicarEstiloGrilla(dgvBitacora);
+            UI.EstilosUI.AplicarBadgeColumna(dgvBitacora, "Estado", UI.EstilosUI.ColorEstadoVehiculo);
+            UI.EstilosUI.EstiloBotonPrimario(btnAplicar);
+            UI.EstilosUI.EstiloBotonPrimario(btnActivar);
+            UI.EstilosUI.EstiloBotonSecundario(btnLimpiar);
+            UI.EstilosUI.EstiloBotonSecundario(btnSalir);
 
             CargaData();
             LimpiarFiltros();
@@ -58,6 +67,8 @@ namespace ProyectoIS_64PR
 
             dgvBitacora.DataSource = null;
             dgvBitacora.DataSource = lst;
+            ///Rebindear regenera las columnas (autogeneradas) y pisa cualquier traduccion previa: hay que reaplicarla
+            Traductor_64PR.TraducirGrilla(this, dgvBitacora, textos);
         }
 
         private void btnLimpiar_Click(object sender, EventArgs e)
@@ -98,6 +109,8 @@ namespace ProyectoIS_64PR
                 resultado = resultado.Where(b => b.Fecha.Date <= dtpFin.Value.Date);
 
             dgvBitacora.DataSource = resultado.ToList();
+            ///Por las dudas: si el rebind regenera las columnas, hay que reaplicar la traduccion
+            Traductor_64PR.TraducirGrilla(this, dgvBitacora, textos);
         }
 
         private void cbPatente_CheckedChanged(object sender, EventArgs e)

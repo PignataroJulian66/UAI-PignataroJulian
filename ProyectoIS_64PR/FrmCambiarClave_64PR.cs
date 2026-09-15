@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,6 +16,7 @@ namespace ProyectoIS_64PR
         public FrmCambiarClave_64PR()
         {
             InitializeComponent();
+
             txtContra.UseSystemPasswordChar = true;
             txtConfirmar.UseSystemPasswordChar = true;
             txtNueva.UseSystemPasswordChar = true;
@@ -35,6 +36,25 @@ namespace ProyectoIS_64PR
 
         private void btnConfirmar_Click(object sender, EventArgs e)
         {
+            ///Validaciones de UI ANTES de llamar al BLL: asi el mensaje de error sale traducido
+            ///segun el idioma actual (BLL_Usuario.CambiarClave tira Exception con texto fijo en espanol,
+            ///que se muestra tal cual via ex.Message si esta validacion no la ataja antes).
+            if (string.IsNullOrWhiteSpace(txtContra.Text) || string.IsNullOrWhiteSpace(txtNueva.Text) || string.IsNullOrWhiteSpace(txtConfirmar.Text))
+            {
+                MessageBox.Show(textos["msg_camposVacios"]);
+                return;
+            }
+            if (txtNueva.Text.Trim() != txtConfirmar.Text.Trim())
+            {
+                MessageBox.Show(textos["msg_claveNoCoincide"]);
+                return;
+            }
+            if (txtNueva.Text.Trim().Length < 8)
+            {
+                MessageBox.Show(textos["msg_claveCorta"]);
+                return;
+            }
+
             try
             {
                 Sesion.BLL_Usuario gusuario = new Sesion.BLL_Usuario();
@@ -55,7 +75,7 @@ namespace ProyectoIS_64PR
 
                         ///registro el evento en bitacora
                         Bitacora.Bitacora_64PR bita2 = new Bitacora.Bitacora_64PR();
-                        Bitacora.Evento_64PR ev2 = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.Login).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.CambioClave).ToString(), 4);
+                        Bitacora.Evento_64PR ev2 = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.Login).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.CambioClave).ToString(), 2);
                         bita2.RegistrarEvento(ev2);
 
                         MessageBox.Show(textos["msg_cambio_exitoso"], "Exito", MessageBoxButtons.OK, MessageBoxIcon.Information);

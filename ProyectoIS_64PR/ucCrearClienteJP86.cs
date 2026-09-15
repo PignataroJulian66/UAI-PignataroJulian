@@ -18,6 +18,8 @@ namespace ProyectoIS_64PR
         {
             InitializeComponent();
 
+            UI.EstilosUI.AplicarEstiloFormulario(this);
+
             Idioma.GestorIdioma_64PR.GetInstance.Suscribir(this);
 
             textos = Idioma.GestorIdioma_64PR.GetInstance.ObtenerTextos();

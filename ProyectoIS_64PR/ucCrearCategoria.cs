@@ -17,6 +17,8 @@ namespace ProyectoIS_64PR
         {
             InitializeComponent();
 
+            UI.EstilosUI.AplicarEstiloFormulario(this);
+
             numTarifaDiaria.Minimum = 0.01m;
             numTarifaDiaria.Maximum = 999999;
             numTarifaDiaria.DecimalPlaces = 2;

@@ -30,9 +30,10 @@
         {
             this.pnlContenido = new System.Windows.Forms.Panel();
             this.SuspendLayout();
-            // 
+            //
             // pnlContenido
-            // 
+            //
+            this.pnlContenido.BackColor = ProyectoIS_64PR.UI.TemaVisual.FondoPagina;
             this.pnlContenido.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlContenido.Location = new System.Drawing.Point(0, 0);
             this.pnlContenido.Name = "pnlContenido";
@@ -41,10 +42,10 @@
             // 
             // FrmContenedor_64PR
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.pnlContenido);
+            this.Icon = global::ProyectoIS_64PR.Properties.Resources.fleetdrive;
             this.Name = "FrmContenedor_64PR";
             this.Text = "FrmContenedor_64PR";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmContenedor_64PR_FormClosing);

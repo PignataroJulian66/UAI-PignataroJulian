@@ -79,5 +79,15 @@ namespace ProyectoIS_64PR.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+
+        /// <summary>
+        ///   Busca un recurso de icono con aspecto de System.Drawing.Icon.
+        /// </summary>
+        internal static System.Drawing.Icon fleetdrive {
+            get {
+                object obj = ResourceManager.GetObject("fleetdrive", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
     }
 }

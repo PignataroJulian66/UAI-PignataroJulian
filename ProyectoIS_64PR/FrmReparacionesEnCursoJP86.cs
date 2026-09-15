@@ -21,6 +21,14 @@ namespace ProyectoIS_64PR
         {
             InitializeComponent();
 
+            this.Font = UI.TemaVisual.FuenteTexto;
+            this.BackColor = UI.TemaVisual.FondoPagina;
+            UI.EstilosUI.AplicarEstiloGrilla(dgvReportes);
+            UI.EstilosUI.AplicarBadgeColumna(dgvReportes, "Estado", UI.EstilosUI.ColorEstadoReporte);
+            ///Fila entera en rojo cuando Criticidad == CRITICA (secc. 8.1.b)
+            UI.EstilosUI.AplicarFilaCritica(dgvReportes, "Criticidad", valor => valor.ToString().ToUpper() == "CRITICA");
+            UI.EstilosUI.EstiloBotonPrimario(btnAcreditar);
+
             Idioma.GestorIdioma_64PR.GetInstance.Suscribir(this);
 
             textos = Idioma.GestorIdioma_64PR.GetInstance.ObtenerTextos();
@@ -61,6 +69,8 @@ namespace ProyectoIS_64PR
 
             dgvReportes.DataSource = null;
             dgvReportes.DataSource = enReparacion;
+            ///Rebindear regenera las columnas (autogeneradas) y pisa cualquier traduccion previa: hay que reaplicarla
+            Traductor_64PR.TraducirGrilla(this, dgvReportes, textos);
 
             LimpiarSeleccion();
 
@@ -106,11 +116,11 @@ namespace ProyectoIS_64PR
 
                 greportes.AcreditarReparacion(reporteSeleccionado, txtDescripcionCierre.Text.Trim(), dniResponsable);
 
-                ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionMantenimiento).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.AcreditacionReparacion).ToString(), 4);
+                ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionMantenimiento).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.AcreditacionReparacion).ToString(), 2);
                 bita.RegistrarEvento(ev);
 
                 ///CUN-09 "Liberar Vehiculo" -- incluido siempre, se registra como evento propio
-                ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionMantenimiento).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.LiberacionVehiculo).ToString(), 4);
+                ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionMantenimiento).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.LiberacionVehiculo).ToString(), 2);
                 bita.RegistrarEvento(ev);
 
                 MessageBox.Show(textos["acreditacion_registrada"]);

@@ -18,6 +18,9 @@ namespace ProyectoIS_64PR
         public ucModificarUsuario()
         {
             InitializeComponent();
+
+            UI.EstilosUI.AplicarEstiloFormulario(this);
+
             cmbRol.DataSource = groles.ListarRoles();
             cmbRol.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbRol.SelectedIndex = 0;
