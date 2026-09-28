@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ProyectoIS_64PR
@@ -16,6 +17,9 @@ namespace ProyectoIS_64PR
         List<BE.ContratoJP86> lst;
         BE.ContratoJP86 contratoSeleccionado;
         BE.FacturaJP86 facturaGenerada;
+
+        ///true mientras se espera el pago simulado (await): bloquea la grilla y el cierre del form
+        bool procesandoPago;
 
         public FrmGenerarFacturaJP86()
         {
@@ -49,6 +53,18 @@ namespace ProyectoIS_64PR
 
             ///lblImporte muestra contenido dinamico: se recalcula despues de traducir
             lblImporte.Text = textos["factura_lblImporte"] + "$" + (contratoSeleccionado != null ? contratoSeleccionado.ImporteTotal.ToString("N2") : "0");
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            ///No se deja cerrar (ni navegar a otro form desde el menu) con un pago en curso:
+            ///al volver del await se usarian controles ya liberados.
+            if (procesandoPago && e.CloseReason != CloseReason.WindowsShutDown && e.CloseReason != CloseReason.TaskManagerClosing)
+            {
+                e.Cancel = true;
+                MessageBox.Show(textos["msg_PagoEnProceso"], textos["titulo_Validacion"], MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            base.OnFormClosing(e);
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
@@ -118,27 +134,27 @@ namespace ProyectoIS_64PR
             btnMercadoPago.Enabled = puedeFacturar;
         }
 
-        private void btnEfectivo_Click(object sender, EventArgs e)
+        private async void btnEfectivo_Click(object sender, EventArgs e)
         {
-            Facturar(BE.MetodoPagoJP86.EFECTIVO);
+            await Facturar(BE.MetodoPagoJP86.EFECTIVO);
         }
 
-        private void btnTarjeta_Click(object sender, EventArgs e)
+        private async void btnTarjeta_Click(object sender, EventArgs e)
         {
-            Facturar(BE.MetodoPagoJP86.TARJETA);
+            await Facturar(BE.MetodoPagoJP86.TARJETA);
         }
 
-        private void btnTransferencia_Click(object sender, EventArgs e)
+        private async void btnTransferencia_Click(object sender, EventArgs e)
         {
-            Facturar(BE.MetodoPagoJP86.TRANSFERENCIA);
+            await Facturar(BE.MetodoPagoJP86.TRANSFERENCIA);
         }
 
-        private void btnMercadoPago_Click(object sender, EventArgs e)
+        private async void btnMercadoPago_Click(object sender, EventArgs e)
         {
-            Facturar(BE.MetodoPagoJP86.MERCADOPAGO);
+            await Facturar(BE.MetodoPagoJP86.MERCADOPAGO);
         }
 
-        private void Facturar(BE.MetodoPagoJP86 metodoPago)
+        private async Task Facturar(BE.MetodoPagoJP86 metodoPago)
         {
             if (contratoSeleccionado == null)
             {
@@ -146,9 +162,13 @@ namespace ProyectoIS_64PR
                 return;
             }
 
+            HabilitarBotonesPago(false);
+            ///Durante el await la grilla queda bloqueada: un click en una fila volveria a habilitar los botones de pago
+            procesandoPago = true;
+            dgvContratos.Enabled = false;
             try
             {
-                BE.FacturaJP86 factura = gcontratos.GenerarFactura(contratoSeleccionado, metodoPago);
+                BE.FacturaJP86 factura = await gcontratos.GenerarFactura(contratoSeleccionado, metodoPago);
 
                 ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionAlquileres).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.FacturacionContrato).ToString(), 2);
                 bita.RegistrarEvento(ev);
@@ -162,12 +182,23 @@ namespace ProyectoIS_64PR
             }
             catch (SqlException ex)
             {
-                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(textos["msg_ErrorBaseDatos"] + ex.Message, textos["titulo_Error"], MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (InvalidOperationException ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ///Pago rechazado / contrato que ya no esta ACTIVO / sin respuesta de la BD: se refresca la grilla
+                MessageBox.Show(Traductor_64PR.TraducirMensaje(textos, ex.Message), textos["titulo_Error"], MessageBoxButtons.OK, MessageBoxIcon.Error);
                 CargaData();
+            }
+            catch (Exception ex)
+            {
+                ManejadorErroresJP86.MostrarErrorInesperado(ex);
+            }
+            finally
+            {
+                procesandoPago = false;
+                dgvContratos.Enabled = true;
+                HabilitarBotonesPago(contratoSeleccionado != null);
             }
         }
 

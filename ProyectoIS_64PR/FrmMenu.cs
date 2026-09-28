@@ -464,15 +464,22 @@ namespace ProyectoIS_64PR
         {
             if (formularioactual != null)
             {
+                ///Si el form actual cancelo su cierre, se queda donde esta y se descarta el form nuevo, que ya se habia construido.
+                if (!CerrarFormularioActual())
+                {
+                    if (f is Idioma.IObservadorIdioma_64PR observador)
+                        Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(observador);
+                    f.Dispose();
+                    return;
+                }
+
                 if (formularioactual.GetType() == f.GetType())
                 {
-                    formularioactual.Close();
                     pnlContenidoMenu.Controls.Clear();
                     formularioactual = null;
                     return;
                 }
 
-                formularioactual.Close();
                 pnlContenidoMenu.Controls.Clear();
                 formularioactual = null;
             }
@@ -483,6 +490,22 @@ namespace ProyectoIS_64PR
             pnlContenidoMenu.Controls.Add(f);
             f.Show();
             formularioactual = f;
+        }
+
+        ///Cierra el form hijo actual. Devuelve false si el form cancelo su cierre
+        ///(ej. FrmGenerarFacturaJP86 con un pago en curso). FormClosed solo se dispara si el cierre NO se cancelo.
+        private bool CerrarFormularioActual()
+        {
+            ///Ya cerrado antes (ej. cerrar sesion + "No" deja la referencia a un form ya cerrado)
+            if (formularioactual.IsDisposed || !formularioactual.IsHandleCreated)
+                return true;
+
+            bool seCerro = false;
+            FormClosedEventHandler alCerrar = (s, e) => seCerro = true;
+            formularioactual.FormClosed += alCerrar;
+            formularioactual.Close();
+            formularioactual.FormClosed -= alCerrar;
+            return seCerro;
         }
 
         private void gestionarUsuariosToolStripMenuItem_Click(object sender, EventArgs e)
@@ -519,7 +542,9 @@ namespace ProyectoIS_64PR
         {
             if (formularioactual != null)
             {
-                formularioactual.Close();
+                ///No se cierra sesion si el form actual rechazo cerrarse (ej. pago en curso)
+                if (!CerrarFormularioActual())
+                    return;
             }
             var textos = Idioma.GestorIdioma_64PR.GetInstance.ObtenerTextos();
             string msg = textos.ContainsKey("msg_cerrarSesion") ? textos["msg_cerrarSesion"] : "¿Está seguro de que desea cerrar la sesión?";

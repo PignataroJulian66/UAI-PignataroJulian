@@ -167,6 +167,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Traductor_64PR.cs" />
+    <Compile Include="ManejadorErroresJP86.cs" />
     <Compile Include="UI\TemaVisual.cs" />
     <Compile Include="UI\EstilosUI.cs" />
     <Compile Include="ucCrearCategoria.cs">

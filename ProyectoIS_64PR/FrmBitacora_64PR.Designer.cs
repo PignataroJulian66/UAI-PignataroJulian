@@ -162,22 +162,16 @@
             // dtpInicio
             // 
             this.dtpInicio.Location = new System.Drawing.Point(92, 416);
-            this.dtpInicio.MaxDate = new System.DateTime(2026, 5, 19, 0, 0, 0, 0);
-            this.dtpInicio.MinDate = new System.DateTime(2026, 4, 1, 0, 0, 0, 0);
             this.dtpInicio.Name = "dtpInicio";
             this.dtpInicio.Size = new System.Drawing.Size(184, 22);
             this.dtpInicio.TabIndex = 22;
-            this.dtpInicio.Value = new System.DateTime(2026, 5, 19, 0, 0, 0, 0);
             // 
             // dtpFin
             // 
             this.dtpFin.Location = new System.Drawing.Point(406, 416);
-            this.dtpFin.MaxDate = new System.DateTime(2026, 5, 19, 0, 0, 0, 0);
-            this.dtpFin.MinDate = new System.DateTime(2026, 4, 1, 0, 0, 0, 0);
             this.dtpFin.Name = "dtpFin";
             this.dtpFin.Size = new System.Drawing.Size(184, 22);
             this.dtpFin.TabIndex = 24;
-            this.dtpFin.Value = new System.DateTime(2026, 5, 19, 0, 0, 0, 0);
             // 
             // cmbLogins
             // 

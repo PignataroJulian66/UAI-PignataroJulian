@@ -74,6 +74,26 @@ namespace Mapper
             DAL_64PR.Acceso.Instancia.escribirQuery("SP_VehiculoJP86_CambiarEstado", parametros, CommandType.StoredProcedure);
         }
 
+        public BE.EstadoVehiculoJP86 ObtenerEstado(string patente)
+        {
+            SqlParameter[] parametros = new SqlParameter[] { new SqlParameter("@Patente", patente) };
+            object resultado = DAL_64PR.Acceso.Instancia.leerEscalar("SP_VehiculoJP86_ObtenerEstado", parametros, CommandType.StoredProcedure);
+            if (resultado == null || resultado == DBNull.Value)
+                throw new InvalidOperationException("El vehiculo no existe.");
+            return (BE.EstadoVehiculoJP86)Enum.Parse(typeof(BE.EstadoVehiculoJP86), resultado.ToString());
+        }
+
+        ///Solo cuenta vehiculos activos (bloquean la baja de la categoria)
+        public bool ExisteActivoPorCategoria(int idCategoria)
+        {
+            SqlParameter[] parametros = new SqlParameter[] { new SqlParameter("@ID_Categoria", idCategoria) };
+            object resultado = DAL_64PR.Acceso.Instancia.leerEscalar("SP_VehiculoJP86_ExistePorCategoria", parametros, CommandType.StoredProcedure);
+            ///null = error de BD absorbido por Acceso.leerEscalar: NO se interpreta como "no existe" (dejaria pasar la baja)
+            if (resultado == null || resultado == DBNull.Value)
+                throw new InvalidOperationException("err_BD_SinRespuesta");
+            return Convert.ToInt32(resultado) == 1;
+        }
+
         public void ActDesact(BE.VehiculoJP86 v)
         {
             SqlParameter[] parametros = new SqlParameter[] { new SqlParameter("@Patente", v.Patente) };

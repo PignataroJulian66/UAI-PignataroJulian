@@ -30,7 +30,7 @@ namespace ProyectoIS_64PR
 
             dgvContratos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
-            cmbEstadoUnidad.DataSource = Enum.GetValues(typeof(BE.EstadoUnidadDevolucionJP86));
+            CargarEstadosUnidad();
 
             CargaData();
 
@@ -47,6 +47,23 @@ namespace ProyectoIS_64PR
         {
             textos = textoss;
             Traductor_64PR.Traducir(this, textos);
+            CargarEstadosUnidad();
+        }
+
+        ///El combo muestra el texto traducido (clave "estadoUnidad_<valor del enum>") y guarda el enum como valor
+        private void CargarEstadosUnidad()
+        {
+            object seleccionado = cmbEstadoUnidad.SelectedValue;
+
+            cmbEstadoUnidad.DisplayMember = "Value";
+            cmbEstadoUnidad.ValueMember = "Key";
+            cmbEstadoUnidad.DataSource = Enum.GetValues(typeof(BE.EstadoUnidadDevolucionJP86))
+                .Cast<BE.EstadoUnidadDevolucionJP86>()
+                .Select(estado => new KeyValuePair<BE.EstadoUnidadDevolucionJP86, string>(estado, Traductor_64PR.TraducirMensaje(textos, "estadoUnidad_" + estado)))
+                .ToList();
+
+            if (seleccionado != null)
+                cmbEstadoUnidad.SelectedValue = seleccionado;
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
@@ -160,7 +177,7 @@ namespace ProyectoIS_64PR
                 return;
             }
 
-            BE.EstadoUnidadDevolucionJP86 estadoUnidad = (BE.EstadoUnidadDevolucionJP86)cmbEstadoUnidad.SelectedItem;
+            BE.EstadoUnidadDevolucionJP86 estadoUnidad = (BE.EstadoUnidadDevolucionJP86)cmbEstadoUnidad.SelectedValue;
 
             try
             {
@@ -175,12 +192,16 @@ namespace ProyectoIS_64PR
             }
             catch (SqlException ex)
             {
-                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(textos["msg_ErrorBaseDatos"] + ex.Message, textos["titulo_Error"], MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (InvalidOperationException ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Traductor_64PR.TraducirMensaje(textos, ex.Message), textos["titulo_Error"], MessageBoxButtons.OK, MessageBoxIcon.Error);
                 CargaData();
+            }
+            catch (Exception ex)
+            {
+                ManejadorErroresJP86.MostrarErrorInesperado(ex);
             }
         }
 

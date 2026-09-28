@@ -6,6 +6,7 @@ namespace Mapper
 {
     public class mpp_factura
     {
+        ///Devuelve el NumeroFactura, o 0 si el SP no facturo (contrato ya no ACTIVO): esa regla la evalua la BLL.
         public int Crear(BE.FacturaJP86 f)
         {
             SqlParameter[] parametros = new SqlParameter[]
@@ -15,10 +16,10 @@ namespace Mapper
                 new SqlParameter("@MontoFactura", f.MontoFactura)
             };
             object resultado = DAL_64PR.Acceso.Instancia.leerEscalar("SP_FacturaJP86_Crear", parametros, CommandType.StoredProcedure);
-            int nuevoNumero = Convert.ToInt32(resultado);
-            if (nuevoNumero == 0)
-                throw new InvalidOperationException("El contrato no existe o no se encuentra en estado ACTIVO.");
-            return nuevoNumero;
+            ///null = el SP no devolvio nada (error de BD absorbido por Acceso.leerEscalar): NO se convierte a 0
+            if (resultado == null || resultado == DBNull.Value)
+                throw new InvalidOperationException("err_BD_SinRespuesta");
+            return Convert.ToInt32(resultado);
         }
     }
 }

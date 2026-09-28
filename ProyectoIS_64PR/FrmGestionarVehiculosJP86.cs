@@ -49,7 +49,9 @@ namespace ProyectoIS_64PR
             UI.EstilosUI.AplicarEstiloGrilla(dgvVehiculos);
             UI.EstilosUI.AplicarBadgeColumna(dgvVehiculos, "Estado", UI.EstilosUI.ColorEstadoVehiculo);
 
-            cmbEstado.DataSource = Enum.GetValues(typeof(BE.EstadoVehiculoJP86));
+            ///El cambio de estado manual solo permite los 2 destinos que no dependen de un flujo de negocio
+            ///en curso (CambiarEstadoManual en BLL_64PR.VehiculoJP86 valida el resto).
+            cmbEstado.DataSource = new[] { BE.EstadoVehiculoJP86.DISPONIBLE, BE.EstadoVehiculoJP86.EN_REVISION };
 
             CargaData();
 
@@ -151,6 +153,10 @@ namespace ProyectoIS_64PR
             uc.Dock = DockStyle.Fill;
             pnlContenedor.Controls.Add(uc);
             btnGuardar.Enabled = true;
+
+            ///Si ya hay una fila seleccionada, se cargan sus datos: el control nunca queda vacio o con datos de otro vehiculo
+            if (dgvVehiculos.SelectedRows.Count > 0 && dgvVehiculos.SelectedRows[0].DataBoundItem is BE.VehiculoJP86 seleccionado)
+                ((ucModificarVehiculoJP86)uc).EscribirControles(seleccionado);
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
@@ -243,18 +249,26 @@ namespace ProyectoIS_64PR
                             MessageBox.Show(textos["msg_CategoriaValida"]);
                             return;
                         }
-                        if (dgvVehiculos.SelectedRows.Count == 0)
+                        ///Se modifica el vehiculo cuyos datos estan en el control, no la fila seleccionada en ese momento
+                        BE.VehiculoJP86 seleccionado = ucm.VehiculoCargado;
+                        if (seleccionado == null)
                         {
                             MessageBox.Show(textos["seleccionar_vehiculo"]);
                             return;
                         }
                         try
                         {
-                            BE.VehiculoJP86 v = dgvVehiculos.SelectedRows[0].DataBoundItem as BE.VehiculoJP86;
-                            v.Marca = ucm.Marca();
-                            v.Modelo = ucm.Modelo();
-                            v.Categoria = ucm.Categoria();
-                            v.Kilometraje = ucm.Kilometraje();
+                            ///Copia: si falla el guardado, la fila de la grilla no queda modificada en memoria
+                            BE.VehiculoJP86 v = new BE.VehiculoJP86()
+                            {
+                                Patente = seleccionado.Patente,
+                                Marca = ucm.Marca(),
+                                Modelo = ucm.Modelo(),
+                                Categoria = ucm.Categoria(),
+                                Kilometraje = ucm.Kilometraje(),
+                                Estado = seleccionado.Estado,
+                                Activo = seleccionado.Activo
+                            };
 
                             gvehiculos.Modificar(v);
 
@@ -292,7 +306,16 @@ namespace ProyectoIS_64PR
 
             bool vaAQuedarActivo = !v.Activo;
 
-            gvehiculos.ActDesact(v);
+            try
+            {
+                gvehiculos.ActDesact(v);
+            }
+            catch (InvalidOperationException ex)
+            {
+                ///Regla de negocio de la baja (clave de idioma lanzada por la BLL): no se registra evento
+                MessageBox.Show(Traductor_64PR.TraducirMensaje(textos, ex.Message), textos["titulo_Validacion"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             string tipoEvento = vaAQuedarActivo
                 ? ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.AltaVehiculo).ToString()
@@ -322,7 +345,16 @@ namespace ProyectoIS_64PR
                 return;
             }
 
-            gvehiculos.CambiarEstado(v.Patente, nuevoEstado);
+            try
+            {
+                gvehiculos.CambiarEstadoManual(v.Patente, nuevoEstado);
+            }
+            catch (InvalidOperationException ex)
+            {
+                string mensaje = textos.ContainsKey(ex.Message) ? textos[ex.Message] : ex.Message;
+                MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
             ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionVehiculos).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.CambioEstadoVehiculo).ToString(), 3);
             bita.RegistrarEvento(ev);

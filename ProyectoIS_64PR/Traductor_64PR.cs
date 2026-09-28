@@ -118,5 +118,14 @@ namespace ProyectoIS_64PR
             if (clavesFaltantes.Count > 0)
                 Idioma.GestorIdioma_64PR.GetInstance.RegistrarClavesFaltantes(clavesFaltantes);
         }
+
+        ///Traduce un mensaje de error/negocio. Las BLL/Mappers lanzan excepciones cuyo Message es una CLAVE
+        ///de idioma (ej. "err_Contrato_NoDisponible"); si el texto no es una clave conocida se muestra tal cual.
+        public static string TraducirMensaje(Dictionary<string, string> textos, string claveOMensaje)
+        {
+            if (textos != null && claveOMensaje != null && textos.ContainsKey(claveOMensaje))
+                return textos[claveOMensaje];
+            return claveOMensaje;
+        }
     }
 }

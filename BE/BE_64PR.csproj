@@ -56,6 +56,7 @@
     <Compile Include="FuenteReporteJP86.cs" />
     <Compile Include="CriticidadReporteJP86.cs" />
     <Compile Include="ModalidadReparacionJP86.cs" />
+    <Compile Include="ResultadoPagoJP86.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

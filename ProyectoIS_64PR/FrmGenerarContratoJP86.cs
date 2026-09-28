@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace ProyectoIS_64PR
@@ -16,9 +15,6 @@ namespace ProyectoIS_64PR
         BLL_64PR.Categoria_64PR gcategorias = new BLL_64PR.Categoria_64PR();
         BLL_64PR.ClienteJP86 gclientes = new BLL_64PR.ClienteJP86();
         public Dictionary<string, string> textos;
-
-        private static readonly Regex RegexDNI = new Regex(@"^\d{7,8}$");
-        private static readonly Regex RegexTelefono = new Regex(@"^(\+?54)?0?\d{8,11}$");
 
         BE.VehiculoJP86 unidadSeleccionada;
         BE.ClienteJP86 clienteSeleccionado;
@@ -136,7 +132,8 @@ namespace ProyectoIS_64PR
         private void CargarClientes()
         {
             dgvClientes.DataSource = null;
-            dgvClientes.DataSource = gclientes.Listar();
+            ///Solo clientes activos: un cliente dado de baja no puede alquilar (el SP de alta lo vuelve a verificar)
+            dgvClientes.DataSource = gclientes.ListarActivos();
             ///Rebindear regenera las columnas (autogeneradas) y pisa cualquier traduccion previa: hay que reaplicarla
             Traductor_64PR.TraducirGrilla(this, dgvClientes, textos);
         }
@@ -163,28 +160,7 @@ namespace ProyectoIS_64PR
 
         private void btnGuardarCliente_Click(object sender, EventArgs e)
         {
-            if (!RegexDNI.IsMatch(ucNuevoCliente.DNI()))
-            {
-                MessageBox.Show(textos["msg_DNIValido"]);
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(ucNuevoCliente.Nombre()))
-            {
-                MessageBox.Show(textos["msg_NombreValido"]);
-                return;
-            }
-            if (string.IsNullOrWhiteSpace(ucNuevoCliente.Apellido()))
-            {
-                MessageBox.Show(textos["msg_ApellidoValido"]);
-                return;
-            }
-            string telefonoNormalizado = Regex.Replace(ucNuevoCliente.Telefono(), @"[\s\-]", "");
-            if (!RegexTelefono.IsMatch(telefonoNormalizado))
-            {
-                MessageBox.Show(textos["msg_TelefonoValido"]);
-                return;
-            }
-
+            ///Las validaciones de formato (DNI, nombre, apellido, telefono) viven en BLL_64PR.ClienteJP86.Crear
             try
             {
                 BE.ClienteJP86 nuevoCliente = new BE.ClienteJP86()
@@ -208,16 +184,24 @@ namespace ProyectoIS_64PR
 
                 CargarClientes();
             }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(Traductor_64PR.TraducirMensaje(textos, ex.Message), textos["titulo_Validacion"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             catch (SqlException ex)
             {
                 if (ex.Number == 2627 || ex.Number == 2601)
                 {
-                    MessageBox.Show(textos["msg_DNIDuplicado"], "DNI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(textos["msg_DNIDuplicado"], textos["titulo_DNIDuplicado"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 else
                 {
-                    MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(textos["msg_ErrorBaseDatos"] + ex.Message, textos["titulo_Error"], MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+            catch (Exception ex)
+            {
+                ManejadorErroresJP86.MostrarErrorInesperado(ex);
             }
         }
 
@@ -240,11 +224,8 @@ namespace ProyectoIS_64PR
 
         private void btnConfirmar_Click(object sender, EventArgs e)
         {
-            if (dtpFechaFin.Value.Date < dtpFechaInicio.Value.Date)
-            {
-                MessageBox.Show(textos["msg_FechasValidas"]);
-                return;
-            }
+            ///Las reglas de fechas (fin >= inicio, inicio >= hoy, plazo maximo) e importe maximo viven en
+            ///BLL_64PR.ContratoJP86.GenerarContrato; aca solo se valida lo que es de la pantalla (seleccion).
             if (unidadSeleccionada == null)
             {
                 MessageBox.Show(textos["msg_seleccionarUnidad"]);
@@ -270,9 +251,26 @@ namespace ProyectoIS_64PR
                 contratoGenerado = contrato;
                 btnImprimirRecibo.Enabled = true;
             }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(Traductor_64PR.TraducirMensaje(textos, ex.Message), textos["titulo_Validacion"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                ///Si la unidad o el cliente dejaron de estar disponibles, la grilla estaba desactualizada: se refresca
+                if (ex.Message == "err_Contrato_NoDisponible")
+                {
+                    CargarUnidadesDisponibles(false);
+                    CargarClientes();
+                    clienteSeleccionado = null;
+                    lblClienteInfo.Text = string.Empty;
+                }
+            }
             catch (SqlException ex)
             {
-                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(textos["msg_ErrorBaseDatos"] + ex.Message, textos["titulo_Error"], MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                ManejadorErroresJP86.MostrarErrorInesperado(ex);
             }
         }
 

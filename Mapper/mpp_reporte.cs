@@ -36,6 +36,16 @@ namespace Mapper
             return lista;
         }
 
+        public bool ExisteAbiertoPorVehiculo(string patente)
+        {
+            SqlParameter[] parametros = new SqlParameter[] { new SqlParameter("@Patente_Vehiculo", patente) };
+            object resultado = DAL_64PR.Acceso.Instancia.leerEscalar("SP_ReporteJP86_ExisteAbiertoPorVehiculo", parametros, CommandType.StoredProcedure);
+            ///null = error de BD absorbido por Acceso.leerEscalar: NO se interpreta como "no existe" (dejaria pasar el cambio de estado)
+            if (resultado == null || resultado == DBNull.Value)
+                throw new InvalidOperationException("err_BD_SinRespuesta");
+            return Convert.ToInt32(resultado) == 1;
+        }
+
         public int Crear(BE.ReporteJP86 r)
         {
             SqlParameter[] parametros = new SqlParameter[]
@@ -45,6 +55,9 @@ namespace Mapper
                 new SqlParameter("@Fuente", r.Fuente.ToString())
             };
             object resultado = DAL_64PR.Acceso.Instancia.leerEscalar("SP_ReporteJP86_Crear", parametros, CommandType.StoredProcedure);
+            ///null = error de BD absorbido por Acceso.leerEscalar: NO se convierte a 0
+            if (resultado == null || resultado == DBNull.Value)
+                throw new InvalidOperationException("err_BD_SinRespuesta");
             return Convert.ToInt32(resultado);
         }
 

@@ -47,6 +47,12 @@
     <Compile Include="ClienteJP86.cs" />
     <Compile Include="ContratoJP86.cs" />
     <Compile Include="ReporteJP86.cs" />
+    <Compile Include="IEstrategiaPagoJP86.cs" />
+    <Compile Include="PagoEfectivoJP86.cs" />
+    <Compile Include="PagoTarjetaJP86.cs" />
+    <Compile Include="PagoTransferenciaJP86.cs" />
+    <Compile Include="PagoMercadoPagoJP86.cs" />
+    <Compile Include="FabricaEstrategiaPagoJP86.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

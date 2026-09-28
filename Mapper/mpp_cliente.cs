@@ -29,6 +29,16 @@ namespace Mapper
             return lista;
         }
 
+        public bool ExisteDNI(string dni)
+        {
+            SqlParameter[] parametros = new SqlParameter[] { new SqlParameter("@DNI", dni) };
+            object resultado = DAL_64PR.Acceso.Instancia.leerEscalar("SP_ClienteJP86_ExisteDNI", parametros, CommandType.StoredProcedure);
+            ///null = error de BD absorbido por Acceso.leerEscalar: NO se interpreta como "no existe"
+            if (resultado == null || resultado == DBNull.Value)
+                throw new InvalidOperationException("err_BD_SinRespuesta");
+            return Convert.ToInt32(resultado) == 1;
+        }
+
         public void Crear(BE.ClienteJP86 c)
         {
             SqlParameter[] parametros = new SqlParameter[]

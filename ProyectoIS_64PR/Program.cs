@@ -14,6 +14,13 @@ namespace ProyectoIS_64PR
         [STAThread]
         static void Main()
         {
+            ///Red de seguridad: ninguna excepcion no capturada llega al dialogo generico de .NET.
+            ///ThreadException cubre el hilo de UI (incluidos los async void de los forms);
+            ///UnhandledException cubre otros hilos, donde el proceso termina igual.
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
+            Application.ThreadException += (s, e) => ManejadorErroresJP86.MostrarErrorInesperado(e.Exception);
+            AppDomain.CurrentDomain.UnhandledException += (s, e) => ManejadorErroresJP86.MostrarErrorFatal(e.ExceptionObject as Exception);
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FrmContenedor_64PR());

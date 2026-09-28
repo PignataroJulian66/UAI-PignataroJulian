@@ -36,11 +36,17 @@ namespace ProyectoIS_64PR
                 ActualizarIdioma(textos);
         }
 
+        ///Vehiculo cuyos datos estan cargados en los controles. Guardar modifica ESTE vehiculo,
+        ///no la fila seleccionada en la grilla (la seleccion puede cambiar sin volver a cargar el control,
+        ///por ejemplo con las flechas del teclado o al recargar la grilla).
+        public BE.VehiculoJP86 VehiculoCargado { get; private set; }
+
         /// <summary>
         /// Vuelca los valores del vehiculo seleccionado en los controles
         /// </summary>
         public void EscribirControles(BE.VehiculoJP86 v)
         {
+            VehiculoCargado = v;
             txtPatente.Text = v.Patente;
             txtMarca.Text = v.Marca;
             txtModelo.Text = v.Modelo;
@@ -78,6 +84,7 @@ namespace ProyectoIS_64PR
 
         public void LimpiarCampos()
         {
+            VehiculoCargado = null;
             txtPatente.Text = string.Empty;
             txtMarca.Text = string.Empty;
             txtModelo.Text = string.Empty;

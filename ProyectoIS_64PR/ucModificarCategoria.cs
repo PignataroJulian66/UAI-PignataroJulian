@@ -30,11 +30,17 @@ namespace ProyectoIS_64PR
                 ActualizarIdioma(textos);
         }
 
+        ///Categoria cuyos datos estan cargados en los controles. Guardar modifica ESTA categoria,
+        ///no la fila seleccionada en la grilla (la seleccion puede cambiar sin volver a cargar el control,
+        ///por ejemplo con las flechas del teclado o al recargar la grilla).
+        public BE.Categoria_64PR CategoriaCargada { get; private set; }
+
         /// <summary>
         /// Vuelca los valores de la categoria seleccionada en los controles
         /// </summary>
         public void EscribirControles(BE.Categoria_64PR c)
         {
+            CategoriaCargada = c;
             txtNombre.Text = c.Nombre;
             txtDescripcion.Text = c.Descripcion;
             numTarifaDiaria.Value = c.TarifaDiaria;
@@ -57,6 +63,7 @@ namespace ProyectoIS_64PR
 
         public void LimpiarCampos()
         {
+            CategoriaCargada = null;
             txtNombre.Text = string.Empty;
             txtDescripcion.Text = string.Empty;
             numTarifaDiaria.Value = numTarifaDiaria.Minimum;

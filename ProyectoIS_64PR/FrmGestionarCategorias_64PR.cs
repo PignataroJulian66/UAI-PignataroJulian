@@ -136,6 +136,10 @@ namespace ProyectoIS_64PR
             uc.Dock = DockStyle.Fill;
             pnlContenedor.Controls.Add(uc);
             btnGuardar.Enabled = true;
+
+            ///Si ya hay una fila seleccionada, se cargan sus datos: el control nunca queda vacio o con datos de otra categoria
+            if (dgvCategorias.SelectedRows.Count > 0 && dgvCategorias.SelectedRows[0].DataBoundItem is BE.Categoria_64PR seleccionada)
+                ((ucModificarCategoria)uc).EscribirControles(seleccionada);
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
@@ -201,17 +205,24 @@ namespace ProyectoIS_64PR
                             MessageBox.Show(textos["msg_NombreCategoriaValido"]);
                             return;
                         }
-                        if (dgvCategorias.SelectedRows.Count == 0)
+                        ///Se modifica la categoria cuyos datos estan en el control, no la fila seleccionada en ese momento
+                        BE.Categoria_64PR seleccionada = ucm.CategoriaCargada;
+                        if (seleccionada == null)
                         {
                             MessageBox.Show(textos["seleccionar_categoria"]);
                             return;
                         }
                         try
                         {
-                            BE.Categoria_64PR c = dgvCategorias.SelectedRows[0].DataBoundItem as BE.Categoria_64PR;
-                            c.Nombre = ucm.Nombre();
-                            c.Descripcion = ucm.Descripcion();
-                            c.TarifaDiaria = ucm.TarifaDiaria();
+                            ///Copia: si falla el guardado (ej. nombre duplicado), la fila de la grilla no queda modificada en memoria
+                            BE.Categoria_64PR c = new BE.Categoria_64PR()
+                            {
+                                Id = seleccionada.Id,
+                                Nombre = ucm.Nombre(),
+                                Descripcion = ucm.Descripcion(),
+                                TarifaDiaria = ucm.TarifaDiaria(),
+                                Activo = seleccionada.Activo
+                            };
 
                             gcategorias.Modificar(c);
 
@@ -257,7 +268,16 @@ namespace ProyectoIS_64PR
 
             bool vaAQuedarActivo = !c.Activo; ///se calcula antes de togglear, para saber que evento registrar
 
-            gcategorias.ActDesact(c);
+            try
+            {
+                gcategorias.ActDesact(c);
+            }
+            catch (InvalidOperationException ex)
+            {
+                ///Regla de negocio de la baja (clave de idioma lanzada por la BLL): no se registra evento
+                MessageBox.Show(Traductor_64PR.TraducirMensaje(textos, ex.Message), textos["titulo_Validacion"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             string tipoEvento = vaAQuedarActivo
                 ? ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.AltaCategoria).ToString()

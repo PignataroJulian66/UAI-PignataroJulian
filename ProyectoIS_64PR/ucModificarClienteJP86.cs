@@ -29,11 +29,17 @@ namespace ProyectoIS_64PR
                 ActualizarIdioma(textos);
         }
 
+        ///Cliente cuyos datos estan cargados en los controles. Guardar modifica ESTE cliente,
+        ///no la fila seleccionada en la grilla (la seleccion puede cambiar sin volver a cargar el control,
+        ///por ejemplo con las flechas del teclado o al recargar la grilla).
+        public BE.ClienteJP86 ClienteCargado { get; private set; }
+
         /// <summary>
         /// Vuelca los valores del cliente seleccionado en los controles
         /// </summary>
         public void EscribirControles(BE.ClienteJP86 c)
         {
+            ClienteCargado = c;
             txtDNI.Text = c.DNI;
             txtNombre.Text = c.Nombre;
             txtApellido.Text = c.Apellido;
@@ -57,6 +63,7 @@ namespace ProyectoIS_64PR
 
         public void LimpiarCampos()
         {
+            ClienteCargado = null;
             txtDNI.Text = string.Empty;
             txtNombre.Text = string.Empty;
             txtApellido.Text = string.Empty;

@@ -32,6 +32,11 @@ namespace ProyectoIS_64PR
             cmbModulos.DataSource = bita.ListarModulos().OrderBy(x => x).ToList();
             cmbTipos.DataSource = bita.ListarTipos().OrderBy(x => x).ToList();
 
+            ///Valores iniciales de los filtros de fecha, calculados al abrir (antes estaban fijos en el Designer,
+            ///con MinDate 01/04/2026 y MaxDate 19/05/2026, lo que impedia elegir cualquier fecha posterior)
+            dtpInicio.Value = DateTime.Today.AddDays(-3);
+            dtpFin.Value = DateTime.Today;
+
             LimpiarFiltros();
 
             dgvEventos.ReadOnly = true;
@@ -100,12 +105,21 @@ namespace ProyectoIS_64PR
 
         private void AplicarFiltros()
         {
-            if (dtpInicio.Value.Date > dtpFin.Value.Date)
+            if (cbInicio.Checked && cbFin.Checked && dtpInicio.Value.Date > dtpFin.Value.Date)
             {
                 MessageBox.Show(textos["fechas_filtros"]);
                 return;
             }
+
+            ///lst solo tiene la vista por defecto (ultimos 3 dias). Si se filtra por fecha, el rango se busca en la BD;
+            ///los demas filtros se aplican en memoria sobre ese resultado.
             IEnumerable<Bitacora.Evento_64PR> resultado = lst;
+            if (cbInicio.Checked || cbFin.Checked)
+            {
+                DateTime? desde = cbInicio.Checked ? dtpInicio.Value.Date : (DateTime?)null;
+                DateTime? hasta = cbFin.Checked ? dtpFin.Value.Date : (DateTime?)null;
+                resultado = bita.ListarEventos(desde, hasta);
+            }
             if (cbLogin.Checked)
                 resultado = resultado.Where(e => e.Login == cmbLogins.SelectedItem.ToString());
 
@@ -117,12 +131,6 @@ namespace ProyectoIS_64PR
 
             if (cbCriticidad.Checked)
                 resultado = resultado.Where(e => e.Criticidad == Convert.ToByte(cmbCriticidad.SelectedItem));
-
-            if (cbInicio.Checked)
-                resultado = resultado.Where(e => e.FechaHora.Date >= dtpInicio.Value.Date);
-
-            if (cbFin.Checked)
-                resultado = resultado.Where(e => e.FechaHora.Date <= dtpFin.Value.Date);
 
             ///Voy aplicando filtros y sumando
             dgvEventos.DataSource = resultado.ToList();

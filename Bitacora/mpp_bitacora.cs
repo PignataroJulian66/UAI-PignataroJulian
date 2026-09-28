@@ -10,10 +10,24 @@ namespace Bitacora
 {
     public class mpp_bitacora
     {
+        ///Vista por defecto: eventos de los ultimos 3 dias
         public List<Bitacora.Evento_64PR> ListarEventos()
         {
-            string query = "SELECT \r\n    e.Id_evento,\r\n    e.Login,\r\n    e.Fecha,\r\n    e.Hora,\r\n    m.Nombre AS Modulo,\r\n    t.Nombre AS TipoEvento,\r\n    e.criticidad\r\nFROM Evento_64PR e\r\n    INNER JOIN USUARIO_64PR u  ON e.Login     = u.Login\r\n    INNER JOIN Modulo_64PR  m  ON e.Id_modulo = m.Id_modulo\r\n    INNER JOIN TipoEvento_64PR t ON e.Id_Tipo = t.Id_tipo\r\nWHERE e.Fecha >= CAST(GETDATE() - 3 AS DATE)\r\nORDER BY e.Fecha DESC, e.Hora DESC;";
-            DataTable tabla = DAL_64PR.Acceso.Instancia.leerQuery(query, null);
+            return ListarEventos(DateTime.Today.AddDays(-3), null);
+        }
+
+        ///Eventos entre dos fechas (inclusive). null = sin limite de ese lado.
+        ///Se usa cuando el usuario filtra por fecha: el rango tiene que buscarse en la BD,
+        ///no dentro de la vista por defecto de 3 dias ya cargada en memoria.
+        public List<Bitacora.Evento_64PR> ListarEventos(DateTime? desde, DateTime? hasta)
+        {
+            string query = "SELECT \r\n    e.Id_evento,\r\n    e.Login,\r\n    e.Fecha,\r\n    e.Hora,\r\n    m.Nombre AS Modulo,\r\n    t.Nombre AS TipoEvento,\r\n    e.criticidad\r\nFROM Evento_64PR e\r\n    INNER JOIN USUARIO_64PR u  ON e.Login     = u.Login\r\n    INNER JOIN Modulo_64PR  m  ON e.Id_modulo = m.Id_modulo\r\n    INNER JOIN TipoEvento_64PR t ON e.Id_Tipo = t.Id_tipo\r\nWHERE (@Desde IS NULL OR e.Fecha >= @Desde)\r\n  AND (@Hasta IS NULL OR e.Fecha <= @Hasta)\r\nORDER BY e.Fecha DESC, e.Hora DESC;";
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@Desde", desde.HasValue ? (object)desde.Value.Date : DBNull.Value),
+                new SqlParameter("@Hasta", hasta.HasValue ? (object)hasta.Value.Date : DBNull.Value)
+            };
+            DataTable tabla = DAL_64PR.Acceso.Instancia.leerQuery(query, parametros);
             List<Bitacora.Evento_64PR> lista = new List<Bitacora.Evento_64PR>();
             foreach (DataRow dr in tabla.Rows)
             {

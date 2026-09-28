@@ -5,7 +5,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -22,9 +21,6 @@ namespace ProyectoIS_64PR
         string modo = "consulta";
         UserControl uc;
         List<BE.ClienteJP86> lst;
-
-        private static readonly Regex RegexDNI = new Regex(@"^\d{7,8}$");
-        private static readonly Regex RegexTelefono = new Regex(@"^(\+?54)?0?\d{8,11}$");
 
         public FrmGestionarClientesJP86()
         {
@@ -145,6 +141,10 @@ namespace ProyectoIS_64PR
             uc.Dock = DockStyle.Fill;
             pnlContenedor.Controls.Add(uc);
             btnGuardar.Enabled = true;
+
+            ///Si ya hay una fila seleccionada, se cargan sus datos: el control nunca queda vacio o con datos de otro cliente
+            if (dgvClientes.SelectedRows.Count > 0 && dgvClientes.SelectedRows[0].DataBoundItem is BE.ClienteJP86 seleccionado)
+                ((ucModificarClienteJP86)uc).EscribirControles(seleccionado);
         }
 
         private void btnGuardar_Click(object sender, EventArgs e)
@@ -158,27 +158,7 @@ namespace ProyectoIS_64PR
                 case "crear":
                     if (uc is ucCrearClienteJP86 ucc)
                     {
-                        if (!RegexDNI.IsMatch(ucc.DNI()))
-                        {
-                            MessageBox.Show(textos["msg_DNIValido"]);
-                            return;
-                        }
-                        if (string.IsNullOrWhiteSpace(ucc.Nombre()))
-                        {
-                            MessageBox.Show(textos["msg_NombreValido"]);
-                            return;
-                        }
-                        if (string.IsNullOrWhiteSpace(ucc.Apellido()))
-                        {
-                            MessageBox.Show(textos["msg_ApellidoValido"]);
-                            return;
-                        }
-                        string telefonoNormalizado = Regex.Replace(ucc.Telefono(), @"[\s\-]", "");
-                        if (!RegexTelefono.IsMatch(telefonoNormalizado))
-                        {
-                            MessageBox.Show(textos["msg_TelefonoValido"]);
-                            return;
-                        }
+                        ///Validaciones de formato: BLL_64PR.ClienteJP86.Crear (mismo codigo que CUN-02)
                         try
                         {
                             BE.ClienteJP86 c = new BE.ClienteJP86()
@@ -204,16 +184,20 @@ namespace ProyectoIS_64PR
                             lblModo.Text = textos["frmGestionClientes_lblModoConsulta"];
                             btnGuardar.Enabled = false;
                         }
+                        catch (InvalidOperationException ex)
+                        {
+                            MessageBox.Show(Traductor_64PR.TraducirMensaje(textos, ex.Message), textos["titulo_Validacion"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
                         catch (SqlException ex)
                         {
                             if (ex.Number == 2627 || ex.Number == 2601)
                             {
                                 MessageBox.Show(textos["msg_DNIDuplicado"],
-                                    "DNI", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    textos["titulo_DNIDuplicado"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             }
                             else
                             {
-                                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                MessageBox.Show(textos["msg_ErrorBaseDatos"] + ex.Message, textos["titulo_Error"], MessageBoxButtons.OK, MessageBoxIcon.Error);
                             }
                         }
                     }
@@ -222,33 +206,25 @@ namespace ProyectoIS_64PR
                 case "modificar":
                     if (uc is ucModificarClienteJP86 ucm)
                     {
-                        if (string.IsNullOrWhiteSpace(ucm.Nombre()))
-                        {
-                            MessageBox.Show(textos["msg_NombreValido"]);
-                            return;
-                        }
-                        if (string.IsNullOrWhiteSpace(ucm.Apellido()))
-                        {
-                            MessageBox.Show(textos["msg_ApellidoValido"]);
-                            return;
-                        }
-                        string telefonoNormalizado = Regex.Replace(ucm.Telefono(), @"[\s\-]", "");
-                        if (!RegexTelefono.IsMatch(telefonoNormalizado))
-                        {
-                            MessageBox.Show(textos["msg_TelefonoValido"]);
-                            return;
-                        }
-                        if (dgvClientes.SelectedRows.Count == 0)
+                        ///Validaciones de formato: BLL_64PR.ClienteJP86.Modificar
+                        ///Se modifica el cliente cuyos datos estan en el control, no la fila seleccionada en ese momento
+                        BE.ClienteJP86 seleccionado = ucm.ClienteCargado;
+                        if (seleccionado == null)
                         {
                             MessageBox.Show(textos["seleccionar_cliente"]);
                             return;
                         }
                         try
                         {
-                            BE.ClienteJP86 c = dgvClientes.SelectedRows[0].DataBoundItem as BE.ClienteJP86;
-                            c.Nombre = ucm.Nombre();
-                            c.Apellido = ucm.Apellido();
-                            c.Telefono = ucm.Telefono();
+                            ///Copia: si la BLL rechaza los datos, la fila de la grilla no queda modificada en memoria
+                            BE.ClienteJP86 c = new BE.ClienteJP86()
+                            {
+                                DNI = seleccionado.DNI,
+                                Nombre = ucm.Nombre(),
+                                Apellido = ucm.Apellido(),
+                                Telefono = ucm.Telefono(),
+                                Activo = seleccionado.Activo
+                            };
 
                             gclientes.Modificar(c);
 
@@ -265,9 +241,13 @@ namespace ProyectoIS_64PR
                             lblModo.Text = textos["frmGestionClientes_lblModoConsulta"];
                             btnGuardar.Enabled = false;
                         }
+                        catch (InvalidOperationException ex)
+                        {
+                            MessageBox.Show(Traductor_64PR.TraducirMensaje(textos, ex.Message), textos["titulo_Validacion"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
                         catch (SqlException ex)
                         {
-                            MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(textos["msg_ErrorBaseDatos"] + ex.Message, textos["titulo_Error"], MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                     break;
@@ -286,7 +266,16 @@ namespace ProyectoIS_64PR
 
             bool vaAQuedarActivo = !c.Activo;
 
-            gclientes.ActDesact(c);
+            try
+            {
+                gclientes.ActDesact(c);
+            }
+            catch (InvalidOperationException ex)
+            {
+                ///Regla de negocio de la baja (clave de idioma lanzada por la BLL): no se registra evento
+                MessageBox.Show(Traductor_64PR.TraducirMensaje(textos, ex.Message), textos["titulo_Validacion"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             string tipoEvento = vaAQuedarActivo
                 ? ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.AltaCliente).ToString()

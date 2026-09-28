@@ -9,6 +9,8 @@ namespace BLL_64PR
     public class VehiculoJP86
     {
         Mapper.mpp_vehiculo mpp = new Mapper.mpp_vehiculo();
+        Mapper.mpp_contrato mppContrato = new Mapper.mpp_contrato();
+        Mapper.mpp_reporte mppReporte = new Mapper.mpp_reporte();
         private static readonly DV.DV_64PR recalculador = new DV.DV_64PR();
 
         public List<BE.VehiculoJP86> Listar()
@@ -38,8 +40,52 @@ namespace BLL_64PR
             recalculador.RecalcularTabla("VehiculoJP86");
         }
 
+        ///Unico punto de entrada para el cambio de estado MANUAL desde el maestro (btnCambiarEstado).
+        ///Los flujos de negocio (CUN-01, CUN-04) siguen llamando a CambiarEstado directamente y no pasan por aca.
+        public void CambiarEstadoManual(string patente, BE.EstadoVehiculoJP86 destino)
+        {
+            if (destino != BE.EstadoVehiculoJP86.DISPONIBLE && destino != BE.EstadoVehiculoJP86.EN_REVISION)
+                throw new InvalidOperationException("err_CambioEstado_DestinoNoPermitido");
+
+            BE.EstadoVehiculoJP86 origen = mpp.ObtenerEstado(patente);
+
+            if (TieneContratoAbierto(patente, origen))
+                throw new InvalidOperationException("err_CambioEstado_ContratoActivo");
+
+            if ((origen == BE.EstadoVehiculoJP86.EN_REVISION || origen == BE.EstadoVehiculoJP86.EN_REPARACION) && TieneReporteAbierto(patente))
+                throw new InvalidOperationException("err_CambioEstado_ReporteAbierto");
+
+            CambiarEstado(patente, destino);
+        }
+
+        ///Compartido por CambiarEstadoManual y ActDesact
+        private bool TieneContratoAbierto(string patente, BE.EstadoVehiculoJP86 origen)
+        {
+            return origen == BE.EstadoVehiculoJP86.ALQUILADO && mppContrato.ExisteActivoPorVehiculo(patente);
+        }
+
+        ///Reporte PENDIENTE, CLASIFICADO o EN_REPARACION (no ACREDITADO)
+        private bool TieneReporteAbierto(string patente)
+        {
+            return mppReporte.ExisteAbiertoPorVehiculo(patente);
+        }
+
+        ///Toggle: si llega activo es una baja (se valida); si llega inactivo es una reactivacion (sin reglas)
         public void ActDesact(BE.VehiculoJP86 v)
         {
+            if (v.Activo)
+            {
+                ///El estado se lee de la BD, no de la grilla (puede estar desactualizada)
+                BE.EstadoVehiculoJP86 origen = mpp.ObtenerEstado(v.Patente);
+
+                if (TieneContratoAbierto(v.Patente, origen))
+                    throw new InvalidOperationException("err_BajaVehiculo_ContratoActivo");
+
+                ///A diferencia del cambio de estado manual, bloquea la baja cualquiera sea el estado actual
+                if (TieneReporteAbierto(v.Patente))
+                    throw new InvalidOperationException("err_BajaVehiculo_ReporteAbierto");
+            }
+
             mpp.ActDesact(v);
             recalculador.RecalcularTabla("VehiculoJP86");
         }

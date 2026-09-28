@@ -44,7 +44,8 @@ namespace Bitacora
             AsignacionCriticidad = 31,
             DeterminacionModalidad = 32,
             AcreditacionReparacion = 33,
-            LiberacionVehiculo = 34
+            LiberacionVehiculo = 34,
+            ErrorNoControlado = 35
         }
         public enum ModuloBitacora_64PR
         {
@@ -56,13 +57,19 @@ namespace Bitacora
             GestionVehiculos = 6,
             GestionClientes = 7,
             GestionAlquileres = 8,
-            GestionMantenimiento = 9
+            GestionMantenimiento = 9,
+            Sistema = 10
         }
 
         Bitacora.mpp_bitacora mpp = new Bitacora.mpp_bitacora();
         public List<Bitacora.Evento_64PR> ListarEventos()
         {
             return mpp.ListarEventos();
+        }
+
+        public List<Bitacora.Evento_64PR> ListarEventos(DateTime? desde, DateTime? hasta)
+        {
+            return mpp.ListarEventos(desde, hasta);
         }
 
         public List<string> ListarLogins()
