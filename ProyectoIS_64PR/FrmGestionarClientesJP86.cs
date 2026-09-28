@@ -22,6 +22,12 @@ namespace ProyectoIS_64PR
         UserControl uc;
         List<BE.ClienteJP86> lst;
 
+        ///Ultimo mensaje del panel de mensajes: se guarda la clave (y sus argumentos) para re-traducirlo si cambia el idioma
+        string claveMensaje;
+        object[] argsMensaje;
+        Color colorMensaje;
+        Color colorModoNormal;
+
         public FrmGestionarClientesJP86()
         {
             InitializeComponent();
@@ -33,6 +39,26 @@ namespace ProyectoIS_64PR
             UI.EstilosUI.EstiloBotonPrimario(btnGuardar);
             UI.EstilosUI.EstiloBotonSecundario(btnModificar);
             UI.EstilosUI.EstiloBotonPeligro(btnEliminar);
+            UI.EstilosUI.EstiloBotonSecundario(btnActualizar);
+            UI.EstilosUI.EstiloBotonSecundario(btnLimpiar);
+            UI.EstilosUI.EstiloBotonPrimario(btnSerializar);
+            UI.EstilosUI.EstiloBotonPrimario(btnDeserializar);
+            UI.EstilosUI.EstiloBotonSecundario(btnCarpetaSerializar);
+            UI.EstilosUI.EstiloBotonSecundario(btnCarpetaDeserializar);
+            ///Icono de carpeta: glifo de la fuente de iconos de Windows 10/11 (el pintado redondeado usa btn.Font)
+            btnCarpetaSerializar.Font = new Font("Segoe MDL2 Assets", 10F);
+            btnCarpetaSerializar.Text = "\uED25";
+            btnCarpetaDeserializar.Font = new Font("Segoe MDL2 Assets", 10F);
+            btnCarpetaDeserializar.Text = "\uED25";
+            pnlSeparador.BackColor = UI.TemaVisual.Borde;
+            pnlSerializacion.BackColor = UI.TemaVisual.FondoPagina;
+            txtRutaSerializar.BackColor = UI.TemaVisual.FondoTarjeta;
+            txtRutaDeserializar.BackColor = UI.TemaVisual.FondoTarjeta;
+            lblMensajes.BackColor = UI.TemaVisual.FondoTarjeta;
+            lblMensajes.Font = UI.TemaVisual.FuenteTexto;
+            colorMensaje = UI.TemaVisual.TextoPrincipal;
+            colorModoNormal = lblModo.ForeColor;
+            pnlContenedor.Controls.Add(lblMensajes);
 
             radioButton3.Checked = true;
             dgvClientes.ReadOnly = true;
@@ -74,8 +100,73 @@ namespace ProyectoIS_64PR
                 case "modificar":
                     lblModo.Text = textos["frmGestionClientes_lblModoModificar"];
                     break;
+                case "xml":
+                    lblModo.Text = Texto("frmGestionClientes_lblModoXml");
+                    break;
             }
+
+            ///La franja de serializacion esta dentro de pnlSerializacion (Traducir solo recorre los controles directos del form,
+            ///y le pisaria el glifo a los botones de carpeta): se traduce aca
+            btnSerializar.Text = Texto("FrmGestionarClientesJP86.btnSerializar");
+            btnDeserializar.Text = Texto("FrmGestionarClientesJP86.btnDeserializar");
+
+            ttAyuda.SetToolTip(btnActualizar, Texto("tt_Clientes_Actualizar"));
+            ttAyuda.SetToolTip(btnLimpiar, Texto("tt_Clientes_Limpiar"));
+            ttAyuda.SetToolTip(btnSerializar, Texto("tt_Clientes_Serializar"));
+            ttAyuda.SetToolTip(btnDeserializar, Texto("tt_Clientes_Deserializar"));
+            ttAyuda.SetToolTip(btnCarpetaSerializar, Texto("tt_Clientes_CarpetaSerializar"));
+            ttAyuda.SetToolTip(btnCarpetaDeserializar, Texto("tt_Clientes_CarpetaDeserializar"));
+
+            MostrarMensajeActual();
         }
+
+        private string Texto(string clave)
+        {
+            return Traductor_64PR.TraducirMensaje(textos, clave);
+        }
+
+        #region Panel de mensajes
+
+        ///Los argumentos que sean claves de idioma (ej. el Message de una excepcion de la BLL) tambien se traducen
+        private void MostrarMensaje(string clave, Color color, params object[] args)
+        {
+            claveMensaje = clave;
+            argsMensaje = args;
+            colorMensaje = color;
+            MostrarMensajeActual();
+        }
+
+        private void MostrarMensajeActual()
+        {
+            if (string.IsNullOrEmpty(claveMensaje))
+            {
+                lblMensajes.Text = string.Empty;
+                return;
+            }
+
+            object[] traducidos = (argsMensaje ?? new object[0])
+                .Select(a => a is string s ? (object)Texto(s) : a)
+                .ToArray();
+            lblMensajes.ForeColor = colorMensaje;
+            lblMensajes.Text = string.Format(Texto(claveMensaje), traducidos);
+        }
+
+        private void LimpiarMensaje()
+        {
+            claveMensaje = null;
+            argsMensaje = null;
+            lblMensajes.Text = string.Empty;
+        }
+
+        ///pnlContenedor tambien aloja los uc de Crear/Modificar: al volver a modo consulta se vuelve a mostrar el panel de mensajes
+        private void MostrarPanelMensajes()
+        {
+            LimpiarMensaje();
+            if (!pnlContenedor.Controls.Contains(lblMensajes))
+                pnlContenedor.Controls.Add(lblMensajes);
+        }
+
+        #endregion
 
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
@@ -180,6 +271,7 @@ namespace ProyectoIS_64PR
                             ucc.LimpiarCampos();
                             pnlContenedor.Controls.Clear();
                             uc = null;
+                            MostrarPanelMensajes();
                             modo = "consulta";
                             lblModo.Text = textos["frmGestionClientes_lblModoConsulta"];
                             btnGuardar.Enabled = false;
@@ -237,6 +329,7 @@ namespace ProyectoIS_64PR
                             ucm.LimpiarCampos();
                             pnlContenedor.Controls.Clear();
                             uc = null;
+                            MostrarPanelMensajes();
                             modo = "consulta";
                             lblModo.Text = textos["frmGestionClientes_lblModoConsulta"];
                             btnGuardar.Enabled = false;
@@ -334,7 +427,215 @@ namespace ProyectoIS_64PR
             btnCrear.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearCliente);
             btnModificar.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarCliente);
             btnEliminar.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarCliente);
+
+            bool puedeSerializar = rolUsuario.TienePermiso(Sesion.Patentes_64PR.SerializarClientes);
+            btnSerializar.Visible = puedeSerializar;
+            txtRutaSerializar.Visible = puedeSerializar;
+            btnCarpetaSerializar.Visible = puedeSerializar;
+
+            bool puedeDeserializar = rolUsuario.TienePermiso(Sesion.Patentes_64PR.DeserializarClientes);
+            btnDeserializar.Visible = puedeDeserializar;
+            txtRutaDeserializar.Visible = puedeDeserializar;
+            btnCarpetaDeserializar.Visible = puedeDeserializar;
+
+            ///Limpiar solo tiene sentido si hay algo que limpiar de la franja de serializacion
+            btnLimpiar.Visible = puedeSerializar || puedeDeserializar;
+            pnlSeparador.Visible = btnLimpiar.Visible;
         }
+
+        #region Serializacion XML
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            ///Si se estaba viendo un XML se sale de ese modo (y se rehabilitan los botones segun patentes)
+            if (modo == "xml")
+            {
+                SalirModoXml();
+                return;
+            }
+
+            CargaData();
+            if (uc == null)
+                MostrarMensaje("msg_Clientes_GrillaActualizada", UI.TemaVisual.TextoPrincipal);
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            txtRutaSerializar.Clear();
+            txtRutaDeserializar.Clear();
+            LimpiarMensaje();
+
+            if (modo == "xml")
+            {
+                SalirModoXml();
+                LimpiarMensaje();
+            }
+        }
+
+        private void btnCarpetaSerializar_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog dialogo = new SaveFileDialog())
+            {
+                dialogo.Title = Texto("dlg_Xml_TituloSerializar");
+                dialogo.Filter = Texto("dlg_Xml_Filtro");
+                dialogo.DefaultExt = "xml";
+                dialogo.AddExtension = true;
+                ///Si el archivo ya existe el dialogo pide confirmacion para sobrescribirlo
+                dialogo.OverwritePrompt = true;
+                dialogo.FileName = "Clientes.xml";
+
+                if (dialogo.ShowDialog(this) == DialogResult.OK)
+                    txtRutaSerializar.Text = dialogo.FileName;
+            }
+        }
+
+        private void btnCarpetaDeserializar_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dialogo = new OpenFileDialog())
+            {
+                dialogo.Title = Texto("dlg_Xml_TituloDeserializar");
+                dialogo.Filter = Texto("dlg_Xml_Filtro");
+                dialogo.CheckFileExists = true;
+                dialogo.Multiselect = false;
+
+                if (dialogo.ShowDialog(this) == DialogResult.OK)
+                    txtRutaDeserializar.Text = dialogo.FileName;
+            }
+        }
+
+        private void btnSerializar_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtRutaSerializar.Text))
+            {
+                MostrarMensajeEnConsulta("msg_Xml_SeleccioneUbicacion", UI.TemaVisual.Advertencia);
+                return;
+            }
+
+            ///Se serializa exactamente lo visible: la lista enlazada a la grilla ya tiene aplicados Buscar y Modo consulta
+            List<BE.ClienteJP86> visibles = dgvClientes.DataSource as List<BE.ClienteJP86>;
+            if (visibles == null || visibles.Count == 0)
+            {
+                MostrarMensajeEnConsulta("msg_Xml_GrillaVacia", UI.TemaVisual.Advertencia);
+                return;
+            }
+
+            try
+            {
+                int cantidad = gclientes.Serializar(new List<BE.ClienteJP86>(visibles), txtRutaSerializar.Text);
+
+                RegistrarEventoXml(Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.SerializacionClientes, 4);
+                MostrarMensajeEnConsulta("msg_Xml_SerializacionOk", UI.TemaVisual.Exito, cantidad, txtRutaSerializar.Text);
+            }
+            catch (InvalidOperationException ex)
+            {
+                RegistrarEventoXml(Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.ErrorSerializacionClientes, 2);
+                MostrarMensajeEnConsulta("msg_Xml_ErrorSerializar", UI.TemaVisual.Peligro, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                MostrarMensajeEnConsulta("msg_Xml_ErrorSerializar", UI.TemaVisual.Peligro, "err_Inesperado");
+                ManejadorErroresJP86.MostrarErrorInesperado(ex);
+            }
+        }
+
+        private void btnDeserializar_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtRutaDeserializar.Text))
+            {
+                MostrarMensajeEnConsulta("msg_Xml_SeleccioneArchivo", UI.TemaVisual.Advertencia);
+                return;
+            }
+
+            try
+            {
+                List<BE.ClienteJP86> clientes = gclientes.Deserializar(txtRutaDeserializar.Text);
+
+                EntrarModoXml(clientes);
+
+                RegistrarEventoXml(Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.DeserializacionClientes, 4);
+                MostrarMensaje("msg_Xml_DeserializacionOk", UI.TemaVisual.Info, clientes.Count, txtRutaDeserializar.Text);
+            }
+            catch (InvalidOperationException ex)
+            {
+                ///Si falla, la grilla queda como estaba (BD o el XML anterior)
+                RegistrarEventoXml(Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.ErrorDeserializacionClientes, 2);
+                MostrarMensajeEnConsulta("msg_Xml_ErrorDeserializar", UI.TemaVisual.Peligro, ex.Message);
+            }
+            catch (Exception ex)
+            {
+                MostrarMensajeEnConsulta("msg_Xml_ErrorDeserializar", UI.TemaVisual.Peligro, "err_Inesperado");
+                ManejadorErroresJP86.MostrarErrorInesperado(ex);
+            }
+        }
+
+        ///Los mensajes de la franja se muestran en pnlContenedor: si habia un alta/modificacion abierta (sin guardar) se cierra
+        private void MostrarMensajeEnConsulta(string clave, Color color, params object[] args)
+        {
+            if (uc != null)
+                VolverAModoConsulta();
+            MostrarMensaje(clave, color, args);
+        }
+
+        private void VolverAModoConsulta()
+        {
+            pnlContenedor.Controls.Clear();
+            uc = null;
+            MostrarPanelMensajes();
+            btnGuardar.Enabled = false;
+            if (modo != "xml")
+            {
+                modo = "consulta";
+                lblModo.Text = textos["frmGestionClientes_lblModoConsulta"];
+            }
+        }
+
+        ///Modo visualizacion XML: la grilla muestra el contenido del archivo y se bloquea todo lo que escribe en la BD.
+        ///Buscar y Modo consulta siguen funcionando porque filtran sobre lst.
+        private void EntrarModoXml(List<BE.ClienteJP86> clientes)
+        {
+            if (uc != null)
+                VolverAModoConsulta();
+
+            modo = "xml";
+            lst = clientes;
+            AplicarFiltros();
+
+            ///Se ocultan ademas de deshabilitarse: el estilo redondeado no pinta distinto un boton deshabilitado
+            foreach (Button b in new[] { btnCrear, btnModificar, btnEliminar, btnGuardar })
+            {
+                b.Enabled = false;
+                b.Visible = false;
+            }
+
+            lblModo.Text = Texto("frmGestionClientes_lblModoXml");
+            lblModo.ForeColor = UI.TemaVisual.Peligro;
+        }
+
+        private void SalirModoXml()
+        {
+            modo = "consulta";
+            lblModo.Text = textos["frmGestionClientes_lblModoConsulta"];
+            lblModo.ForeColor = colorModoNormal;
+
+            btnCrear.Enabled = true;
+            btnModificar.Enabled = true;
+            btnEliminar.Enabled = true;
+            btnEliminar.Text = textos["FrmGestionarClientesJP86.btnEliminar"];
+            btnGuardar.Enabled = false;
+            btnGuardar.Visible = true;
+            ConfigurarPermisos();
+
+            CargaData();
+            MostrarMensaje("msg_Xml_VueltaABD", UI.TemaVisual.TextoPrincipal);
+        }
+
+        private void RegistrarEventoXml(Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR tipo, int criticidad)
+        {
+            ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionClientes).ToString(), ((int)tipo).ToString(), criticidad);
+            bita.RegistrarEvento(ev);
+        }
+
+        #endregion
 
         private void FrmGestionarClientesJP86_FormClosed(object sender, FormClosedEventArgs e)
         {

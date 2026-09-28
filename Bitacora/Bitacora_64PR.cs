@@ -45,7 +45,11 @@ namespace Bitacora
             DeterminacionModalidad = 32,
             AcreditacionReparacion = 33,
             LiberacionVehiculo = 34,
-            ErrorNoControlado = 35
+            ErrorNoControlado = 35,
+            SerializacionClientes = 36,
+            DeserializacionClientes = 37,
+            ErrorSerializacionClientes = 38,
+            ErrorDeserializacionClientes = 39
         }
         public enum ModuloBitacora_64PR
         {

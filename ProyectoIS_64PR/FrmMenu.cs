@@ -679,7 +679,9 @@ namespace ProyectoIS_64PR
 
             bool puedeGestionarClientes = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearCliente) ||
                                            rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarCliente) ||
-                                           rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarCliente);
+                                           rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarCliente) ||
+                                           rolUsuario.TienePermiso(Sesion.Patentes_64PR.SerializarClientes) ||
+                                           rolUsuario.TienePermiso(Sesion.Patentes_64PR.DeserializarClientes);
             btnClientes.Visible = puedeGestionarClientes;
 
             pnlGrupoMaestros.Visible = puedeGestionarCategorias || puedeGestionarVehiculos || puedeGestionarClientes;

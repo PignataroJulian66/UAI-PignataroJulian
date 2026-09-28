@@ -73,5 +73,34 @@ namespace BLL_64PR
             mpp.ActDesact(c);
             recalculador.RecalcularTabla("ClienteJP86");
         }
+
+        ///Serializa a XML los clientes recibidos (los visibles en la grilla) y relee el archivo para verificarlo.
+        ///Devuelve la cantidad de clientes verificada. No toca la BD (ni el DV).
+        public int Serializar(List<BE.ClienteJP86> clientes, string ruta)
+        {
+            SerializadorXmlJP86.Serializar(clientes, ruta);
+
+            List<BE.ClienteJP86> releidos = SerializadorXmlJP86.Deserializar<BE.ClienteJP86>(ruta);
+            if (releidos.Count != clientes.Count)
+                throw new InvalidOperationException("err_Xml_VerificacionFallida");
+
+            return releidos.Count;
+        }
+
+        ///Des-serializa un XML de clientes solo para visualizarlo: NO persiste nada en la BD.
+        public List<BE.ClienteJP86> Deserializar(string ruta)
+        {
+            List<BE.ClienteJP86> clientes = SerializadorXmlJP86.Deserializar<BE.ClienteJP86>(ruta);
+
+            if (clientes.Count == 0)
+                throw new InvalidOperationException("err_Xml_SinClientes");
+
+            ///XmlSerializer ignora los elementos que no conoce: un XML con la raiz correcta pero otros nodos
+            ///devuelve clientes sin datos. Sin DNI/Nombre/Apellido no es un archivo de clientes valido.
+            if (clientes.Any(c => c == null || string.IsNullOrWhiteSpace(c.DNI) || string.IsNullOrWhiteSpace(c.Nombre) || string.IsNullOrWhiteSpace(c.Apellido)))
+                throw new InvalidOperationException("err_Xml_EstructuraInvalida");
+
+            return clientes;
+        }
     }
 }

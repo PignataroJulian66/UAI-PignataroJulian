@@ -30,7 +30,21 @@ namespace ProyectoIS_64PR
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton3 = new System.Windows.Forms.RadioButton();
             this.lblCantidad = new System.Windows.Forms.Label();
+            this.components = new System.ComponentModel.Container();
+            this.btnActualizar = new System.Windows.Forms.Button();
+            this.btnLimpiar = new System.Windows.Forms.Button();
+            this.pnlSeparador = new System.Windows.Forms.Panel();
+            this.pnlSerializacion = new System.Windows.Forms.Panel();
+            this.btnSerializar = new System.Windows.Forms.Button();
+            this.txtRutaSerializar = new System.Windows.Forms.TextBox();
+            this.btnCarpetaSerializar = new System.Windows.Forms.Button();
+            this.btnDeserializar = new System.Windows.Forms.Button();
+            this.txtRutaDeserializar = new System.Windows.Forms.TextBox();
+            this.btnCarpetaDeserializar = new System.Windows.Forms.Button();
+            this.lblMensajes = new System.Windows.Forms.Label();
+            this.ttAyuda = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgvClientes)).BeginInit();
+            this.pnlSerializacion.SuspendLayout();
             this.SuspendLayout();
             //
             // lblBuscar
@@ -177,10 +191,127 @@ namespace ProyectoIS_64PR
             this.lblCantidad.TabIndex = 12;
             this.lblCantidad.Text = "Cantidad de clientes:";
             //
+            // btnActualizar
+            //
+            this.btnActualizar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnActualizar.Location = new System.Drawing.Point(693, 13);
+            this.btnActualizar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnActualizar.Name = "btnActualizar";
+            this.btnActualizar.Size = new System.Drawing.Size(95, 23);
+            this.btnActualizar.TabIndex = 14;
+            this.btnActualizar.Text = "Actualizar";
+            this.btnActualizar.UseVisualStyleBackColor = true;
+            this.btnActualizar.Click += new System.EventHandler(this.btnActualizar_Click);
+            //
+            // pnlSeparador
+            //
+            this.pnlSeparador.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlSeparador.Location = new System.Drawing.Point(12, 432);
+            this.pnlSeparador.Name = "pnlSeparador";
+            this.pnlSeparador.Size = new System.Drawing.Size(776, 1);
+            this.pnlSeparador.TabIndex = 15;
+            //
+            // pnlSerializacion
+            //
+            this.pnlSerializacion.Controls.Add(this.btnSerializar);
+            this.pnlSerializacion.Controls.Add(this.txtRutaSerializar);
+            this.pnlSerializacion.Controls.Add(this.btnCarpetaSerializar);
+            this.pnlSerializacion.Controls.Add(this.btnDeserializar);
+            this.pnlSerializacion.Controls.Add(this.txtRutaDeserializar);
+            this.pnlSerializacion.Controls.Add(this.btnCarpetaDeserializar);
+            this.pnlSerializacion.Location = new System.Drawing.Point(12, 444);
+            this.pnlSerializacion.Name = "pnlSerializacion";
+            this.pnlSerializacion.Size = new System.Drawing.Size(674, 66);
+            this.pnlSerializacion.TabIndex = 16;
+            //
+            // btnSerializar
+            //
+            this.btnSerializar.Location = new System.Drawing.Point(0, 0);
+            this.btnSerializar.Name = "btnSerializar";
+            this.btnSerializar.Size = new System.Drawing.Size(150, 28);
+            this.btnSerializar.TabIndex = 2;
+            this.btnSerializar.Text = "SERIALIZAR";
+            this.btnSerializar.UseVisualStyleBackColor = true;
+            this.btnSerializar.Click += new System.EventHandler(this.btnSerializar_Click);
+            //
+            // txtRutaSerializar
+            //
+            this.txtRutaSerializar.Location = new System.Drawing.Point(0, 38);
+            this.txtRutaSerializar.Name = "txtRutaSerializar";
+            this.txtRutaSerializar.ReadOnly = true;
+            this.txtRutaSerializar.Size = new System.Drawing.Size(280, 22);
+            this.txtRutaSerializar.TabIndex = 0;
+            this.txtRutaSerializar.TabStop = false;
+            //
+            // btnCarpetaSerializar
+            //
+            this.btnCarpetaSerializar.Location = new System.Drawing.Point(286, 37);
+            this.btnCarpetaSerializar.Name = "btnCarpetaSerializar";
+            this.btnCarpetaSerializar.Size = new System.Drawing.Size(34, 25);
+            this.btnCarpetaSerializar.TabIndex = 1;
+            this.btnCarpetaSerializar.UseVisualStyleBackColor = true;
+            this.btnCarpetaSerializar.Click += new System.EventHandler(this.btnCarpetaSerializar_Click);
+            //
+            // btnDeserializar
+            //
+            this.btnDeserializar.Location = new System.Drawing.Point(353, 0);
+            this.btnDeserializar.Name = "btnDeserializar";
+            this.btnDeserializar.Size = new System.Drawing.Size(150, 28);
+            this.btnDeserializar.TabIndex = 5;
+            this.btnDeserializar.Text = "DES-SERIALIZAR";
+            this.btnDeserializar.UseVisualStyleBackColor = true;
+            this.btnDeserializar.Click += new System.EventHandler(this.btnDeserializar_Click);
+            //
+            // txtRutaDeserializar
+            //
+            this.txtRutaDeserializar.Location = new System.Drawing.Point(353, 38);
+            this.txtRutaDeserializar.Name = "txtRutaDeserializar";
+            this.txtRutaDeserializar.ReadOnly = true;
+            this.txtRutaDeserializar.Size = new System.Drawing.Size(280, 22);
+            this.txtRutaDeserializar.TabIndex = 3;
+            this.txtRutaDeserializar.TabStop = false;
+            //
+            // btnCarpetaDeserializar
+            //
+            this.btnCarpetaDeserializar.Location = new System.Drawing.Point(639, 37);
+            this.btnCarpetaDeserializar.Name = "btnCarpetaDeserializar";
+            this.btnCarpetaDeserializar.Size = new System.Drawing.Size(34, 25);
+            this.btnCarpetaDeserializar.TabIndex = 4;
+            this.btnCarpetaDeserializar.UseVisualStyleBackColor = true;
+            this.btnCarpetaDeserializar.Click += new System.EventHandler(this.btnCarpetaDeserializar_Click);
+            //
+            // btnLimpiar
+            //
+            this.btnLimpiar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLimpiar.Location = new System.Drawing.Point(693, 444);
+            this.btnLimpiar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnLimpiar.Name = "btnLimpiar";
+            this.btnLimpiar.Size = new System.Drawing.Size(95, 28);
+            this.btnLimpiar.TabIndex = 17;
+            this.btnLimpiar.Text = "Limpiar";
+            this.btnLimpiar.UseVisualStyleBackColor = true;
+            this.btnLimpiar.Click += new System.EventHandler(this.btnLimpiar_Click);
+            //
+            // lblMensajes
+            //
+            this.lblMensajes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblMensajes.Location = new System.Drawing.Point(10, 10);
+            this.lblMensajes.Name = "lblMensajes";
+            this.lblMensajes.Size = new System.Drawing.Size(300, 130);
+            this.lblMensajes.TabIndex = 0;
+            //
             // FrmGestionarClientesJP86
             //
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.AutoScroll = true;
+            this.ClientSize = new System.Drawing.Size(800, 525);
+            this.Controls.Add(this.btnLimpiar);
+            this.Controls.Add(this.pnlSerializacion);
+            this.Controls.Add(this.pnlSeparador);
+            this.Controls.Add(this.btnActualizar);
             this.Controls.Add(this.lblCantidad);
             this.Controls.Add(this.radioButton3);
             this.Controls.Add(this.radioButton2);
@@ -201,6 +332,8 @@ namespace ProyectoIS_64PR
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmGestionarClientesJP86_FormClosed);
             this.Load += new System.EventHandler(this.FrmGestionarClientesJP86_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvClientes)).EndInit();
+            this.pnlSerializacion.ResumeLayout(false);
+            this.pnlSerializacion.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -221,5 +354,17 @@ namespace ProyectoIS_64PR
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton3;
         private System.Windows.Forms.Label lblCantidad;
+        private System.Windows.Forms.Button btnActualizar;
+        private System.Windows.Forms.Button btnLimpiar;
+        private System.Windows.Forms.Panel pnlSeparador;
+        private System.Windows.Forms.Panel pnlSerializacion;
+        private System.Windows.Forms.Button btnSerializar;
+        private System.Windows.Forms.TextBox txtRutaSerializar;
+        private System.Windows.Forms.Button btnCarpetaSerializar;
+        private System.Windows.Forms.Button btnDeserializar;
+        private System.Windows.Forms.TextBox txtRutaDeserializar;
+        private System.Windows.Forms.Button btnCarpetaDeserializar;
+        private System.Windows.Forms.Label lblMensajes;
+        private System.Windows.Forms.ToolTip ttAyuda;
     }
 }

@@ -44,6 +44,8 @@ namespace Sesion
         public const string CrearCliente = "Crear cliente";
         public const string ModificarCliente = "Modificar cliente";
         public const string EliminarCliente = "Eliminar cliente";
+        public const string SerializarClientes = "Serializar clientes";
+        public const string DeserializarClientes = "Deserializar clientes";
 
         ///Gestion de Alquileres (RFN1)
         public const string GenerarContrato = "Generar contrato";
