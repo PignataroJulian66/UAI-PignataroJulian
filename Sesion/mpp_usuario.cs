@@ -181,7 +181,7 @@ namespace Sesion
                 u.Apellido = dr["Apellido"].ToString();
                 u.Login = dr["Login"].ToString();
                 u.Rol = u.Rol = mpRoles.ObtenerRolCompleto(int.Parse(dr["Rol"].ToString()));
-                u.Email = dr["Email"].ToString();
+                u.Email = Encriptacion.Encriptación.Instancia.DesencriptarAESBase64(dr["Email"].ToString());
                 u.Activo = bool.Parse(dr["Activo"].ToString());
                 u.Bloqueado = bool.Parse(dr["Bloqueo"].ToString());
                 u.PrimeraVez = bool.Parse(dr["PrimeraVez"].ToString());

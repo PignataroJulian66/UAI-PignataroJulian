@@ -227,7 +227,7 @@ namespace DAL_64PR
         {
             ///Conexión independiente contra 'master'
             //string connStringMaster = ConfigurationManager.ConnectionStrings["ConexionMaster"].ConnectionString;
-            string connStringMaster = @"Data Source=.;Initial Catalog=BD_64PR;Integrated Security=True;TrustServerCertificate=True";
+            string connStringMaster = @"Data Source=.;Initial Catalog=master;Integrated Security=True;TrustServerCertificate=True";
             using (SqlConnection conexionMaster = new SqlConnection(connStringMaster))
             {
                 conexionMaster.Open();

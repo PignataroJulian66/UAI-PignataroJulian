@@ -605,5 +605,7 @@
   "err_Xml_SinPermisosLectura": "you do not have permission to read the file.",
   "err_Xml_ErrorLectura": "the file could not be read (it may be open in another program).",
   "err_Xml_VerificacionFallida": "the file was created but the client count does not match when read back.",
-  "err_Xml_SinClientes": "the file does not contain any clients."
+  "err_Xml_SinClientes": "the file does not contain any clients.",
+  "err_RestaurarVersion_RevisionActiva": "This version cannot be restored: it has the vehicle In review and active. A vehicle in review is always inactive.",
+  "err_Reporte_ReporteAbierto": "The report cannot be registered: the vehicle already has an unaccredited defect report. Complete that maintenance cycle first."
 }

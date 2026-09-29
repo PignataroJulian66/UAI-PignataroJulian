@@ -160,10 +160,19 @@ namespace ProyectoIS_64PR
 
             try
             {
-                bll.ActivarBitacoraCambios(seleccionado.IdBitacora);
+                bll.ActivarBitacoraCambios(seleccionado);
+
+                Bitacora.Evento_64PR ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionVehiculos).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.RestauracionVersionVehiculo).ToString(), 2);
+                new Bitacora.Bitacora_64PR().RegistrarEvento(ev);
+
                 MessageBox.Show(textos["bitacoraCambios_activado"]);
                 CargaData();
                 LimpiarFiltros();
+            }
+            catch (InvalidOperationException ex)
+            {
+                ///Regla de estado/baja (clave de idioma lanzada por la BLL): no se restaura ni se registra evento
+                MessageBox.Show(Traductor_64PR.TraducirMensaje(textos, ex.Message), textos["titulo_Validacion"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (SqlException ex)
             {

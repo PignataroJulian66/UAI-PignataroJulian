@@ -49,7 +49,8 @@ namespace Bitacora
             SerializacionClientes = 36,
             DeserializacionClientes = 37,
             ErrorSerializacionClientes = 38,
-            ErrorDeserializacionClientes = 39
+            ErrorDeserializacionClientes = 39,
+            RestauracionVersionVehiculo = 40
         }
         public enum ModuloBitacora_64PR
         {

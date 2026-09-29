@@ -58,7 +58,45 @@ namespace BLL_64PR
             CambiarEstado(patente, destino);
         }
 
-        ///Compartido por CambiarEstadoManual y ActDesact
+        ///Restaurar una version historica (FrmBitacoraCambiosVehiculo) es un UPDATE completo del vehiculo:
+        ///se le aplican las mismas reglas que al cambio de estado manual y a la baja, para que no sea un atajo.
+        public void ValidarRestauracion(string patente, BE.EstadoVehiculoJP86 estadoDestino, bool activoDestino)
+        {
+            BE.VehiculoJP86 actual = mpp.Listar().FirstOrDefault(v => v.Patente == patente);
+            if (actual == null)
+                throw new InvalidOperationException("El vehiculo no existe.");
+
+            ///El estado se lee de la BD, no de la grilla (puede estar desactualizada)
+            BE.EstadoVehiculoJP86 origen = mpp.ObtenerEstado(patente);
+
+            if (estadoDestino != origen)
+            {
+                if (estadoDestino != BE.EstadoVehiculoJP86.DISPONIBLE && estadoDestino != BE.EstadoVehiculoJP86.EN_REVISION)
+                    throw new InvalidOperationException("err_CambioEstado_DestinoNoPermitido");
+
+                if (TieneContratoAbierto(patente, origen))
+                    throw new InvalidOperationException("err_CambioEstado_ContratoActivo");
+
+                if ((origen == BE.EstadoVehiculoJP86.EN_REVISION || origen == BE.EstadoVehiculoJP86.EN_REPARACION) && TieneReporteAbierto(patente))
+                    throw new InvalidOperationException("err_CambioEstado_ReporteAbierto");
+            }
+
+            ///Misma regla que CambiarEstado: un vehiculo EN_REVISION nunca queda activo
+            if (estadoDestino == BE.EstadoVehiculoJP86.EN_REVISION && activoDestino)
+                throw new InvalidOperationException("err_RestaurarVersion_RevisionActiva");
+
+            ///Si la version lo deja inactivo y hoy esta activo, es una baja: mismas reglas que ActDesact
+            if (actual.Activo && !activoDestino)
+            {
+                if (TieneContratoAbierto(patente, origen))
+                    throw new InvalidOperationException("err_BajaVehiculo_ContratoActivo");
+
+                if (TieneReporteAbierto(patente))
+                    throw new InvalidOperationException("err_BajaVehiculo_ReporteAbierto");
+            }
+        }
+
+        ///Compartido por CambiarEstadoManual, ActDesact y ValidarRestauracion
         private bool TieneContratoAbierto(string patente, BE.EstadoVehiculoJP86 origen)
         {
             return origen == BE.EstadoVehiculoJP86.ALQUILADO && mppContrato.ExisteActivoPorVehiculo(patente);

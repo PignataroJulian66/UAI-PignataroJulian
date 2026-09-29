@@ -18,6 +18,11 @@ namespace BLL_64PR
 
         public BE.ReporteJP86 RegistrarReporte(BE.VehiculoJP86 vehiculo, string descripcionProblema, BE.FuenteReporteJP86 fuente)
         {
+            ///Un vehiculo tiene a lo sumo un reporte abierto (PENDIENTE, CLASIFICADO o EN_REPARACION): el nuevo
+            ///desperfecto se agrega al circuito ya abierto en vez de duplicarlo
+            if (mpp.ExisteAbiertoPorVehiculo(vehiculo.Patente))
+                throw new InvalidOperationException("err_Reporte_ReporteAbierto");
+
             BE.ReporteJP86 r = new BE.ReporteJP86()
             {
                 Vehiculo = vehiculo,

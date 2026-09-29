@@ -127,6 +127,11 @@ namespace ProyectoIS_64PR
 
                 LimpiarFormulario();
             }
+            catch (InvalidOperationException ex)
+            {
+                ///Regla de negocio (clave de idioma lanzada por la BLL): no se registra evento
+                MessageBox.Show(Traductor_64PR.TraducirMensaje(textos, ex.Message), textos["titulo_Validacion"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             catch (SqlException ex)
             {
                 MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -525,5 +525,7 @@
   "err_Xml_SinPermisosLectura": "no tiene permisos para leer el archivo.",
   "err_Xml_ErrorLectura": "no se pudo leer el archivo (puede estar abierto por otro programa).",
   "err_Xml_VerificacionFallida": "el archivo se generó pero al releerlo la cantidad de clientes no coincide.",
-  "err_Xml_SinClientes": "el archivo no contiene clientes."
+  "err_Xml_SinClientes": "el archivo no contiene clientes.",
+  "err_RestaurarVersion_RevisionActiva": "No se puede restaurar esta versión: tiene el vehículo En revisión y activo. Un vehículo en revisión siempre queda inactivo.",
+  "err_Reporte_ReporteAbierto": "No se puede registrar el reporte: el vehículo ya tiene un reporte de desperfecto sin acreditar. Complete ese circuito de mantenimiento primero."
 }
