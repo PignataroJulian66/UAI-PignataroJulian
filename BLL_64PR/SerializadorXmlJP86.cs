@@ -11,8 +11,8 @@ using System.Xml.Serialization;
 namespace BLL_64PR
 {
     ///Serializacion XML generica (XmlSerializer) de una lista de objetos a un archivo del disco.
-    ///No conoce ninguna entidad: la usan las BLL de cada maestro (ej. BLL_64PR.ClienteJP86).
-    ///Las excepciones llevan como Message una clave de idioma (la UI la traduce), igual que el resto de las BLL.
+    ///la usan las BLL de cada maestro
+    ///Las excepciones llevan como Message una clave de idioma, igual que el resto de las BLL.
     public static class SerializadorXmlJP86
     {
         public static void Serializar<T>(List<T> lista, string ruta)

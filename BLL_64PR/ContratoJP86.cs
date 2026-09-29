@@ -13,8 +13,7 @@ namespace BLL_64PR
         ///Tope de las columnas ContratoJP86.ImporteTotal y FacturaJP86.MontoFactura: DECIMAL(10,2).
         public const decimal ImporteMaximo = 99999999.99m;
 
-        ///Plazo maximo de un contrato: el negocio es alquiler de corto plazo (entrega inmediata de la unidad).
-        ///Un uso mas largo es leasing/renting, otro producto. Si se cambia, actualizar err_Contrato_PlazoMaximo en idiomas/*.json.
+        ///Plazo maximo de un contrato: alquiler de corto plazo.
         public const int PlazoMaximoDias = 90;
 
         Mapper.mpp_contrato mpp = new Mapper.mpp_contrato();
@@ -37,7 +36,7 @@ namespace BLL_64PR
 
         public BE.ContratoJP86 GenerarContrato(BE.ClienteJP86 cliente, BE.VehiculoJP86 vehiculo, DateTime fechaInicio, DateTime fechaFin, bool cargosAdicionales)
         {
-            ///Las excepciones de negocio llevan como Message una clave de idioma (la UI la traduce)
+            ///Las excepciones de negocio llevan como Message una clave de idioma
             if (fechaFin.Date < fechaInicio.Date)
                 throw new InvalidOperationException("msg_FechasValidas");
             if (fechaInicio.Date < DateTime.Today)

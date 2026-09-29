@@ -14,7 +14,7 @@ namespace BE
         public decimal ImporteTotal { get; set; }
         public int KilometrajeEntrega { get; set; }
         public int? KilometrajeRetorno { get; set; }
-        public EstadoUnidadDevolucionJP86? EstadoUnidadDevolucion { get; set; }
+        public EstadoUnidadDevolucionJP86? EstadoUnidadDevolucion { get; set; }  // el ? admite nulos 
         public EstadoContratoJP86 Estado { get; set; }
 
         public override string ToString()

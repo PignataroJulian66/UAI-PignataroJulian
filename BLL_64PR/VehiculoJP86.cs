@@ -108,7 +108,7 @@ namespace BLL_64PR
             return mppReporte.ExisteAbiertoPorVehiculo(patente);
         }
 
-        ///Toggle: si llega activo es una baja (se valida); si llega inactivo es una reactivacion (sin reglas)
+        ///si llega activo es una baja; si llega inactivo es una reactivacion
         public void ActDesact(BE.VehiculoJP86 v)
         {
             if (v.Activo)

@@ -29,7 +29,7 @@ namespace BLL_64PR
             recalculador.RecalcularTabla("Categoria_64PR");
         }
 
-        ///Toggle: si llega activa es una baja (se valida); si llega inactiva es una reactivacion (sin reglas)
+        ///si llega activa es una baja (se valida); si llega inactiva es una reactivacion
         public void ActDesact(BE.Categoria_64PR c)
         {
             if (c.Activo && mppVehiculo.ExisteActivoPorCategoria(c.Id))

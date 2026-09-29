@@ -30,11 +30,11 @@ namespace BLL_64PR
 
         public void Crear(BE.ClienteJP86 c)
         {
-            ///Las excepciones llevan como Message una clave de idioma (la UI la traduce)
+            ///Las excepciones llevan como Message una clave de idioma
             if (c.DNI == null || !RegexDNI.IsMatch(c.DNI))
                 throw new InvalidOperationException("msg_DNIValido");
             ValidarDatosPersonales(c);
-            ///La PK de ClienteJP86.DNI sigue siendo la garantia final (alta simultanea): la UI conserva el catch 2627/2601
+            ///La PK de ClienteJP86.DNI sigue siendo la garantia final 
             if (mpp.ExisteDNI(c.DNI))
                 throw new InvalidOperationException("msg_DNIDuplicado");
 
@@ -63,7 +63,7 @@ namespace BLL_64PR
                 throw new InvalidOperationException("msg_TelefonoValido");
         }
 
-        ///Toggle: si llega activo es una baja (se valida); si llega inactivo es una reactivacion (sin reglas)
+        //si llega activo es una baja (se valida); si llega inactivo es una reactivacion
         public void ActDesact(BE.ClienteJP86 c)
         {
             ///Baja logica: los contratos CERRADO no bloquean, solo los que siguen abiertos
@@ -95,7 +95,7 @@ namespace BLL_64PR
             if (clientes.Count == 0)
                 throw new InvalidOperationException("err_Xml_SinClientes");
 
-            ///XmlSerializer ignora los elementos que no conoce: un XML con la raiz correcta pero otros nodos
+            
             ///devuelve clientes sin datos. Sin DNI/Nombre/Apellido no es un archivo de clientes valido.
             if (clientes.Any(c => c == null || string.IsNullOrWhiteSpace(c.DNI) || string.IsNullOrWhiteSpace(c.Nombre) || string.IsNullOrWhiteSpace(c.Apellido)))
                 throw new InvalidOperationException("err_Xml_EstructuraInvalida");

@@ -60,10 +60,10 @@ namespace BLL_64PR
             reporte.Estado = BE.EstadoReporteJP86.CLASIFICADO;
         }
 
-        ///CUN-07 "Determinar Modalidad Reparacion": incluido siempre a continuacion de AsignarCriticidad (CUN-06 paso 7).
+        ///CUN-07 "Determinar Modalidad Reparacion": incluido siempre a continuacion de AsignarCriticidad (CUN-06).
         ///El SP actualiza Reporte (Estado=EN_REPARACION) y VehiculoJP86 (Estado=EN_REPARACION) en una unica transaccion,
         ///a diferencia de CUN-01/CUN-04 (que reutilizan BLL_64PR.VehiculoJP86.CambiarEstado en llamadas separadas),
-        ///porque ambas actualizaciones tienen que quedar consistentes entre si (mismo criterio que SP_FacturaJP86_Crear).
+        ///porque ambas actualizaciones tienen que quedar consistentes entre si
         public void DeterminarModalidad(BE.ReporteJP86 reporte, BE.ModalidadReparacionJP86 modalidad)
         {
             mpp.DeterminarModalidad(reporte.NumeroReporte, modalidad);

@@ -5,7 +5,7 @@ using System.Windows.Forms;
 namespace ProyectoIS_64PR
 {
     ///Punto unico para los errores NO previstos: lo usan los catch (Exception) de respaldo de los forms
-    ///y los handlers globales de Program.cs (Application.ThreadException / AppDomain.UnhandledException).
+    ///y los handlers globales
     public static class ManejadorErroresJP86
     {
         ///Textos de respaldo por si el error ocurre antes de que se haya cargado un idioma (ej. antes del login).
