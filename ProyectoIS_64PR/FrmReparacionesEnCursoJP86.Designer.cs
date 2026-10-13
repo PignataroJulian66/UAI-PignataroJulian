@@ -80,7 +80,6 @@ namespace ProyectoIS_64PR
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmReparacionesEnCursoJP86";
             this.Text = "FrmReparacionesEnCursoJP86";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmReparacionesEnCursoJP86_FormClosed);
             this.Load += new System.EventHandler(this.FrmReparacionesEnCursoJP86_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvReportes)).EndInit();
             this.ResumeLayout(false);

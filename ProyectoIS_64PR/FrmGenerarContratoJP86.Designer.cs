@@ -298,7 +298,6 @@ namespace ProyectoIS_64PR
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmGenerarContratoJP86";
             this.Text = "FrmGenerarContratoJP86";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmGenerarContratoJP86_FormClosed);
             this.Load += new System.EventHandler(this.FrmGenerarContratoJP86_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numKilometrajeMax)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUnidades)).EndInit();

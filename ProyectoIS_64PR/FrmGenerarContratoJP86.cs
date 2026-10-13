@@ -309,10 +309,5 @@ namespace ProyectoIS_64PR
 
             ActualizarImporte();
         }
-
-        private void FrmGenerarContratoJP86_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this);
-        }
     }
 }

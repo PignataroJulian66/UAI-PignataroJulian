@@ -476,11 +476,10 @@
 
   "FrmReportesPendientesJP86.lblHistorialTitulo": "Vehicle maintenance history:",
   "FrmReportesPendientesJP86.lblCriticidad": "Criticality:",
-  "FrmReportesPendientesJP86.btnAsignarCriticidad": "Assign criticality",
   "FrmReportesPendientesJP86.lblModalidad": "Repair modality:",
   "FrmReportesPendientesJP86.rbInterna": "In-house",
   "FrmReportesPendientesJP86.rbExterna": "External",
-  "FrmReportesPendientesJP86.btnConfirmarModalidad": "Confirm modality",
+  "FrmReportesPendientesJP86.btnConfirmar": "Confirm",
   "FrmReportesPendientesJP86.dgvReportes.NumeroReporte": "Report No.",
   "FrmReportesPendientesJP86.dgvReportes.Vehiculo": "Vehicle",
   "FrmReportesPendientesJP86.dgvReportes.FechaHora": "Date and time",
@@ -506,7 +505,7 @@
 
   "msg_sinReportesPendientes": "There are no reports in PENDIENTE status.",
   "msg_seleccionarReporte": "Select a report from the list.",
-  "modalidad_determinada": "Repair modality registered. The vehicle moves to Under Repair status.",
+  "reporte_clasificado": "Criticality and modality registered. The report moves to EN_REPARACION and the vehicle to Under Repair status.",
 
   "FrmReparacionesEnCursoJP86.lblDescripcionCierre": "Repair closing description:",
   "FrmReparacionesEnCursoJP86.btnAcreditar": "Accredit repair",
@@ -607,5 +606,7 @@
   "err_Xml_VerificacionFallida": "the file was created but the client count does not match when read back.",
   "err_Xml_SinClientes": "the file does not contain any clients.",
   "err_RestaurarVersion_RevisionActiva": "This version cannot be restored: it has the vehicle In review and active. A vehicle in review is always inactive.",
-  "err_Reporte_ReporteAbierto": "The report cannot be registered: the vehicle already has an unaccredited defect report. Complete that maintenance cycle first."
+  "err_Reporte_ReporteAbierto": "The report cannot be registered: the vehicle already has an unaccredited defect report. Complete that maintenance cycle first.",
+  "err_Reporte_NoPendiente": "The report is no longer in PENDIENTE status (another user may have classified it). No changes were made; the list was refreshed.",
+  "err_Reporte_NoEnReparacion": "The report is no longer in EN_REPARACION status (another user may have accredited it). No changes were made; the list was refreshed."
 }

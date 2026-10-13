@@ -6,7 +6,8 @@ using System.Windows.Forms;
 
 namespace ProyectoIS_64PR
 {
-    ///CUN-06 "Asignar Criticidad" + CUN-07 "Determinar Modalidad Reparacion" (incluido siempre en el paso 7 de CUN-06).
+    ///CUN-06 "Asignar Criticidad" + CUN-07 "Determinar Modalidad Reparacion" (include obligatorio: mismo actor, mismo form, mismo momento).
+    ///Una unica confirmacion registra criticidad + modalidad y pasa el reporte a EN_REPARACION; si no se confirma, no se guarda nada.
     public partial class FrmReportesPendientesJP86 : Form, Idioma.IObservadorIdioma_64PR
     {
         Bitacora.Bitacora_64PR bita = new Bitacora.Bitacora_64PR();
@@ -30,8 +31,7 @@ namespace ProyectoIS_64PR
             ///Fila entera en rojo cuando Criticidad == CRITICA (secc. 8.1.b)
             UI.EstilosUI.AplicarFilaCritica(dgvReportes, "Criticidad", valor => valor.ToString().ToUpper() == "CRITICA");
             UI.EstilosUI.AplicarFilaCritica(dgvHistorial, "Criticidad", valor => valor.ToString().ToUpper() == "CRITICA");
-            UI.EstilosUI.EstiloBotonPrimario(btnAsignarCriticidad);
-            UI.EstilosUI.EstiloBotonPrimario(btnConfirmarModalidad);
+            UI.EstilosUI.EstiloBotonPrimario(btnConfirmar);
 
             cmbCriticidad.DataSource = Enum.GetValues(typeof(BE.CriticidadReporteJP86));
 
@@ -61,18 +61,22 @@ namespace ProyectoIS_64PR
             ConfigurarPermisos();
         }
 
-        private void ConfigurarPermisos()
+        ///CUN-07 es include obligatorio de CUN-06: hacen falta AMBAS patentes para clasificar un reporte
+        private bool PuedeClasificar()
         {
             Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
-            bool puedeAsignarCriticidad = rolUsuario.TienePermiso(Sesion.Patentes_64PR.AsignarCriticidad);
-            bool puedeDeterminarModalidad = rolUsuario.TienePermiso(Sesion.Patentes_64PR.DeterminarModalidad);
+            return rolUsuario.TienePermiso(Sesion.Patentes_64PR.AsignarCriticidad) &&
+                   rolUsuario.TienePermiso(Sesion.Patentes_64PR.DeterminarModalidad);
+        }
 
-            cmbCriticidad.Enabled = puedeAsignarCriticidad;
-            btnAsignarCriticidad.Enabled = puedeAsignarCriticidad && reporteSeleccionado != null;
+        private void ConfigurarPermisos()
+        {
+            bool puedeClasificar = PuedeClasificar();
 
-            rbInterna.Enabled = puedeDeterminarModalidad;
-            rbExterna.Enabled = puedeDeterminarModalidad;
-            btnConfirmarModalidad.Enabled = puedeDeterminarModalidad;
+            cmbCriticidad.Enabled = puedeClasificar;
+            rbInterna.Enabled = puedeClasificar;
+            rbExterna.Enabled = puedeClasificar;
+            btnConfirmar.Enabled = puedeClasificar && reporteSeleccionado != null;
         }
 
         private void CargarReportesPendientes()
@@ -94,6 +98,7 @@ namespace ProyectoIS_64PR
         {
             if (e.RowIndex >= 0)
             {
+                ///Cambiar de fila sin confirmar descarta lo elegido: no se guardo nada todavia
                 reporteSeleccionado = dgvReportes.SelectedRows[0].DataBoundItem as BE.ReporteJP86;
 
                 dgvHistorial.DataSource = null;
@@ -101,37 +106,25 @@ namespace ProyectoIS_64PR
                 ///Rebindear regenera las columnas (autogeneradas) y pisa cualquier traduccion previa: hay que reaplicarla
                 Traductor_64PR.TraducirGrilla(this, dgvHistorial, textos);
 
-                MostrarPasoCriticidad();
+                MostrarClasificacion();
 
-                Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
-                btnAsignarCriticidad.Enabled = rolUsuario.TienePermiso(Sesion.Patentes_64PR.AsignarCriticidad);
+                btnConfirmar.Enabled = PuedeClasificar();
             }
         }
 
-        private void MostrarPasoCriticidad()
+        ///Criticidad (CUN-06) y modalidad (CUN-07) se muestran juntas y se confirman una sola vez
+        private void MostrarClasificacion()
         {
             lblCriticidad.Visible = true;
             cmbCriticidad.Visible = true;
-            btnAsignarCriticidad.Visible = true;
             cmbCriticidad.SelectedIndex = 0;
-
-            lblModalidad.Visible = false;
-            rbInterna.Visible = false;
-            rbExterna.Visible = false;
-            btnConfirmarModalidad.Visible = false;
-        }
-
-        private void MostrarPasoModalidad()
-        {
-            lblCriticidad.Visible = false;
-            cmbCriticidad.Visible = false;
-            btnAsignarCriticidad.Visible = false;
 
             lblModalidad.Visible = true;
             rbInterna.Visible = true;
             rbExterna.Visible = true;
-            btnConfirmarModalidad.Visible = true;
             rbInterna.Checked = true;
+
+            btnConfirmar.Visible = true;
         }
 
         private void LimpiarSeleccion()
@@ -141,14 +134,13 @@ namespace ProyectoIS_64PR
 
             lblCriticidad.Visible = false;
             cmbCriticidad.Visible = false;
-            btnAsignarCriticidad.Visible = false;
             lblModalidad.Visible = false;
             rbInterna.Visible = false;
             rbExterna.Visible = false;
-            btnConfirmarModalidad.Visible = false;
+            btnConfirmar.Visible = false;
         }
 
-        private void btnAsignarCriticidad_Click(object sender, EventArgs e)
+        private void btnConfirmar_Click(object sender, EventArgs e)
         {
             if (reporteSeleccionado == null)
             {
@@ -157,63 +149,33 @@ namespace ProyectoIS_64PR
             }
 
             BE.CriticidadReporteJP86 criticidad = (BE.CriticidadReporteJP86)cmbCriticidad.SelectedItem;
-
-            try
-            {
-                greportes.AsignarCriticidad(reporteSeleccionado, criticidad);
-
-                ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionMantenimiento).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.AsignacionCriticidad).ToString(), 2);
-                bita.RegistrarEvento(ev);
-
-                ///CUN-07 incluido siempre: pasa directo al paso de determinar modalidad, sin volver al menu
-                MostrarPasoModalidad();
-            }
-            catch (SqlException ex)
-            {
-                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (InvalidOperationException ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                CargarReportesPendientes();
-            }
-        }
-
-        private void btnConfirmarModalidad_Click(object sender, EventArgs e)
-        {
-            if (reporteSeleccionado == null)
-            {
-                MessageBox.Show(textos["msg_seleccionarReporte"]);
-                return;
-            }
-
             BE.ModalidadReparacionJP86 modalidad = rbInterna.Checked ? BE.ModalidadReparacionJP86.INTERNA : BE.ModalidadReparacionJP86.EXTERNA;
 
             try
             {
-                greportes.DeterminarModalidad(reporteSeleccionado, modalidad);
+                greportes.AsignarCriticidadYModalidad(reporteSeleccionado, criticidad, modalidad);
+
+                ///Solo si la operacion fue exitosa: un evento por cada caso de uso (CUN-06 y CUN-07)
+                ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionMantenimiento).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.AsignacionCriticidad).ToString(), 2);
+                bita.RegistrarEvento(ev);
 
                 ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionMantenimiento).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.DeterminacionModalidad).ToString(), 3);
                 bita.RegistrarEvento(ev);
 
-                MessageBox.Show(textos["modalidad_determinada"]);
+                MessageBox.Show(textos["reporte_clasificado"]);
 
+                CargarReportesPendientes();
+            }
+            catch (InvalidOperationException ex)
+            {
+                ///Regla de negocio (clave de idioma lanzada por la BLL/Mapper): no se registra evento
+                MessageBox.Show(Traductor_64PR.TraducirMensaje(textos, ex.Message), textos["titulo_Validacion"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 CargarReportesPendientes();
             }
             catch (SqlException ex)
             {
                 MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch (InvalidOperationException ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                CargarReportesPendientes();
-            }
-        }
-
-        private void FrmReportesPendientesJP86_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this);
         }
     }
 }

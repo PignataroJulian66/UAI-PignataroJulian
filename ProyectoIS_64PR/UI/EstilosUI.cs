@@ -199,7 +199,6 @@ namespace ProyectoIS_64PR.UI
             switch (estado)
             {
                 case "PENDIENTE": return (TemaVisual.Advertencia, Color.White);
-                case "CLASIFICADO": return (TemaVisual.Info, Color.White);
                 case "EN_REPARACION": return (TemaVisual.Peligro, Color.White);
                 case "ACREDITADO": return (TemaVisual.Exito, Color.White);
                 default: return (TemaVisual.Borde, TemaVisual.TextoPrincipal);

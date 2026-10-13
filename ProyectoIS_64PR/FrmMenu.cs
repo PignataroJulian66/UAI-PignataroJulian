@@ -703,12 +703,14 @@ namespace ProyectoIS_64PR
 
             bool puedeAsignarCriticidad = rolUsuario.TienePermiso(Sesion.Patentes_64PR.AsignarCriticidad);
             bool puedeDeterminarModalidad = rolUsuario.TienePermiso(Sesion.Patentes_64PR.DeterminarModalidad);
-            btnReportesPendientes.Visible = puedeAsignarCriticidad || puedeDeterminarModalidad;
+            ///CUN-07 es include obligatorio de CUN-06: "Reportes pendientes" requiere AMBAS patentes
+            bool puedeClasificarReporte = puedeAsignarCriticidad && puedeDeterminarModalidad;
+            btnReportesPendientes.Visible = puedeClasificarReporte;
 
             bool puedeRegistrarAcreditacion = rolUsuario.TienePermiso(Sesion.Patentes_64PR.RegistrarAcreditacion);
             btnReparacionesEnCurso.Visible = puedeRegistrarAcreditacion;
 
-            pnlGrupoMantenimiento.Visible = puedeRegistrarReporte || puedeAsignarCriticidad || puedeDeterminarModalidad || puedeRegistrarAcreditacion;
+            pnlGrupoMantenimiento.Visible = puedeRegistrarReporte || puedeClasificarReporte || puedeRegistrarAcreditacion;
 
             lblSeccionOperacion.Visible = pnlGrupoAlquileres.Visible || pnlGrupoMantenimiento.Visible;
 

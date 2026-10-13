@@ -127,20 +127,16 @@ namespace ProyectoIS_64PR
 
                 CargarReportesEnReparacion();
             }
+            catch (InvalidOperationException ex)
+            {
+                ///Regla de negocio (clave de idioma lanzada por la BLL/Mapper): no se registra evento
+                MessageBox.Show(Traductor_64PR.TraducirMensaje(textos, ex.Message), textos["titulo_Validacion"], MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                CargarReportesEnReparacion();
+            }
             catch (SqlException ex)
             {
                 MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch (InvalidOperationException ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                CargarReportesEnReparacion();
-            }
-        }
-
-        private void FrmReparacionesEnCursoJP86_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this);
         }
     }
 }

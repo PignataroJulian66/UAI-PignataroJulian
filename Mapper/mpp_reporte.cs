@@ -127,31 +127,27 @@ namespace Mapper
             return MapearReportes(tabla);
         }
 
-        public void AsignarCriticidad(int numeroReporte, BE.CriticidadReporteJP86 criticidad)
+        ///CUN-06 + CUN-07 en una unica operacion: criticidad + modalidad, reporte PENDIENTE -> EN_REPARACION y vehiculo -> EN_REPARACION.
+        ///Devuelve las filas afectadas (0 si el reporte ya no estaba PENDIENTE): esa regla la evalua la BLL.
+        ///El SP devuelve @@ROWCOUNT como resultado (SELECT) porque con SET NOCOUNT ON, ExecuteNonQuery siempre da -1.
+        public int AsignarCriticidadYModalidad(int numeroReporte, BE.CriticidadReporteJP86 criticidad, BE.ModalidadReparacionJP86 modalidad)
         {
             SqlParameter[] parametros = new SqlParameter[]
             {
                 new SqlParameter("@NumeroReporte", numeroReporte),
-                new SqlParameter("@Criticidad", criticidad.ToString())
-            };
-            int filasAfectadas = DAL_64PR.Acceso.Instancia.escribirQuery("SP_ReporteJP86_AsignarCriticidad", parametros, CommandType.StoredProcedure);
-            if (filasAfectadas == 0)
-                throw new InvalidOperationException("El reporte no existe o no se encuentra en estado PENDIENTE.");
-        }
-
-        public void DeterminarModalidad(int numeroReporte, BE.ModalidadReparacionJP86 modalidad)
-        {
-            SqlParameter[] parametros = new SqlParameter[]
-            {
-                new SqlParameter("@NumeroReporte", numeroReporte),
+                new SqlParameter("@Criticidad", criticidad.ToString()),
                 new SqlParameter("@ModalidadReparacion", modalidad.ToString())
             };
-            int filasAfectadas = DAL_64PR.Acceso.Instancia.escribirQuery("SP_ReporteJP86_DeterminarModalidad", parametros, CommandType.StoredProcedure);
-            if (filasAfectadas == 0)
-                throw new InvalidOperationException("El reporte no existe o no se encuentra en estado CLASIFICADO.");
+            object resultado = DAL_64PR.Acceso.Instancia.leerEscalar("SP_ReporteJP86_AsignarCriticidadYModalidad", parametros, CommandType.StoredProcedure);
+            ///null = error de BD absorbido por Acceso.leerEscalar: NO se convierte a 0
+            if (resultado == null || resultado == DBNull.Value)
+                throw new InvalidOperationException("err_BD_SinRespuesta");
+            return Convert.ToInt32(resultado);
         }
 
-        public void Acreditar(int numeroReporte, string descripcionCierre, string dniResponsableCierre)
+        ///CUN-08 + CUN-09: reporte EN_REPARACION -> ACREDITADO y vehiculo -> DISPONIBLE.
+        ///Devuelve las filas afectadas (0 si el reporte ya no estaba EN_REPARACION): esa regla la evalua la BLL.
+        public int Acreditar(int numeroReporte, string descripcionCierre, string dniResponsableCierre)
         {
             SqlParameter[] parametros = new SqlParameter[]
             {
@@ -159,9 +155,11 @@ namespace Mapper
                 new SqlParameter("@DescripcionCierre", descripcionCierre),
                 new SqlParameter("@DNI_ResponsableCierre", dniResponsableCierre)
             };
-            int filasAfectadas = DAL_64PR.Acceso.Instancia.escribirQuery("SP_ReporteJP86_Acreditar", parametros, CommandType.StoredProcedure);
-            if (filasAfectadas == 0)
-                throw new InvalidOperationException("El reporte no existe o no se encuentra en estado EN_REPARACION.");
+            object resultado = DAL_64PR.Acceso.Instancia.leerEscalar("SP_ReporteJP86_Acreditar", parametros, CommandType.StoredProcedure);
+            ///null = error de BD absorbido por Acceso.leerEscalar: NO se convierte a 0
+            if (resultado == null || resultado == DBNull.Value)
+                throw new InvalidOperationException("err_BD_SinRespuesta");
+            return Convert.ToInt32(resultado);
         }
     }
 }

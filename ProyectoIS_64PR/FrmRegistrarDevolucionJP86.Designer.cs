@@ -133,7 +133,6 @@ namespace ProyectoIS_64PR
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmRegistrarDevolucionJP86";
             this.Text = "FrmRegistrarDevolucionJP86";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmRegistrarDevolucionJP86_FormClosed);
             this.Load += new System.EventHandler(this.FrmRegistrarDevolucionJP86_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvContratos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numKilometrajeRetorno)).EndInit();

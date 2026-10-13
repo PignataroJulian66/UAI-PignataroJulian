@@ -396,11 +396,10 @@
 
   "FrmReportesPendientesJP86.lblHistorialTitulo": "Historial de mantenimiento de la unidad:",
   "FrmReportesPendientesJP86.lblCriticidad": "Criticidad:",
-  "FrmReportesPendientesJP86.btnAsignarCriticidad": "Asignar criticidad",
   "FrmReportesPendientesJP86.lblModalidad": "Modalidad de reparacion:",
   "FrmReportesPendientesJP86.rbInterna": "Interna",
   "FrmReportesPendientesJP86.rbExterna": "Externa",
-  "FrmReportesPendientesJP86.btnConfirmarModalidad": "Confirmar modalidad",
+  "FrmReportesPendientesJP86.btnConfirmar": "Confirmar",
   "FrmReportesPendientesJP86.dgvReportes.NumeroReporte": "Nro. reporte",
   "FrmReportesPendientesJP86.dgvReportes.Vehiculo": "Vehiculo",
   "FrmReportesPendientesJP86.dgvReportes.FechaHora": "Fecha y hora",
@@ -426,7 +425,7 @@
 
   "msg_sinReportesPendientes": "No hay reportes en estado PENDIENTE.",
   "msg_seleccionarReporte": "Seleccione un reporte de la lista.",
-  "modalidad_determinada": "Modalidad de reparacion registrada. El vehiculo pasa a estado En Reparacion.",
+  "reporte_clasificado": "Criticidad y modalidad registradas. El reporte pasa a EN_REPARACION y el vehiculo a estado En Reparacion.",
 
   "FrmReparacionesEnCursoJP86.lblDescripcionCierre": "Descripcion de cierre de reparacion:",
   "FrmReparacionesEnCursoJP86.btnAcreditar": "Acreditar reparacion",
@@ -527,5 +526,7 @@
   "err_Xml_VerificacionFallida": "el archivo se generó pero al releerlo la cantidad de clientes no coincide.",
   "err_Xml_SinClientes": "el archivo no contiene clientes.",
   "err_RestaurarVersion_RevisionActiva": "No se puede restaurar esta versión: tiene el vehículo En revisión y activo. Un vehículo en revisión siempre queda inactivo.",
-  "err_Reporte_ReporteAbierto": "No se puede registrar el reporte: el vehículo ya tiene un reporte de desperfecto sin acreditar. Complete ese circuito de mantenimiento primero."
+  "err_Reporte_ReporteAbierto": "No se puede registrar el reporte: el vehículo ya tiene un reporte de desperfecto sin acreditar. Complete ese circuito de mantenimiento primero.",
+  "err_Reporte_NoPendiente": "El reporte ya no se encuentra en estado PENDIENTE (puede haberlo clasificado otro usuario). No se realizaron cambios; la lista se actualizó.",
+  "err_Reporte_NoEnReparacion": "El reporte ya no se encuentra en estado EN_REPARACION (puede haberlo acreditado otro usuario). No se realizaron cambios; la lista se actualizó."
 }

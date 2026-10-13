@@ -123,7 +123,6 @@ namespace ProyectoIS_64PR
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmNuevoReporteJP86";
             this.Text = "FrmNuevoReporteJP86";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmNuevoReporteJP86_FormClosed);
             this.Load += new System.EventHandler(this.FrmNuevoReporteJP86_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvVehiculos)).EndInit();
             this.ResumeLayout(false);

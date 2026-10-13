@@ -204,10 +204,5 @@ namespace ProyectoIS_64PR
                 ManejadorErroresJP86.MostrarErrorInesperado(ex);
             }
         }
-
-        private void FrmRegistrarDevolucionJP86_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this);
-        }
     }
 }

@@ -16,6 +16,7 @@ namespace ProyectoIS_64PR
 
         BE.VehiculoJP86 vehiculoSeleccionado;
         BE.ReporteJP86 reporteGenerado;
+        bool hayVehiculos;
 
         public FrmNuevoReporteJP86()
         {
@@ -57,12 +58,14 @@ namespace ProyectoIS_64PR
             ConfigurarPermisos();
         }
 
+        ///Descripcion y fuente solo se habilitan si hay permiso Y hay vehiculos para reportar.
+        ///La llaman el Load y CargarVehiculos (cada recarga de la grilla), asi ninguna de las dos pisa a la otra.
         private void ConfigurarPermisos()
         {
             Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
             bool puedeRegistrar = rolUsuario.TienePermiso(Sesion.Patentes_64PR.RegistrarReporte);
-            txtDescripcion.Enabled = puedeRegistrar;
-            cmbFuente.Enabled = puedeRegistrar;
+            txtDescripcion.Enabled = puedeRegistrar && hayVehiculos;
+            cmbFuente.Enabled = puedeRegistrar && hayVehiculos;
             btnConfirmar.Enabled = puedeRegistrar && vehiculoSeleccionado != null;
         }
 
@@ -76,14 +79,12 @@ namespace ProyectoIS_64PR
             Traductor_64PR.TraducirGrilla(this, dgvVehiculos, textos);
 
             vehiculoSeleccionado = null;
-            btnConfirmar.Enabled = false;
 
-            bool haySinRevision = disponibles.Count == 0;
-            txtDescripcion.Enabled = !haySinRevision;
-            cmbFuente.Enabled = !haySinRevision;
-            dgvVehiculos.Enabled = !haySinRevision;
+            hayVehiculos = disponibles.Count > 0;
+            dgvVehiculos.Enabled = hayVehiculos;
+            ConfigurarPermisos();
 
-            if (haySinRevision)
+            if (!hayVehiculos)
                 MessageBox.Show(textos["msg_sinVehiculosEnRevision"]);
         }
 
@@ -156,11 +157,6 @@ namespace ProyectoIS_64PR
             dgvVehiculos.ClearSelection();
 
             CargarVehiculos();
-        }
-
-        private void FrmNuevoReporteJP86_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this);
         }
     }
 }

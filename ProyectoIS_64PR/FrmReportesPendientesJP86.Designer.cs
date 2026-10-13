@@ -22,11 +22,10 @@ namespace ProyectoIS_64PR
             this.dgvHistorial = new System.Windows.Forms.DataGridView();
             this.lblCriticidad = new System.Windows.Forms.Label();
             this.cmbCriticidad = new System.Windows.Forms.ComboBox();
-            this.btnAsignarCriticidad = new System.Windows.Forms.Button();
             this.lblModalidad = new System.Windows.Forms.Label();
             this.rbInterna = new System.Windows.Forms.RadioButton();
             this.rbExterna = new System.Windows.Forms.RadioButton();
-            this.btnConfirmarModalidad = new System.Windows.Forms.Button();
+            this.btnConfirmar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvReportes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHistorial)).BeginInit();
             this.SuspendLayout();
@@ -91,34 +90,23 @@ namespace ProyectoIS_64PR
             this.cmbCriticidad.TabIndex = 4;
             this.cmbCriticidad.Visible = false;
             //
-            // btnAsignarCriticidad
-            //
-            this.btnAsignarCriticidad.Location = new System.Drawing.Point(260, 296);
-            this.btnAsignarCriticidad.Name = "btnAsignarCriticidad";
-            this.btnAsignarCriticidad.Size = new System.Drawing.Size(180, 28);
-            this.btnAsignarCriticidad.TabIndex = 5;
-            this.btnAsignarCriticidad.Text = "Asignar criticidad";
-            this.btnAsignarCriticidad.UseVisualStyleBackColor = true;
-            this.btnAsignarCriticidad.Visible = false;
-            this.btnAsignarCriticidad.Click += new System.EventHandler(this.btnAsignarCriticidad_Click);
-            //
             // lblModalidad
             //
             this.lblModalidad.AutoSize = true;
-            this.lblModalidad.Location = new System.Drawing.Point(12, 300);
+            this.lblModalidad.Location = new System.Drawing.Point(12, 336);
             this.lblModalidad.Name = "lblModalidad";
             this.lblModalidad.Size = new System.Drawing.Size(170, 16);
-            this.lblModalidad.TabIndex = 6;
+            this.lblModalidad.TabIndex = 5;
             this.lblModalidad.Text = "Modalidad de reparacion:";
             this.lblModalidad.Visible = false;
             //
             // rbInterna
             //
             this.rbInterna.AutoSize = true;
-            this.rbInterna.Location = new System.Drawing.Point(190, 299);
+            this.rbInterna.Location = new System.Drawing.Point(190, 335);
             this.rbInterna.Name = "rbInterna";
             this.rbInterna.Size = new System.Drawing.Size(90, 20);
-            this.rbInterna.TabIndex = 7;
+            this.rbInterna.TabIndex = 6;
             this.rbInterna.TabStop = true;
             this.rbInterna.Text = "Interna";
             this.rbInterna.UseVisualStyleBackColor = true;
@@ -127,34 +115,33 @@ namespace ProyectoIS_64PR
             // rbExterna
             //
             this.rbExterna.AutoSize = true;
-            this.rbExterna.Location = new System.Drawing.Point(290, 299);
+            this.rbExterna.Location = new System.Drawing.Point(290, 335);
             this.rbExterna.Name = "rbExterna";
             this.rbExterna.Size = new System.Drawing.Size(90, 20);
-            this.rbExterna.TabIndex = 8;
+            this.rbExterna.TabIndex = 7;
             this.rbExterna.Text = "Externa";
             this.rbExterna.UseVisualStyleBackColor = true;
             this.rbExterna.Visible = false;
             //
-            // btnConfirmarModalidad
+            // btnConfirmar
             //
-            this.btnConfirmarModalidad.Location = new System.Drawing.Point(400, 296);
-            this.btnConfirmarModalidad.Name = "btnConfirmarModalidad";
-            this.btnConfirmarModalidad.Size = new System.Drawing.Size(180, 28);
-            this.btnConfirmarModalidad.TabIndex = 9;
-            this.btnConfirmarModalidad.Text = "Confirmar modalidad";
-            this.btnConfirmarModalidad.UseVisualStyleBackColor = true;
-            this.btnConfirmarModalidad.Visible = false;
-            this.btnConfirmarModalidad.Click += new System.EventHandler(this.btnConfirmarModalidad_Click);
+            this.btnConfirmar.Location = new System.Drawing.Point(12, 370);
+            this.btnConfirmar.Name = "btnConfirmar";
+            this.btnConfirmar.Size = new System.Drawing.Size(180, 28);
+            this.btnConfirmar.TabIndex = 8;
+            this.btnConfirmar.Text = "Confirmar";
+            this.btnConfirmar.UseVisualStyleBackColor = true;
+            this.btnConfirmar.Visible = false;
+            this.btnConfirmar.Click += new System.EventHandler(this.btnConfirmar_Click);
             //
             // FrmReportesPendientesJP86
             //
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(900, 340);
-            this.Controls.Add(this.btnConfirmarModalidad);
+            this.ClientSize = new System.Drawing.Size(900, 410);
+            this.Controls.Add(this.btnConfirmar);
             this.Controls.Add(this.rbExterna);
             this.Controls.Add(this.rbInterna);
             this.Controls.Add(this.lblModalidad);
-            this.Controls.Add(this.btnAsignarCriticidad);
             this.Controls.Add(this.cmbCriticidad);
             this.Controls.Add(this.lblCriticidad);
             this.Controls.Add(this.dgvHistorial);
@@ -163,7 +150,6 @@ namespace ProyectoIS_64PR
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmReportesPendientesJP86";
             this.Text = "FrmReportesPendientesJP86";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmReportesPendientesJP86_FormClosed);
             this.Load += new System.EventHandler(this.FrmReportesPendientesJP86_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvReportes)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHistorial)).EndInit();
@@ -179,10 +165,9 @@ namespace ProyectoIS_64PR
         private System.Windows.Forms.DataGridView dgvHistorial;
         private System.Windows.Forms.Label lblCriticidad;
         private System.Windows.Forms.ComboBox cmbCriticidad;
-        private System.Windows.Forms.Button btnAsignarCriticidad;
         private System.Windows.Forms.Label lblModalidad;
         private System.Windows.Forms.RadioButton rbInterna;
         private System.Windows.Forms.RadioButton rbExterna;
-        private System.Windows.Forms.Button btnConfirmarModalidad;
+        private System.Windows.Forms.Button btnConfirmar;
     }
 }

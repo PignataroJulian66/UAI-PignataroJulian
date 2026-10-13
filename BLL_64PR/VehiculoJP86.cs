@@ -102,7 +102,7 @@ namespace BLL_64PR
             return origen == BE.EstadoVehiculoJP86.ALQUILADO && mppContrato.ExisteActivoPorVehiculo(patente);
         }
 
-        ///Reporte PENDIENTE, CLASIFICADO o EN_REPARACION (no ACREDITADO)
+        ///Reporte PENDIENTE o EN_REPARACION (no ACREDITADO)
         private bool TieneReporteAbierto(string patente)
         {
             return mppReporte.ExisteAbiertoPorVehiculo(patente);

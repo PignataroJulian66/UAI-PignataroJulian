@@ -142,7 +142,6 @@ namespace ProyectoIS_64PR
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmGenerarFacturaJP86";
             this.Text = "FrmGenerarFacturaJP86";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmGenerarFacturaJP86_FormClosed);
             this.Load += new System.EventHandler(this.FrmGenerarFacturaJP86_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvContratos)).EndInit();
             this.ResumeLayout(false);

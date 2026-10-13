@@ -206,10 +206,5 @@ namespace ProyectoIS_64PR
         {
             Documentos.GeneradorFactura.Imprimir(facturaGenerada);
         }
-
-        private void FrmGenerarFacturaJP86_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this);
-        }
     }
 }
