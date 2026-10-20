@@ -9,6 +9,7 @@ namespace ProyectoIS_64PR
     ///CUN-08 "Registrar Acreditacion de Reparacion" + CUN-09 "Liberar Vehiculo" (incluido siempre en el paso 5 de CUN-08).
     public partial class FrmReparacionesEnCursoJP86 : Form, Idioma.IObservadorIdioma_64PR
     {
+        #region Campos
         Bitacora.Bitacora_64PR bita = new Bitacora.Bitacora_64PR();
         Bitacora.Evento_64PR ev;
 
@@ -16,7 +17,9 @@ namespace ProyectoIS_64PR
         public Dictionary<string, string> textos;
 
         BE.ReporteJP86 reporteSeleccionado;
+        #endregion
 
+        #region Constructor
         public FrmReparacionesEnCursoJP86()
         {
             InitializeComponent();
@@ -37,7 +40,9 @@ namespace ProyectoIS_64PR
 
             CargarReportesEnReparacion();
         }
+        #endregion
 
+        #region Idioma (Observer)
         public void ActualizarIdioma(Dictionary<string, string> textoss)
         {
             textos = textoss;
@@ -49,12 +54,9 @@ namespace ProyectoIS_64PR
             Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this);
             base.OnFormClosed(e);
         }
+        #endregion
 
-        private void FrmReparacionesEnCursoJP86_Load(object sender, EventArgs e)
-        {
-            ConfigurarPermisos();
-        }
-
+        #region Permisos
         private void ConfigurarPermisos()
         {
             Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
@@ -62,7 +64,9 @@ namespace ProyectoIS_64PR
             txtDescripcionCierre.Enabled = puedeAcreditar;
             btnAcreditar.Enabled = puedeAcreditar && reporteSeleccionado != null;
         }
+        #endregion
 
+        #region Carga de datos
         private void CargarReportesEnReparacion()
         {
             List<BE.ReporteJP86> enReparacion = greportes.ListarEnReparacion();
@@ -77,6 +81,13 @@ namespace ProyectoIS_64PR
             if (enReparacion.Count == 0)
                 MessageBox.Show(textos["msg_sinReparacionesEnCurso"]);
         }
+        #endregion
+
+        #region Eventos
+        private void FrmReparacionesEnCursoJP86_Load(object sender, EventArgs e)
+        {
+            ConfigurarPermisos();
+        }
 
         private void dgvReportes_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -88,13 +99,6 @@ namespace ProyectoIS_64PR
                 Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
                 btnAcreditar.Enabled = rolUsuario.TienePermiso(Sesion.Patentes_64PR.RegistrarAcreditacion);
             }
-        }
-
-        private void LimpiarSeleccion()
-        {
-            reporteSeleccionado = null;
-            txtDescripcionCierre.Text = string.Empty;
-            btnAcreditar.Enabled = false;
         }
 
         private void btnAcreditar_Click(object sender, EventArgs e)
@@ -138,5 +142,15 @@ namespace ProyectoIS_64PR
                 MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        #endregion
+
+        #region Metodos privados
+        private void LimpiarSeleccion()
+        {
+            reporteSeleccionado = null;
+            txtDescripcionCierre.Text = string.Empty;
+            btnAcreditar.Enabled = false;
+        }
+        #endregion
     }
 }

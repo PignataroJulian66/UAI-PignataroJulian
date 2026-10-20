@@ -8,6 +8,7 @@ namespace ProyectoIS_64PR
 {
     public partial class FrmGenerarFacturaJP86 : Form, Idioma.IObservadorIdioma_64PR
     {
+        #region Campos
         Bitacora.Bitacora_64PR bita = new Bitacora.Bitacora_64PR();
         Bitacora.Evento_64PR ev;
 
@@ -20,7 +21,9 @@ namespace ProyectoIS_64PR
 
         ///true mientras se espera el pago simulado (await): bloquea la grilla y el cierre del form
         bool procesandoPago;
+        #endregion
 
+        #region Constructor
         public FrmGenerarFacturaJP86()
         {
             InitializeComponent();
@@ -45,7 +48,9 @@ namespace ProyectoIS_64PR
             if (textos.Count > 0)
                 ActualizarIdioma(textos);
         }
+        #endregion
 
+        #region Idioma (Observer)
         public void ActualizarIdioma(Dictionary<string, string> textoss)
         {
             textos = textoss;
@@ -55,29 +60,14 @@ namespace ProyectoIS_64PR
             lblImporte.Text = textos["factura_lblImporte"] + "$" + (contratoSeleccionado != null ? contratoSeleccionado.ImporteTotal.ToString("N2") : "0");
         }
 
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            ///No se deja cerrar (ni navegar a otro form desde el menu) con un pago en curso:
-            ///al volver del await se usarian controles ya liberados.
-            if (procesandoPago && e.CloseReason != CloseReason.WindowsShutDown && e.CloseReason != CloseReason.TaskManagerClosing)
-            {
-                e.Cancel = true;
-                MessageBox.Show(textos["msg_PagoEnProceso"], textos["titulo_Validacion"], MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            base.OnFormClosing(e);
-        }
-
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
             Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this);
             base.OnFormClosed(e);
         }
+        #endregion
 
-        private void FrmGenerarFacturaJP86_Load(object sender, EventArgs e)
-        {
-            ConfigurarPermisos();
-        }
-
+        #region Permisos
         private void ConfigurarPermisos()
         {
             Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
@@ -88,6 +78,18 @@ namespace ProyectoIS_64PR
             btnMercadoPago.Visible = puedeFacturar;
         }
 
+        private void HabilitarBotonesPago(bool habilitar)
+        {
+            Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
+            bool puedeFacturar = habilitar && rolUsuario.TienePermiso(Sesion.Patentes_64PR.GenerarFactura);
+            btnEfectivo.Enabled = puedeFacturar;
+            btnTarjeta.Enabled = puedeFacturar;
+            btnTransferencia.Enabled = puedeFacturar;
+            btnMercadoPago.Enabled = puedeFacturar;
+        }
+        #endregion
+
+        #region Carga de datos
         private void CargaData()
         {
             lst = gcontratos.ListarActivos();
@@ -113,6 +115,25 @@ namespace ProyectoIS_64PR
             facturaGenerada = null;
             btnImprimirFactura.Enabled = false;
         }
+        #endregion
+
+        #region Eventos
+        private void FrmGenerarFacturaJP86_Load(object sender, EventArgs e)
+        {
+            ConfigurarPermisos();
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            ///No se deja cerrar (ni navegar a otro form desde el menu) con un pago en curso:
+            ///al volver del await se usarian controles ya liberados.
+            if (procesandoPago && e.CloseReason != CloseReason.WindowsShutDown && e.CloseReason != CloseReason.TaskManagerClosing)
+            {
+                e.Cancel = true;
+                MessageBox.Show(textos["msg_PagoEnProceso"], textos["titulo_Validacion"], MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            base.OnFormClosing(e);
+        }
 
         private void dgvContratos_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -122,16 +143,6 @@ namespace ProyectoIS_64PR
                 lblImporte.Text = textos["factura_lblImporte"] + "$" + contratoSeleccionado.ImporteTotal.ToString("N2");
                 HabilitarBotonesPago(true);
             }
-        }
-
-        private void HabilitarBotonesPago(bool habilitar)
-        {
-            Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
-            bool puedeFacturar = habilitar && rolUsuario.TienePermiso(Sesion.Patentes_64PR.GenerarFactura);
-            btnEfectivo.Enabled = puedeFacturar;
-            btnTarjeta.Enabled = puedeFacturar;
-            btnTransferencia.Enabled = puedeFacturar;
-            btnMercadoPago.Enabled = puedeFacturar;
         }
 
         private async void btnEfectivo_Click(object sender, EventArgs e)
@@ -154,6 +165,13 @@ namespace ProyectoIS_64PR
             await Facturar(BE.MetodoPagoJP86.MERCADOPAGO);
         }
 
+        private void btnImprimirFactura_Click(object sender, EventArgs e)
+        {
+            Documentos.GeneradorFactura.Imprimir(facturaGenerada);
+        }
+        #endregion
+
+        #region Metodos privados
         private async Task Facturar(BE.MetodoPagoJP86 metodoPago)
         {
             if (contratoSeleccionado == null)
@@ -168,7 +186,10 @@ namespace ProyectoIS_64PR
             dgvContratos.Enabled = false;
             try
             {
+                await MostrarProgresoPago();
+
                 BE.FacturaJP86 factura = await gcontratos.GenerarFactura(contratoSeleccionado, metodoPago);
+                OcultarProgresoPago();
 
                 ev = new Bitacora.Evento_64PR(Sesion.SessionManager.GetInstance.Usuario.Login, ((int)Bitacora.Bitacora_64PR.ModuloBitacora_64PR.GestionAlquileres).ToString(), ((int)Bitacora.Bitacora_64PR.TipoEventoBitacora_64PR.FacturacionContrato).ToString(), 2);
                 bita.RegistrarEvento(ev);
@@ -196,15 +217,37 @@ namespace ProyectoIS_64PR
             }
             finally
             {
+                OcultarProgresoPago();
                 procesandoPago = false;
                 dgvContratos.Enabled = true;
                 HabilitarBotonesPago(contratoSeleccionado != null);
             }
         }
 
-        private void btnImprimirFactura_Click(object sender, EventArgs e)
+        ///Barra puramente visual (~2,5 s): el resultado del pago lo sigue decidiendo la estrategia de la BLL.
+        ///Task.Delay libera el hilo de UI entre pasos, asi el form se sigue redibujando.
+        private async Task MostrarProgresoPago()
         {
-            Documentos.GeneradorFactura.Imprimir(facturaGenerada);
+            const int pasos = 50;
+            const int msPorPaso = 50;
+
+            pbPago.Value = 0;
+            pbPago.Visible = true;
+            lblEstadoPago.Visible = true;
+
+            for (int i = 1; i <= pasos; i++)
+            {
+                await Task.Delay(msPorPaso);
+                pbPago.Value = i * 100 / pasos;
+            }
         }
+
+        private void OcultarProgresoPago()
+        {
+            pbPago.Visible = false;
+            lblEstadoPago.Visible = false;
+            pbPago.Value = 0;
+        }
+        #endregion
     }
 }

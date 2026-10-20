@@ -12,9 +12,12 @@ namespace ProyectoIS_64PR
 {
     public partial class ucCrearVehiculoJP86 : UserControl, Idioma.IObservadorIdioma_64PR
     {
+        #region Campos
         BLL_64PR.Categoria_64PR gcategorias = new BLL_64PR.Categoria_64PR();
         Dictionary<string, string> textos;
+        #endregion
 
+        #region Constructor
         public ucCrearVehiculoJP86()
         {
             InitializeComponent();
@@ -36,7 +39,9 @@ namespace ProyectoIS_64PR
             if (textos.Count > 0)
                 ActualizarIdioma(textos);
         }
+        #endregion
 
+        #region Datos del control
         public string Patente()
         {
             return txtPatente.Text.Trim().ToUpper();
@@ -71,7 +76,9 @@ namespace ProyectoIS_64PR
             if (cmbCategoria.Items.Count > 0)
                 cmbCategoria.SelectedIndex = 0;
         }
+        #endregion
 
+        #region Idioma (Observer)
         public void ActualizarIdioma(Dictionary<string, string> textoss)
         {
             textos = textoss;
@@ -81,5 +88,6 @@ namespace ProyectoIS_64PR
             lblCategoria.Text = textos["ucVehiculo_lblCategoria"];
             lblKilometraje.Text = textos["ucVehiculo_lblKilometraje"];
         }
+        #endregion
     }
 }

@@ -13,6 +13,7 @@ namespace ProyectoIS_64PR
     public partial class FrmCambiarClave_64PR : Form, Idioma.IObservadorIdioma_64PR
     {
         Dictionary<string, string> textos;
+        #region Constructor
         public FrmCambiarClave_64PR()
         {
             InitializeComponent();
@@ -28,12 +29,22 @@ namespace ProyectoIS_64PR
             if (textos.Count > 0)
                 ActualizarIdioma(textos);
         }
+        #endregion
+
+        #region Idioma (Observer)
         public void ActualizarIdioma(Dictionary<string, string> textoss)
         {
             textos = textoss;
             Traductor_64PR.Traducir(this, textos);
         }
 
+        private void FrmCambiarClave_64PR_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this);
+        }
+        #endregion
+
+        #region Eventos
         private void btnConfirmar_Click(object sender, EventArgs e)
         {
             ///Validaciones de UI ANTES de llamar al BLL: asi el mensaje de error sale traducido
@@ -102,10 +113,6 @@ namespace ProyectoIS_64PR
                 txtConfirmar.Clear();
             }
         }
-
-        private void FrmCambiarClave_64PR_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this);
-        }
+        #endregion
     }
 }

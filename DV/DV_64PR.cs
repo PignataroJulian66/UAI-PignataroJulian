@@ -8,6 +8,7 @@ namespace DV
 {
     public class DV_64PR
     {
+        #region Campos
         public static readonly Dictionary<string, string[]> Tablas = new Dictionary<string, string[]>
         {
             { "Roles_64PR",         new string[] { "ID_Rol" } },
@@ -27,7 +28,9 @@ namespace DV
         };
 
         DV.mpp_DV mpp = new DV.mpp_DV();
+        #endregion
 
+        #region Consultas
         /// Compara el DV recalculado contra el DV guardado para UNA tabla
         public bool VerificarTabla(string nombreTabla, string[] columnasPK)
         {
@@ -55,6 +58,9 @@ namespace DV
 
             return resultado;
         }
+        #endregion
+
+        #region Operaciones
         public void RecalcularIntegridadCompleta()
         {
             foreach (var entrada in Tablas)
@@ -64,6 +70,7 @@ namespace DV
                 mpp.RecalcularTabla(nombreTabla, columnasPK);
             }
         }
+
         public void RecalcularTabla(string nombreTabla)
         {
             if (!Tablas.ContainsKey(nombreTabla))
@@ -72,5 +79,6 @@ namespace DV
             string[] columnasPK = Tablas[nombreTabla];
             mpp.RecalcularTabla(nombreTabla, columnasPK);
         }
+        #endregion
     }
 }

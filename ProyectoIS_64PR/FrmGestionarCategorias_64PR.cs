@@ -13,6 +13,7 @@ namespace ProyectoIS_64PR
 {
     public partial class FrmGestionarCategorias_64PR : Form, Idioma.IObservadorIdioma_64PR
     {
+        #region Campos
         Bitacora.Bitacora_64PR bita = new Bitacora.Bitacora_64PR();
         Bitacora.Evento_64PR ev;
 
@@ -22,7 +23,9 @@ namespace ProyectoIS_64PR
         string modo = "consulta";
         UserControl uc;
         List<BE.Categoria_64PR> lst;
+        #endregion
 
+        #region Constructor
         public FrmGestionarCategorias_64PR()
         {
             InitializeComponent();
@@ -54,7 +57,9 @@ namespace ProyectoIS_64PR
                 ActualizarIdioma(textos);
             lblModo.Text = textos["frmGestionCategorias_lblModoConsulta"];
         }
+        #endregion
 
+        #region Idioma (Observer)
         public void ActualizarIdioma(Dictionary<string, string> textoss)
         {
             textos = textoss;
@@ -84,6 +89,24 @@ namespace ProyectoIS_64PR
             base.OnFormClosed(e);
         }
 
+        private void FrmGestionarCategorias_64PR_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this);
+        }
+        #endregion
+
+        #region Permisos
+        private void ConfigurarPermisos()
+        {
+            Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
+
+            btnCrear.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearCategoria);
+            btnModificar.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarCategoria);
+            btnEliminar.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarCategoria);
+        }
+        #endregion
+
+        #region Carga de datos
         private void CargaData()
         {
             lst = gcategorias.Listar();
@@ -114,6 +137,13 @@ namespace ProyectoIS_64PR
 
             if (textos != null && textos.Count > 0)
                 lblCantidad.Text = textos["frmGestionCategorias_lblCantidad"] + resultado.Count.ToString();
+        }
+        #endregion
+
+        #region Eventos
+        private void FrmGestionarCategorias_64PR_Load(object sender, EventArgs e)
+        {
+            ConfigurarPermisos();
         }
 
         private void btnCrear_Click(object sender, EventArgs e)
@@ -324,24 +354,6 @@ namespace ProyectoIS_64PR
         {
             AplicarFiltros();
         }
-
-        private void FrmGestionarCategorias_64PR_Load(object sender, EventArgs e)
-        {
-            ConfigurarPermisos();
-        }
-
-        private void ConfigurarPermisos()
-        {
-            Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
-
-            btnCrear.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearCategoria);
-            btnModificar.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarCategoria);
-            btnEliminar.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarCategoria);
-        }
-
-        private void FrmGestionarCategorias_64PR_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this);
-        }
+        #endregion
     }
 }

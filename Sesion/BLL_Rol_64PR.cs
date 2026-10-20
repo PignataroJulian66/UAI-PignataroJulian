@@ -8,12 +8,29 @@ namespace Sesion
 {
     public class BLL_Rol_64PR
     {
+        #region Campos
         Sesion.mpp_roles mpp = new Sesion.mpp_roles();
         private static readonly DV.DV_64PR recalculador = new DV.DV_64PR();
+        #endregion
+
+        #region Consultas
         public List<Sesion.Rol_64PR> ListarRoles()
         {
             return mpp.ListarRoles();
         }
+
+        public int ContarUsuariosConRol(int idRol)
+        {
+            return mpp.ContarUsuariosConRol(idRol);
+        }
+
+        public Sesion.Rol_64PR ObtenerRolCompleto(int idRol)
+        {
+            return mpp.ObtenerRolCompleto(idRol);
+        }
+        #endregion
+
+        #region Operaciones
         public void CrearRol(string nombre, List<Sesion.Rol_64PR> hijos)
         {
             mpp.CrearRol(nombre, hijos);
@@ -38,15 +55,6 @@ namespace Sesion
             recalculador.RecalcularTabla("RolPatente_64PR");
             recalculador.RecalcularTabla("USUARIO_64PR");
         }
-
-        public int ContarUsuariosConRol(int idRol)
-        {
-            return mpp.ContarUsuariosConRol(idRol);
-        }
-
-        public Sesion.Rol_64PR ObtenerRolCompleto(int idRol)
-        {
-            return mpp.ObtenerRolCompleto(idRol);
-        }
+        #endregion
     }
 }

@@ -9,6 +9,7 @@ namespace Idioma
 {
     public class GestorIdioma_64PR
     {
+        #region Singleton
         private static GestorIdioma_64PR _instancia;
 
         public static GestorIdioma_64PR GetInstance
@@ -22,7 +23,9 @@ namespace Idioma
         }
 
         private GestorIdioma_64PR() { }
+        #endregion
 
+        #region Campos
         private string _idiomaActual = "es";   ///Idioma por defecto
         private Dictionary<string, string> _textos = new Dictionary<string, string>();
         private readonly List<IObservadorIdioma_64PR> _observadores = new List<IObservadorIdioma_64PR>();
@@ -31,7 +34,9 @@ namespace Idioma
 
         ///Carpeta donde están los JSON. Usamos AppDomain para que funcione tanto en Debug como publicado.
         private string RutaIdiomas => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "idiomas");
+        #endregion
 
+        #region Observer
         public void Suscribir(IObservadorIdioma_64PR observador)
         {
             if (!_observadores.Contains(observador))
@@ -43,6 +48,16 @@ namespace Idioma
             _observadores.Remove(observador);
         }
 
+        private void NotificarObservadores()
+        {
+            ///Iteramos sobre una copia para evitar problemas si algún
+            ///observador se desuscribe durante la notificación.
+            foreach (var obs in new List<IObservadorIdioma_64PR>(_observadores))
+                obs.ActualizarIdioma(_textos);
+        }
+        #endregion
+
+        #region Idioma
         /// <summary>
         /// Cambiar idioma:
         /// Carga el JSON del idioma indicado y notifica a todos los observadores.
@@ -68,19 +83,13 @@ namespace Idioma
 
             NotificarObservadores();
         }
-        private void NotificarObservadores()
-        {
-            ///Iteramos sobre una copia para evitar problemas si algún
-            ///observador se desuscribe durante la notificación.
-            foreach (var obs in new List<IObservadorIdioma_64PR>(_observadores))
-                obs.ActualizarIdioma(_textos);
-        }
 
         /// <summary>
         /// Devuelve los textos actuales (útil para que un form recién
         /// abierto se inicialice sin esperar una notificación).
         /// </summary>
         public Dictionary<string, string> ObtenerTextos() => _textos;
+
         public List<string> IdiomasDisponibles()
         {
             /// Lista los idiomas disponibles leyendo los JSON en la carpeta.
@@ -92,6 +101,9 @@ namespace Idioma
 
             return lista;
         }
+        #endregion
+
+        #region Claves faltantes
         public void RegistrarClavesFaltantes(List<string> claves)
         {
             try
@@ -139,6 +151,7 @@ namespace Idioma
                 throw new Exception("Error en RegistrarClavesFaltantes: " + ex.Message);
             }
         }
+
         private string FormatearJson(string json)
         {
             var stringBuilder = new StringBuilder();
@@ -194,5 +207,6 @@ namespace Idioma
 
             return stringBuilder.ToString();
         }
+        #endregion
     }
 }

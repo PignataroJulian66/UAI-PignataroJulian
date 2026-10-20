@@ -10,6 +10,7 @@ namespace Mapper
 {
     public class mpp_categoria
     {
+        #region Consultas
         public List<BE.Categoria_64PR> Listar()
         {
             List<BE.Categoria_64PR> lista = new List<BE.Categoria_64PR>();
@@ -28,7 +29,9 @@ namespace Mapper
             }
             return lista;
         }
+        #endregion
 
+        #region Escritura
         public void Crear(BE.Categoria_64PR c)
         {
             SqlParameter[] parametros = new SqlParameter[]
@@ -57,5 +60,6 @@ namespace Mapper
             SqlParameter[] parametros = new SqlParameter[] { new SqlParameter("@Id", c.Id) };
             DAL_64PR.Acceso.Instancia.escribirQuery("SP_Categoria_ActDesact", parametros, CommandType.StoredProcedure);
         }
+        #endregion
     }
 }

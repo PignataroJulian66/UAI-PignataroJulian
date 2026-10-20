@@ -10,6 +10,7 @@ namespace Bitacora
 {
     public class Bitacora_64PR
     {
+        #region Enumeraciones
         public enum TipoEventoBitacora_64PR
         {
             LoginExitoso = 1,
@@ -52,6 +53,7 @@ namespace Bitacora
             ErrorDeserializacionClientes = 39,
             RestauracionVersionVehiculo = 40
         }
+
         public enum ModuloBitacora_64PR
         {
             Login = 1,
@@ -65,8 +67,11 @@ namespace Bitacora
             GestionMantenimiento = 9,
             Sistema = 10
         }
+        #endregion
 
         Bitacora.mpp_bitacora mpp = new Bitacora.mpp_bitacora();
+
+        #region Consultas
         public List<Bitacora.Evento_64PR> ListarEventos()
         {
             return mpp.ListarEventos();
@@ -91,10 +96,13 @@ namespace Bitacora
         {
             return mpp.ListarTipos();
         }
+        #endregion
 
+        #region Operaciones
         public void RegistrarEvento(Bitacora.Evento_64PR e)
         {
             mpp.RegistrarEvento(e);
         }
+        #endregion
     }
 }

@@ -13,6 +13,7 @@ namespace ProyectoIS_64PR
     public partial class ucModificarCategoria : UserControl, Idioma.IObservadorIdioma_64PR
     {
         Dictionary<string, string> textos;
+        #region Constructor
         public ucModificarCategoria()
         {
             InitializeComponent();
@@ -29,7 +30,9 @@ namespace ProyectoIS_64PR
             if (textos.Count > 0)
                 ActualizarIdioma(textos);
         }
+        #endregion
 
+        #region Datos del control
         ///Categoria cuyos datos estan cargados en los controles. Guardar modifica ESTA categoria,
         ///no la fila seleccionada en la grilla (la seleccion puede cambiar sin volver a cargar el control,
         ///por ejemplo con las flechas del teclado o al recargar la grilla).
@@ -68,7 +71,9 @@ namespace ProyectoIS_64PR
             txtDescripcion.Text = string.Empty;
             numTarifaDiaria.Value = numTarifaDiaria.Minimum;
         }
+        #endregion
 
+        #region Idioma (Observer)
         public void ActualizarIdioma(Dictionary<string, string> textoss)
         {
             textos = textoss;
@@ -76,5 +81,6 @@ namespace ProyectoIS_64PR
             lblDescripcion.Text = textos["ucCategoria_lblDescripcion"];
             lblTarifaDiaria.Text = textos["ucCategoria_lblTarifaDiaria"];
         }
+        #endregion
     }
 }

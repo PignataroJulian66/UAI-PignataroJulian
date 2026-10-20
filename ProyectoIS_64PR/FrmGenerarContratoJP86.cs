@@ -8,6 +8,7 @@ namespace ProyectoIS_64PR
 {
     public partial class FrmGenerarContratoJP86 : Form, Idioma.IObservadorIdioma_64PR
     {
+        #region Campos
         Bitacora.Bitacora_64PR bita = new Bitacora.Bitacora_64PR();
         Bitacora.Evento_64PR ev;
 
@@ -20,7 +21,9 @@ namespace ProyectoIS_64PR
         BE.ClienteJP86 clienteSeleccionado;
         BE.ContratoJP86 contratoGenerado;
         ucCrearClienteJP86 ucNuevoCliente;
+        #endregion
 
+        #region Constructor
         public FrmGenerarContratoJP86()
         {
             InitializeComponent();
@@ -63,7 +66,9 @@ namespace ProyectoIS_64PR
             if (textos.Count > 0)
                 ActualizarIdioma(textos);
         }
+        #endregion
 
+        #region Idioma (Observer)
         public void ActualizarIdioma(Dictionary<string, string> textoss)
         {
             textos = textoss;
@@ -83,23 +88,17 @@ namespace ProyectoIS_64PR
             Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this);
             base.OnFormClosed(e);
         }
+        #endregion
 
-        private void FrmGenerarContratoJP86_Load(object sender, EventArgs e)
-        {
-            ConfigurarPermisos();
-        }
-
+        #region Permisos
         private void ConfigurarPermisos()
         {
             Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
             btnConfirmar.Enabled = rolUsuario.TienePermiso(Sesion.Patentes_64PR.GenerarContrato);
         }
+        #endregion
 
-        private void btnBuscarUnidades_Click(object sender, EventArgs e)
-        {
-            CargarUnidadesDisponibles(true);
-        }
-
+        #region Carga de datos
         private void CargarUnidadesDisponibles(bool mostrarMensajeSiVacio)
         {
             int? idCategoria = cmbCategoria.SelectedIndex <= 0 ? (int?)null : ((BE.Categoria_64PR)cmbCategoria.SelectedItem).Id;
@@ -120,15 +119,6 @@ namespace ProyectoIS_64PR
                 MessageBox.Show(textos["msg_sinUnidadesDisponibles"]);
         }
 
-        private void dgvUnidades_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                unidadSeleccionada = dgvUnidades.SelectedRows[0].DataBoundItem as BE.VehiculoJP86;
-                ActualizarImporte();
-            }
-        }
-
         private void CargarClientes()
         {
             dgvClientes.DataSource = null;
@@ -136,6 +126,27 @@ namespace ProyectoIS_64PR
             dgvClientes.DataSource = gclientes.ListarActivos();
             ///Rebindear regenera las columnas (autogeneradas) y pisa cualquier traduccion previa: hay que reaplicarla
             Traductor_64PR.TraducirGrilla(this, dgvClientes, textos);
+        }
+        #endregion
+
+        #region Eventos
+        private void FrmGenerarContratoJP86_Load(object sender, EventArgs e)
+        {
+            ConfigurarPermisos();
+        }
+
+        private void btnBuscarUnidades_Click(object sender, EventArgs e)
+        {
+            CargarUnidadesDisponibles(true);
+        }
+
+        private void dgvUnidades_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                unidadSeleccionada = dgvUnidades.SelectedRows[0].DataBoundItem as BE.VehiculoJP86;
+                ActualizarImporte();
+            }
         }
 
         private void dgvClientes_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -210,18 +221,6 @@ namespace ProyectoIS_64PR
             ActualizarImporte();
         }
 
-        private void ActualizarImporte()
-        {
-            if (unidadSeleccionada == null || textos == null)
-            {
-                lblImporteTotal.Text = (textos != null ? textos["contrato_lblImporteTotal"] : "Importe total: ") + "$0";
-                return;
-            }
-
-            decimal importe = gcontratos.CalcularImporteTotal(unidadSeleccionada.Categoria.TarifaDiaria, dtpFechaInicio.Value, dtpFechaFin.Value, chkCargosAdicionales.Checked);
-            lblImporteTotal.Text = textos["contrato_lblImporteTotal"] + "$" + importe.ToString("N2");
-        }
-
         private void btnConfirmar_Click(object sender, EventArgs e)
         {
             ///Las reglas de fechas (fin >= inicio, inicio >= hoy, plazo maximo) e importe maximo viven en
@@ -283,6 +282,20 @@ namespace ProyectoIS_64PR
         {
             Documentos.GeneradorReciboContrato.Imprimir(contratoGenerado);
         }
+        #endregion
+
+        #region Metodos privados
+        private void ActualizarImporte()
+        {
+            if (unidadSeleccionada == null || textos == null)
+            {
+                lblImporteTotal.Text = (textos != null ? textos["contrato_lblImporteTotal"] : "Importe total: ") + "$0";
+                return;
+            }
+
+            decimal importe = gcontratos.CalcularImporteTotal(unidadSeleccionada.Categoria.TarifaDiaria, dtpFechaInicio.Value, dtpFechaFin.Value, chkCargosAdicionales.Checked);
+            lblImporteTotal.Text = textos["contrato_lblImporteTotal"] + "$" + importe.ToString("N2");
+        }
 
         private void LimpiarFormulario()
         {
@@ -309,5 +322,6 @@ namespace ProyectoIS_64PR
 
             ActualizarImporte();
         }
+        #endregion
     }
 }

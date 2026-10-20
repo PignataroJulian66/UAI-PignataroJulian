@@ -10,6 +10,7 @@ namespace Bitacora
 {
     public class mpp_bitacora
     {
+        #region Consultas
         ///Vista por defecto: eventos de los ultimos 3 dias
         public List<Bitacora.Evento_64PR> ListarEventos()
         {
@@ -79,7 +80,9 @@ namespace Bitacora
             }
             return lista;
         }
+        #endregion
 
+        #region Escritura
         public void RegistrarEvento(Bitacora.Evento_64PR e)
         {
             int fa;
@@ -91,5 +94,6 @@ namespace Bitacora
             parametros[3] = new SqlParameter("@Criticidad", e.Criticidad);
             fa = DAL_64PR.Acceso.Instancia.escribirQuery(query, parametros);
         }
+        #endregion
     }
 }

@@ -10,6 +10,7 @@ namespace Mapper
 {
     public class mpp_cliente
     {
+        #region Consultas
         public List<BE.ClienteJP86> Listar()
         {
             List<BE.ClienteJP86> lista = new List<BE.ClienteJP86>();
@@ -38,7 +39,9 @@ namespace Mapper
                 throw new InvalidOperationException("err_BD_SinRespuesta");
             return Convert.ToInt32(resultado) == 1;
         }
+        #endregion
 
+        #region Escritura
         public void Crear(BE.ClienteJP86 c)
         {
             SqlParameter[] parametros = new SqlParameter[]
@@ -68,5 +71,6 @@ namespace Mapper
             SqlParameter[] parametros = new SqlParameter[] { new SqlParameter("@DNI", c.DNI) };
             DAL_64PR.Acceso.Instancia.escribirQuery("SP_ClienteJP86_ActDesact", parametros, CommandType.StoredProcedure);
         }
+        #endregion
     }
 }

@@ -13,7 +13,7 @@ namespace ProyectoIS_64PR
     public partial class ucCrearClienteJP86 : UserControl, Idioma.IObservadorIdioma_64PR
     {
         Dictionary<string, string> textos;
-
+        #region Constructor
         public ucCrearClienteJP86()
         {
             InitializeComponent();
@@ -26,7 +26,9 @@ namespace ProyectoIS_64PR
             if (textos.Count > 0)
                 ActualizarIdioma(textos);
         }
+        #endregion
 
+        #region Datos del control
         public string DNI()
         {
             return txtDNI.Text.Trim();
@@ -54,7 +56,9 @@ namespace ProyectoIS_64PR
             txtApellido.Text = string.Empty;
             txtTelefono.Text = string.Empty;
         }
+        #endregion
 
+        #region Idioma (Observer)
         public void ActualizarIdioma(Dictionary<string, string> textoss)
         {
             textos = textoss;
@@ -63,5 +67,6 @@ namespace ProyectoIS_64PR
             lblApellido.Text = textos["ucCliente_lblApellido"];
             lblTelefono.Text = textos["ucCliente_lblTelefono"];
         }
+        #endregion
     }
 }

@@ -8,6 +8,7 @@ namespace ProyectoIS_64PR
 {
     public partial class FrmRegistrarDevolucionJP86 : Form, Idioma.IObservadorIdioma_64PR
     {
+        #region Campos
         Bitacora.Bitacora_64PR bita = new Bitacora.Bitacora_64PR();
         Bitacora.Evento_64PR ev;
 
@@ -16,7 +17,9 @@ namespace ProyectoIS_64PR
 
         List<BE.ContratoJP86> lst;
         BE.ContratoJP86 contratoSeleccionado;
+        #endregion
 
+        #region Constructor
         public FrmRegistrarDevolucionJP86()
         {
             InitializeComponent();
@@ -42,7 +45,9 @@ namespace ProyectoIS_64PR
             if (textos.Count > 0)
                 ActualizarIdioma(textos);
         }
+        #endregion
 
+        #region Idioma (Observer)
         public void ActualizarIdioma(Dictionary<string, string> textoss)
         {
             textos = textoss;
@@ -50,6 +55,24 @@ namespace ProyectoIS_64PR
             CargarEstadosUnidad();
         }
 
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this);
+            base.OnFormClosed(e);
+        }
+        #endregion
+
+        #region Permisos
+        private void ConfigurarPermisos()
+        {
+            Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
+            bool puedeRegistrar = rolUsuario.TienePermiso(Sesion.Patentes_64PR.RegistrarDevolucion);
+            numKilometrajeRetorno.Enabled = puedeRegistrar;
+            cmbEstadoUnidad.Enabled = puedeRegistrar;
+        }
+        #endregion
+
+        #region Carga de datos
         ///El combo muestra el texto traducido (clave "estadoUnidad_<valor del enum>") y guarda el enum como valor
         private void CargarEstadosUnidad()
         {
@@ -64,25 +87,6 @@ namespace ProyectoIS_64PR
 
             if (seleccionado != null)
                 cmbEstadoUnidad.SelectedValue = seleccionado;
-        }
-
-        protected override void OnFormClosed(FormClosedEventArgs e)
-        {
-            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this);
-            base.OnFormClosed(e);
-        }
-
-        private void FrmRegistrarDevolucionJP86_Load(object sender, EventArgs e)
-        {
-            ConfigurarPermisos();
-        }
-
-        private void ConfigurarPermisos()
-        {
-            Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
-            bool puedeRegistrar = rolUsuario.TienePermiso(Sesion.Patentes_64PR.RegistrarDevolucion);
-            numKilometrajeRetorno.Enabled = puedeRegistrar;
-            cmbEstadoUnidad.Enabled = puedeRegistrar;
         }
 
         private void CargaData()
@@ -122,6 +126,13 @@ namespace ProyectoIS_64PR
 
             LimpiarSeleccion();
         }
+        #endregion
+
+        #region Eventos
+        private void FrmRegistrarDevolucionJP86_Load(object sender, EventArgs e)
+        {
+            ConfigurarPermisos();
+        }
 
         private void txtBuscar_TextChanged(object sender, EventArgs e)
         {
@@ -141,14 +152,6 @@ namespace ProyectoIS_64PR
                 btnRegistrarDevolucion.Enabled = rolUsuario.TienePermiso(Sesion.Patentes_64PR.RegistrarDevolucion);
                 btnImprimirRecibo.Enabled = true;
             }
-        }
-
-        private void LimpiarSeleccion()
-        {
-            contratoSeleccionado = null;
-            btnRegistrarDevolucion.Enabled = false;
-            btnImprimirRecibo.Enabled = false;
-            numKilometrajeRetorno.Value = numKilometrajeRetorno.Minimum;
         }
 
         private void btnImprimirRecibo_Click(object sender, EventArgs e)
@@ -204,5 +207,16 @@ namespace ProyectoIS_64PR
                 ManejadorErroresJP86.MostrarErrorInesperado(ex);
             }
         }
+        #endregion
+
+        #region Metodos privados
+        private void LimpiarSeleccion()
+        {
+            contratoSeleccionado = null;
+            btnRegistrarDevolucion.Enabled = false;
+            btnImprimirRecibo.Enabled = false;
+            numKilometrajeRetorno.Value = numKilometrajeRetorno.Minimum;
+        }
+        #endregion
     }
 }

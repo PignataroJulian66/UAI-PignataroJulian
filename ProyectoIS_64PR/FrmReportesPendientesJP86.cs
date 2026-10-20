@@ -10,6 +10,7 @@ namespace ProyectoIS_64PR
     ///Una unica confirmacion registra criticidad + modalidad y pasa el reporte a EN_REPARACION; si no se confirma, no se guarda nada.
     public partial class FrmReportesPendientesJP86 : Form, Idioma.IObservadorIdioma_64PR
     {
+        #region Campos
         Bitacora.Bitacora_64PR bita = new Bitacora.Bitacora_64PR();
         Bitacora.Evento_64PR ev;
 
@@ -17,7 +18,9 @@ namespace ProyectoIS_64PR
         public Dictionary<string, string> textos;
 
         BE.ReporteJP86 reporteSeleccionado;
+        #endregion
 
+        #region Constructor
         public FrmReportesPendientesJP86()
         {
             InitializeComponent();
@@ -43,7 +46,9 @@ namespace ProyectoIS_64PR
 
             CargarReportesPendientes();
         }
+        #endregion
 
+        #region Idioma (Observer)
         public void ActualizarIdioma(Dictionary<string, string> textoss)
         {
             textos = textoss;
@@ -55,12 +60,9 @@ namespace ProyectoIS_64PR
             Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this);
             base.OnFormClosed(e);
         }
+        #endregion
 
-        private void FrmReportesPendientesJP86_Load(object sender, EventArgs e)
-        {
-            ConfigurarPermisos();
-        }
-
+        #region Permisos
         ///CUN-07 es include obligatorio de CUN-06: hacen falta AMBAS patentes para clasificar un reporte
         private bool PuedeClasificar()
         {
@@ -78,7 +80,9 @@ namespace ProyectoIS_64PR
             rbExterna.Enabled = puedeClasificar;
             btnConfirmar.Enabled = puedeClasificar && reporteSeleccionado != null;
         }
+        #endregion
 
+        #region Carga de datos
         private void CargarReportesPendientes()
         {
             List<BE.ReporteJP86> pendientes = greportes.ListarPendientes();
@@ -92,6 +96,13 @@ namespace ProyectoIS_64PR
 
             if (pendientes.Count == 0)
                 MessageBox.Show(textos["msg_sinReportesPendientes"]);
+        }
+        #endregion
+
+        #region Eventos
+        private void FrmReportesPendientesJP86_Load(object sender, EventArgs e)
+        {
+            ConfigurarPermisos();
         }
 
         private void dgvReportes_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -110,34 +121,6 @@ namespace ProyectoIS_64PR
 
                 btnConfirmar.Enabled = PuedeClasificar();
             }
-        }
-
-        ///Criticidad (CUN-06) y modalidad (CUN-07) se muestran juntas y se confirman una sola vez
-        private void MostrarClasificacion()
-        {
-            lblCriticidad.Visible = true;
-            cmbCriticidad.Visible = true;
-            cmbCriticidad.SelectedIndex = 0;
-
-            lblModalidad.Visible = true;
-            rbInterna.Visible = true;
-            rbExterna.Visible = true;
-            rbInterna.Checked = true;
-
-            btnConfirmar.Visible = true;
-        }
-
-        private void LimpiarSeleccion()
-        {
-            reporteSeleccionado = null;
-            dgvHistorial.DataSource = null;
-
-            lblCriticidad.Visible = false;
-            cmbCriticidad.Visible = false;
-            lblModalidad.Visible = false;
-            rbInterna.Visible = false;
-            rbExterna.Visible = false;
-            btnConfirmar.Visible = false;
         }
 
         private void btnConfirmar_Click(object sender, EventArgs e)
@@ -177,5 +160,36 @@ namespace ProyectoIS_64PR
                 MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        #endregion
+
+        #region Metodos privados
+        ///Criticidad (CUN-06) y modalidad (CUN-07) se muestran juntas y se confirman una sola vez
+        private void MostrarClasificacion()
+        {
+            lblCriticidad.Visible = true;
+            cmbCriticidad.Visible = true;
+            cmbCriticidad.SelectedIndex = 0;
+
+            lblModalidad.Visible = true;
+            rbInterna.Visible = true;
+            rbExterna.Visible = true;
+            rbInterna.Checked = true;
+
+            btnConfirmar.Visible = true;
+        }
+
+        private void LimpiarSeleccion()
+        {
+            reporteSeleccionado = null;
+            dgvHistorial.DataSource = null;
+
+            lblCriticidad.Visible = false;
+            cmbCriticidad.Visible = false;
+            lblModalidad.Visible = false;
+            rbInterna.Visible = false;
+            rbExterna.Visible = false;
+            btnConfirmar.Visible = false;
+        }
+        #endregion
     }
 }

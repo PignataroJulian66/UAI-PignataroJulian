@@ -10,6 +10,7 @@ namespace Mapper
 {
     public class mpp_reporte
     {
+        #region Consultas
         public List<BE.VehiculoJP86> ListarVehiculosEnRevision()
         {
             List<BE.VehiculoJP86> lista = new List<BE.VehiculoJP86>();
@@ -46,6 +47,30 @@ namespace Mapper
             return Convert.ToInt32(resultado) == 1;
         }
 
+        public List<BE.ReporteJP86> ListarPendientes()
+        {
+            DataTable tabla = DAL_64PR.Acceso.Instancia.leerQuery("SP_ReporteJP86_ListarPendientes", null, CommandType.StoredProcedure);
+            return MapearReportes(tabla);
+        }
+
+        public List<BE.ReporteJP86> ListarPorVehiculo(string patente)
+        {
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@Patente_Vehiculo", patente)
+            };
+            DataTable tabla = DAL_64PR.Acceso.Instancia.leerQuery("SP_ReporteJP86_ListarPorVehiculo", parametros, CommandType.StoredProcedure);
+            return MapearReportes(tabla);
+        }
+
+        public List<BE.ReporteJP86> ListarEnReparacion()
+        {
+            DataTable tabla = DAL_64PR.Acceso.Instancia.leerQuery("SP_ReporteJP86_ListarEnReparacion", null, CommandType.StoredProcedure);
+            return MapearReportes(tabla);
+        }
+        #endregion
+
+        #region Escritura
         public int Crear(BE.ReporteJP86 r)
         {
             SqlParameter[] parametros = new SqlParameter[]
@@ -61,6 +86,43 @@ namespace Mapper
             return Convert.ToInt32(resultado);
         }
 
+        ///CUN-06 + CUN-07 en una unica operacion: criticidad + modalidad, reporte PENDIENTE -> EN_REPARACION y vehiculo -> EN_REPARACION.
+        ///Devuelve las filas afectadas (0 si el reporte ya no estaba PENDIENTE): esa regla la evalua la BLL.
+        ///El SP devuelve @@ROWCOUNT como resultado (SELECT) porque con SET NOCOUNT ON, ExecuteNonQuery siempre da -1.
+        public int AsignarCriticidadYModalidad(int numeroReporte, BE.CriticidadReporteJP86 criticidad, BE.ModalidadReparacionJP86 modalidad)
+        {
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@NumeroReporte", numeroReporte),
+                new SqlParameter("@Criticidad", criticidad.ToString()),
+                new SqlParameter("@ModalidadReparacion", modalidad.ToString())
+            };
+            object resultado = DAL_64PR.Acceso.Instancia.leerEscalar("SP_ReporteJP86_AsignarCriticidadYModalidad", parametros, CommandType.StoredProcedure);
+            ///null = error de BD absorbido por Acceso.leerEscalar: NO se convierte a 0
+            if (resultado == null || resultado == DBNull.Value)
+                throw new InvalidOperationException("err_BD_SinRespuesta");
+            return Convert.ToInt32(resultado);
+        }
+
+        ///CUN-08 + CUN-09: reporte EN_REPARACION -> ACREDITADO y vehiculo -> DISPONIBLE.
+        ///Devuelve las filas afectadas (0 si el reporte ya no estaba EN_REPARACION): esa regla la evalua la BLL.
+        public int Acreditar(int numeroReporte, string descripcionCierre, string dniResponsableCierre)
+        {
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@NumeroReporte", numeroReporte),
+                new SqlParameter("@DescripcionCierre", descripcionCierre),
+                new SqlParameter("@DNI_ResponsableCierre", dniResponsableCierre)
+            };
+            object resultado = DAL_64PR.Acceso.Instancia.leerEscalar("SP_ReporteJP86_Acreditar", parametros, CommandType.StoredProcedure);
+            ///null = error de BD absorbido por Acceso.leerEscalar: NO se convierte a 0
+            if (resultado == null || resultado == DBNull.Value)
+                throw new InvalidOperationException("err_BD_SinRespuesta");
+            return Convert.ToInt32(resultado);
+        }
+        #endregion
+
+        #region Mapeo de filas
         private List<BE.ReporteJP86> MapearReportes(DataTable tabla)
         {
             List<BE.ReporteJP86> lista = new List<BE.ReporteJP86>();
@@ -104,62 +166,6 @@ namespace Mapper
             }
             return lista;
         }
-
-        public List<BE.ReporteJP86> ListarPendientes()
-        {
-            DataTable tabla = DAL_64PR.Acceso.Instancia.leerQuery("SP_ReporteJP86_ListarPendientes", null, CommandType.StoredProcedure);
-            return MapearReportes(tabla);
-        }
-
-        public List<BE.ReporteJP86> ListarPorVehiculo(string patente)
-        {
-            SqlParameter[] parametros = new SqlParameter[]
-            {
-                new SqlParameter("@Patente_Vehiculo", patente)
-            };
-            DataTable tabla = DAL_64PR.Acceso.Instancia.leerQuery("SP_ReporteJP86_ListarPorVehiculo", parametros, CommandType.StoredProcedure);
-            return MapearReportes(tabla);
-        }
-
-        public List<BE.ReporteJP86> ListarEnReparacion()
-        {
-            DataTable tabla = DAL_64PR.Acceso.Instancia.leerQuery("SP_ReporteJP86_ListarEnReparacion", null, CommandType.StoredProcedure);
-            return MapearReportes(tabla);
-        }
-
-        ///CUN-06 + CUN-07 en una unica operacion: criticidad + modalidad, reporte PENDIENTE -> EN_REPARACION y vehiculo -> EN_REPARACION.
-        ///Devuelve las filas afectadas (0 si el reporte ya no estaba PENDIENTE): esa regla la evalua la BLL.
-        ///El SP devuelve @@ROWCOUNT como resultado (SELECT) porque con SET NOCOUNT ON, ExecuteNonQuery siempre da -1.
-        public int AsignarCriticidadYModalidad(int numeroReporte, BE.CriticidadReporteJP86 criticidad, BE.ModalidadReparacionJP86 modalidad)
-        {
-            SqlParameter[] parametros = new SqlParameter[]
-            {
-                new SqlParameter("@NumeroReporte", numeroReporte),
-                new SqlParameter("@Criticidad", criticidad.ToString()),
-                new SqlParameter("@ModalidadReparacion", modalidad.ToString())
-            };
-            object resultado = DAL_64PR.Acceso.Instancia.leerEscalar("SP_ReporteJP86_AsignarCriticidadYModalidad", parametros, CommandType.StoredProcedure);
-            ///null = error de BD absorbido por Acceso.leerEscalar: NO se convierte a 0
-            if (resultado == null || resultado == DBNull.Value)
-                throw new InvalidOperationException("err_BD_SinRespuesta");
-            return Convert.ToInt32(resultado);
-        }
-
-        ///CUN-08 + CUN-09: reporte EN_REPARACION -> ACREDITADO y vehiculo -> DISPONIBLE.
-        ///Devuelve las filas afectadas (0 si el reporte ya no estaba EN_REPARACION): esa regla la evalua la BLL.
-        public int Acreditar(int numeroReporte, string descripcionCierre, string dniResponsableCierre)
-        {
-            SqlParameter[] parametros = new SqlParameter[]
-            {
-                new SqlParameter("@NumeroReporte", numeroReporte),
-                new SqlParameter("@DescripcionCierre", descripcionCierre),
-                new SqlParameter("@DNI_ResponsableCierre", dniResponsableCierre)
-            };
-            object resultado = DAL_64PR.Acceso.Instancia.leerEscalar("SP_ReporteJP86_Acreditar", parametros, CommandType.StoredProcedure);
-            ///null = error de BD absorbido por Acceso.leerEscalar: NO se convierte a 0
-            if (resultado == null || resultado == DBNull.Value)
-                throw new InvalidOperationException("err_BD_SinRespuesta");
-            return Convert.ToInt32(resultado);
-        }
+        #endregion
     }
 }

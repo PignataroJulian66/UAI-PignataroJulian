@@ -413,6 +413,7 @@
   "FrmGenerarFacturaJP86.btnTransferencia": "Bank transfer",
   "FrmGenerarFacturaJP86.btnMercadoPago": "Mercado Pago",
   "FrmGenerarFacturaJP86.btnImprimirFactura": "Print Invoice",
+  "FrmGenerarFacturaJP86.lblEstadoPago": "Processing payment...",
   "FrmGenerarFacturaJP86.dgvContratos.NumeroContrato": "Contract No.",
   "FrmGenerarFacturaJP86.dgvContratos.Cliente": "Customer",
   "FrmGenerarFacturaJP86.dgvContratos.Vehiculo": "Vehicle",

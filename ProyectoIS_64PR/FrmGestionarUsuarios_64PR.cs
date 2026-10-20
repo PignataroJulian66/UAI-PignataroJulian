@@ -19,6 +19,7 @@ namespace ProyectoIS_64PR
 
     public partial class FrmGestionarUsuarios_64PR : Form, Idioma.IObservadorIdioma_64PR
     {
+        #region Campos
         Bitacora.Bitacora_64PR bita = new Bitacora.Bitacora_64PR();
         Bitacora.Evento_64PR ev;
 
@@ -30,6 +31,9 @@ namespace ProyectoIS_64PR
         string modo = "consulta";
         UserControl uc;
         List<Sesion.Usuario> lst;
+        #endregion
+
+        #region Constructor
         public FrmGestionarUsuarios_64PR()
         {
             InitializeComponent();
@@ -65,7 +69,9 @@ namespace ProyectoIS_64PR
             lblModo.Text = textos["frmGestionUsuarios_lblModoConsulta"];
             lblCantidad.Text = textos["FrmGestionarUsuarios_64PR.lblCantidad"] + lst.Count.ToString();
         }
-        
+        #endregion
+
+        #region Idioma (Observer)
         public void ActualizarIdioma(Dictionary<string, string> textoss)
         {
             ///Esto lo que hace es actualizar los textos visibles
@@ -102,6 +108,25 @@ namespace ProyectoIS_64PR
             base.OnFormClosed(e);
         }
 
+        private void FrmGestionarUsuarios_64PR_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this); ///observer del cambio de idioma
+        }
+        #endregion
+
+        #region Permisos
+        private void ConfigurarPermisos()
+        {
+            Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
+
+            btnCrear.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearUsuario);
+            btnModificar.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarUsuario);
+            btnActDesact.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.ActivarDesactivarUsuarios);
+            btnDesbloquear.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.DesbloquearUsuario);
+        }
+        #endregion
+
+        #region Carga de datos
         private void CargaData()
         {
             dgvUsuarios.DataSource = null;
@@ -118,6 +143,13 @@ namespace ProyectoIS_64PR
             {
                 radioButton2_CheckedChanged(this, EventArgs.Empty);
             }
+        }
+        #endregion
+
+        #region Eventos
+        private void FrmGestionarUsuarios_64PR_Load(object sender, EventArgs e)
+        {
+            ConfigurarPermisos();
         }
 
         private void btnCrear_Click(object sender, EventArgs e)
@@ -320,6 +352,7 @@ namespace ProyectoIS_64PR
                 }
             }
         }
+
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
             ///Activos
@@ -364,23 +397,6 @@ namespace ProyectoIS_64PR
                 }
             }
         }
-
-        private void FrmGestionarUsuarios_64PR_Load(object sender, EventArgs e)
-        {
-            ConfigurarPermisos();
-        }
-        private void ConfigurarPermisos()
-        {
-            Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
-
-            btnCrear.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearUsuario);
-            btnModificar.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarUsuario);
-            btnActDesact.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.ActivarDesactivarUsuarios);
-            btnDesbloquear.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.DesbloquearUsuario);
-        }
-        private void FrmGestionarUsuarios_64PR_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this); ///observer del cambio de idioma
-        }
+        #endregion
     }
 }

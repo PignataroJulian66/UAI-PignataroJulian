@@ -10,6 +10,7 @@ namespace Mapper
 {
     public class mpp_contrato
     {
+        #region Consultas
         public List<BE.VehiculoJP86> BuscarUnidadesDisponibles(int? idCategoria, string marca, int? kilometrajeMaximo)
         {
             List<BE.VehiculoJP86> lista = new List<BE.VehiculoJP86>();
@@ -43,6 +44,41 @@ namespace Mapper
             return lista;
         }
 
+        public List<BE.ContratoJP86> ListarActivos()
+        {
+            DataTable tabla = DAL_64PR.Acceso.Instancia.leerQuery("SP_ContratoJP86_ListarActivos", null, CommandType.StoredProcedure);
+            return MapearContratos(tabla);
+        }
+
+        public List<BE.ContratoJP86> ListarFacturados()
+        {
+            DataTable tabla = DAL_64PR.Acceso.Instancia.leerQuery("SP_ContratoJP86_ListarFacturados", null, CommandType.StoredProcedure);
+            return MapearContratos(tabla);
+        }
+
+        public bool ExisteActivoPorVehiculo(string patente)
+        {
+            SqlParameter[] parametros = new SqlParameter[] { new SqlParameter("@Patente_Vehiculo", patente) };
+            object resultado = DAL_64PR.Acceso.Instancia.leerEscalar("SP_ContratoJP86_ExisteActivoPorVehiculo", parametros, CommandType.StoredProcedure);
+            ///null = error de BD absorbido por Acceso.leerEscalar: NO se interpreta como "no existe" (dejaria pasar el cambio de estado)
+            if (resultado == null || resultado == DBNull.Value)
+                throw new InvalidOperationException("err_BD_SinRespuesta");
+            return Convert.ToInt32(resultado) == 1;
+        }
+
+        ///Contratos ACTIVO o FACTURADO del cliente (bloquean su baja)
+        public bool ExisteAbiertoPorCliente(string dni)
+        {
+            SqlParameter[] parametros = new SqlParameter[] { new SqlParameter("@DNI_Cliente", dni) };
+            object resultado = DAL_64PR.Acceso.Instancia.leerEscalar("SP_ContratoJP86_ExisteAbiertoPorCliente", parametros, CommandType.StoredProcedure);
+            ///null = error de BD absorbido por Acceso.leerEscalar: NO se interpreta como "no existe" (dejaria pasar la baja)
+            if (resultado == null || resultado == DBNull.Value)
+                throw new InvalidOperationException("err_BD_SinRespuesta");
+            return Convert.ToInt32(resultado) == 1;
+        }
+        #endregion
+
+        #region Escritura
         public int Crear(BE.ContratoJP86 c)
         {
             SqlParameter[] parametros = new SqlParameter[]
@@ -63,6 +99,25 @@ namespace Mapper
             return Convert.ToInt32(resultado);
         }
 
+        ///Devuelve las filas afectadas (0 si el contrato ya no estaba FACTURADO): esa regla la evalua la BLL.
+        ///El SP devuelve @@ROWCOUNT como resultado (SELECT) porque con SET NOCOUNT ON, ExecuteNonQuery siempre da -1.
+        public int CerrarPorDevolucion(int numeroContrato, int kilometrajeRetorno, BE.EstadoUnidadDevolucionJP86 estadoUnidad)
+        {
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+                new SqlParameter("@NumeroContrato", numeroContrato),
+                new SqlParameter("@KilometrajeRetorno", kilometrajeRetorno),
+                new SqlParameter("@EstadoUnidadDevolucion", estadoUnidad.ToString())
+            };
+            object resultado = DAL_64PR.Acceso.Instancia.leerEscalar("SP_ContratoJP86_CerrarPorDevolucion", parametros, CommandType.StoredProcedure);
+            ///null = error de BD absorbido por Acceso.leerEscalar: NO se convierte a 0
+            if (resultado == null || resultado == DBNull.Value)
+                throw new InvalidOperationException("err_BD_SinRespuesta");
+            return Convert.ToInt32(resultado);
+        }
+        #endregion
+
+        #region Mapeo de filas
         private List<BE.ContratoJP86> MapearContratos(DataTable tabla)
         {
             List<BE.ContratoJP86> lista = new List<BE.ContratoJP86>();
@@ -113,55 +168,6 @@ namespace Mapper
             }
             return lista;
         }
-
-        public List<BE.ContratoJP86> ListarActivos()
-        {
-            DataTable tabla = DAL_64PR.Acceso.Instancia.leerQuery("SP_ContratoJP86_ListarActivos", null, CommandType.StoredProcedure);
-            return MapearContratos(tabla);
-        }
-
-        public List<BE.ContratoJP86> ListarFacturados()
-        {
-            DataTable tabla = DAL_64PR.Acceso.Instancia.leerQuery("SP_ContratoJP86_ListarFacturados", null, CommandType.StoredProcedure);
-            return MapearContratos(tabla);
-        }
-
-        public bool ExisteActivoPorVehiculo(string patente)
-        {
-            SqlParameter[] parametros = new SqlParameter[] { new SqlParameter("@Patente_Vehiculo", patente) };
-            object resultado = DAL_64PR.Acceso.Instancia.leerEscalar("SP_ContratoJP86_ExisteActivoPorVehiculo", parametros, CommandType.StoredProcedure);
-            ///null = error de BD absorbido por Acceso.leerEscalar: NO se interpreta como "no existe" (dejaria pasar el cambio de estado)
-            if (resultado == null || resultado == DBNull.Value)
-                throw new InvalidOperationException("err_BD_SinRespuesta");
-            return Convert.ToInt32(resultado) == 1;
-        }
-
-        ///Contratos ACTIVO o FACTURADO del cliente (bloquean su baja)
-        public bool ExisteAbiertoPorCliente(string dni)
-        {
-            SqlParameter[] parametros = new SqlParameter[] { new SqlParameter("@DNI_Cliente", dni) };
-            object resultado = DAL_64PR.Acceso.Instancia.leerEscalar("SP_ContratoJP86_ExisteAbiertoPorCliente", parametros, CommandType.StoredProcedure);
-            ///null = error de BD absorbido por Acceso.leerEscalar: NO se interpreta como "no existe" (dejaria pasar la baja)
-            if (resultado == null || resultado == DBNull.Value)
-                throw new InvalidOperationException("err_BD_SinRespuesta");
-            return Convert.ToInt32(resultado) == 1;
-        }
-
-        ///Devuelve las filas afectadas (0 si el contrato ya no estaba FACTURADO): esa regla la evalua la BLL.
-        ///El SP devuelve @@ROWCOUNT como resultado (SELECT) porque con SET NOCOUNT ON, ExecuteNonQuery siempre da -1.
-        public int CerrarPorDevolucion(int numeroContrato, int kilometrajeRetorno, BE.EstadoUnidadDevolucionJP86 estadoUnidad)
-        {
-            SqlParameter[] parametros = new SqlParameter[]
-            {
-                new SqlParameter("@NumeroContrato", numeroContrato),
-                new SqlParameter("@KilometrajeRetorno", kilometrajeRetorno),
-                new SqlParameter("@EstadoUnidadDevolucion", estadoUnidad.ToString())
-            };
-            object resultado = DAL_64PR.Acceso.Instancia.leerEscalar("SP_ContratoJP86_CerrarPorDevolucion", parametros, CommandType.StoredProcedure);
-            ///null = error de BD absorbido por Acceso.leerEscalar: NO se convierte a 0
-            if (resultado == null || resultado == DBNull.Value)
-                throw new InvalidOperationException("err_BD_SinRespuesta");
-            return Convert.ToInt32(resultado);
-        }
+        #endregion
     }
 }

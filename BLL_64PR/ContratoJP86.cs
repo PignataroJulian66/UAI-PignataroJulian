@@ -8,6 +8,7 @@ namespace BLL_64PR
 {
     public class ContratoJP86
     {
+        #region Campos
         public const decimal PorcentajeCargosAdicionales = 0.10m;
 
         ///Tope de las columnas ContratoJP86.ImporteTotal y FacturaJP86.MontoFactura: DECIMAL(10,2).
@@ -19,7 +20,9 @@ namespace BLL_64PR
         Mapper.mpp_contrato mpp = new Mapper.mpp_contrato();
         Mapper.mpp_factura mppFactura = new Mapper.mpp_factura();
         private static readonly DV.DV_64PR recalculador = new DV.DV_64PR();
+        #endregion
 
+        #region Consultas
         public List<BE.VehiculoJP86> BuscarUnidadesDisponibles(int? idCategoria, string marca, int? kilometrajeMaximo)
         {
             return mpp.BuscarUnidadesDisponibles(idCategoria, marca, kilometrajeMaximo);
@@ -34,6 +37,18 @@ namespace BLL_64PR
             return importe;
         }
 
+        public List<BE.ContratoJP86> ListarActivos()
+        {
+            return mpp.ListarActivos();
+        }
+
+        public List<BE.ContratoJP86> ListarFacturados()
+        {
+            return mpp.ListarFacturados();
+        }
+        #endregion
+
+        #region Operaciones
         public BE.ContratoJP86 GenerarContrato(BE.ClienteJP86 cliente, BE.VehiculoJP86 vehiculo, DateTime fechaInicio, DateTime fechaFin, bool cargosAdicionales)
         {
             ///Las excepciones de negocio llevan como Message una clave de idioma
@@ -70,16 +85,6 @@ namespace BLL_64PR
             new BLL_64PR.VehiculoJP86().CambiarEstado(vehiculo.Patente, BE.EstadoVehiculoJP86.ALQUILADO);
 
             return c;
-        }
-
-        public List<BE.ContratoJP86> ListarActivos()
-        {
-            return mpp.ListarActivos();
-        }
-
-        public List<BE.ContratoJP86> ListarFacturados()
-        {
-            return mpp.ListarFacturados();
         }
 
         public async Task<BE.FacturaJP86> GenerarFactura(BE.ContratoJP86 contrato, BE.MetodoPagoJP86 metodoPago)
@@ -135,5 +140,6 @@ namespace BLL_64PR
             contrato.EstadoUnidadDevolucion = estadoUnidad;
             contrato.Estado = BE.EstadoContratoJP86.CERRADO;
         }
+        #endregion
     }
 }

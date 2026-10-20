@@ -13,9 +13,13 @@ namespace ProyectoIS_64PR
 {
     public partial class FrmBitacora_64PR : Form, Idioma.IObservadorIdioma_64PR
     {
+        #region Campos
         Bitacora.Bitacora_64PR bita = new Bitacora.Bitacora_64PR();
         List<Bitacora.Evento_64PR> lst = new List<Bitacora.Evento_64PR>();
         Dictionary<string, string> textos;
+        #endregion
+
+        #region Constructor
         public FrmBitacora_64PR()
         {
             InitializeComponent();
@@ -61,48 +65,22 @@ namespace ProyectoIS_64PR
             if (textos.Count > 0)
                 ActualizarIdioma(textos);
         }
+        #endregion
 
-        private void btnLimpiar_Click(object sender, EventArgs e)
+        #region Idioma (Observer)
+        public void ActualizarIdioma(Dictionary<string, string> textoss)
         {
-            LimpiarFiltros();
+            textos = textoss;
+            Traductor_64PR.Traducir(this, textos);
         }
 
-        private void LimpiarFiltros()
+        private void FrmBitacora_64PR_FormClosed(object sender, FormClosedEventArgs e)
         {
-            cmbCriticidad.SelectedIndex = -1;
-            cmbLogins.SelectedIndex = -1;
-            cmbModulos.SelectedIndex = -1;
-            cmbTipos.SelectedIndex = -1;
-
-            dgvEventos.DataSource = null;
-            dgvEventos.DataSource = lst;
-            ///Rebindear regenera las columnas (autogeneradas) y pisa cualquier traduccion previa: hay que reaplicarla
-            Traductor_64PR.TraducirGrilla(this, dgvEventos, textos);
-
-            cbLogin.Checked = false;
-            cmbLogins.Enabled = false;
-
-            cbInicio.Checked = false;
-            dtpInicio.Enabled = false;
-
-            cbFin.Checked = false;
-            dtpFin.Enabled = false;
-
-            cbCriticidad.Checked = false;
-            cmbCriticidad.Enabled = false;
-
-            cbModulo.Checked = false;
-            cmbModulos.Enabled = false;
-
-            cbTipo.Checked = false;
-            cmbTipos.Enabled = false;
+            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this); ///observer del cambio de idioma
         }
+        #endregion
 
-        private void btnAplicar_Click(object sender, EventArgs e)
-        {
-            AplicarFiltros();
-        }
-
+        #region Carga de datos
         private void AplicarFiltros()
         {
             if (cbInicio.Checked && cbFin.Checked && dtpInicio.Value.Date > dtpFin.Value.Date)
@@ -136,6 +114,18 @@ namespace ProyectoIS_64PR
             dgvEventos.DataSource = resultado.ToList();
             ///Por las dudas: si el rebind regenera las columnas, hay que reaplicar la traduccion
             Traductor_64PR.TraducirGrilla(this, dgvEventos, textos);
+        }
+        #endregion
+
+        #region Eventos
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            LimpiarFiltros();
+        }
+
+        private void btnAplicar_Click(object sender, EventArgs e)
+        {
+            AplicarFiltros();
         }
 
         private void cbLogin_CheckedChanged(object sender, EventArgs e)
@@ -236,6 +226,7 @@ namespace ProyectoIS_64PR
             preview.WindowState = FormWindowState.Maximized;
             preview.ShowDialog();
         }
+
         private void PrintDoc_PrintPage(object sender, PrintPageEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -290,16 +281,39 @@ namespace ProyectoIS_64PR
             fontHeader.Dispose();
             fontData.Dispose();
         }
+        #endregion
 
-        public void ActualizarIdioma(Dictionary<string, string> textoss)
+        #region Metodos privados
+        private void LimpiarFiltros()
         {
-            textos = textoss;
-            Traductor_64PR.Traducir(this, textos);
-        }
+            cmbCriticidad.SelectedIndex = -1;
+            cmbLogins.SelectedIndex = -1;
+            cmbModulos.SelectedIndex = -1;
+            cmbTipos.SelectedIndex = -1;
 
-        private void FrmBitacora_64PR_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this); ///observer del cambio de idioma
+            dgvEventos.DataSource = null;
+            dgvEventos.DataSource = lst;
+            ///Rebindear regenera las columnas (autogeneradas) y pisa cualquier traduccion previa: hay que reaplicarla
+            Traductor_64PR.TraducirGrilla(this, dgvEventos, textos);
+
+            cbLogin.Checked = false;
+            cmbLogins.Enabled = false;
+
+            cbInicio.Checked = false;
+            dtpInicio.Enabled = false;
+
+            cbFin.Checked = false;
+            dtpFin.Enabled = false;
+
+            cbCriticidad.Checked = false;
+            cmbCriticidad.Enabled = false;
+
+            cbModulo.Checked = false;
+            cmbModulos.Enabled = false;
+
+            cbTipo.Checked = false;
+            cmbTipos.Enabled = false;
         }
+        #endregion
     }
 }

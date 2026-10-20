@@ -13,7 +13,7 @@ namespace ProyectoIS_64PR
     public partial class ucModificarClienteJP86 : UserControl, Idioma.IObservadorIdioma_64PR
     {
         Dictionary<string, string> textos;
-
+        #region Constructor
         public ucModificarClienteJP86()
         {
             InitializeComponent();
@@ -28,7 +28,9 @@ namespace ProyectoIS_64PR
             if (textos.Count > 0)
                 ActualizarIdioma(textos);
         }
+        #endregion
 
+        #region Datos del control
         ///Cliente cuyos datos estan cargados en los controles. Guardar modifica ESTE cliente,
         ///no la fila seleccionada en la grilla (la seleccion puede cambiar sin volver a cargar el control,
         ///por ejemplo con las flechas del teclado o al recargar la grilla).
@@ -69,7 +71,9 @@ namespace ProyectoIS_64PR
             txtApellido.Text = string.Empty;
             txtTelefono.Text = string.Empty;
         }
+        #endregion
 
+        #region Idioma (Observer)
         public void ActualizarIdioma(Dictionary<string, string> textoss)
         {
             textos = textoss;
@@ -78,5 +82,6 @@ namespace ProyectoIS_64PR
             lblApellido.Text = textos["ucCliente_lblApellido"];
             lblTelefono.Text = textos["ucCliente_lblTelefono"];
         }
+        #endregion
     }
 }

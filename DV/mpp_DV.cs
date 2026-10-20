@@ -10,21 +10,7 @@ namespace DV
 {
     public class mpp_DV
     {
-        private long ValorHexDeCelda(object valor)
-        {
-            if (valor == null || valor == DBNull.Value)
-                return 0;
-
-            string texto = valor.ToString();
-            byte[] bytes = Encoding.UTF8.GetBytes(texto);
-
-            long suma = 0;
-            foreach (byte b in bytes)
-                suma += b;
-
-            return suma;
-        }
-
+        #region Consultas
         /// Calcula el DVH de TODAS las filas de una tabla (Cálculo Horizontal - columna a columna)
         public List<DV.DVH_64PR> CalcularDVHTabla(string nombreTabla, string[] columnasPK)
         {
@@ -56,24 +42,6 @@ namespace DV
             return resultado;
         }
 
-        /// Upsert del DVH de una fila puntual
-        private void GuardarDVH(DV.DVH_64PR dvh)
-        {
-            string query = @"
-        IF EXISTS (SELECT 1 FROM DVH_64PR WHERE Tabla = @Tabla AND IdFila = @IdFila)
-            UPDATE DVH_64PR SET DVH = @Valor WHERE Tabla = @Tabla AND IdFila = @IdFila
-        ELSE
-            INSERT INTO DVH_64PR (Tabla, IdFila, DVH) VALUES (@Tabla, @IdFila, @Valor)";
-
-            SqlParameter[] parametros = new SqlParameter[]
-            {
-        new SqlParameter("@Tabla", dvh.Tabla),
-        new SqlParameter("@IdFila", dvh.IdFila),
-        new SqlParameter("@Valor", dvh.Valor)
-            };
-
-            DAL_64PR.Acceso.Instancia.escribirQuery(query, parametros);
-        }   
         public long ObtenerDVGuardado(string nombreTabla)
         {
             string query = "SELECT DV FROM DV_64PR WHERE Tabla = @Tabla";
@@ -95,36 +63,7 @@ namespace DV
                 suma += fila.Valor;
             return suma;
         }
-        /// Fuerza la regeneración completa del DVH/DV de una tabla, descartando lo guardado previamente
-        public void RecalcularTabla(string nombreTabla, string[] columnasPK)
-        {
-            // 1. Borra todo lo que había guardado para esta tabla
-            DAL_64PR.Acceso.Instancia.escribirQuery(
-                "DELETE FROM DVH_64PR WHERE Tabla = @Tabla",
-                new SqlParameter[] { new SqlParameter("@Tabla", nombreTabla) });
 
-            DAL_64PR.Acceso.Instancia.escribirQuery(
-                "DELETE FROM DV_64PR WHERE Tabla = @Tabla",
-                new SqlParameter[] { new SqlParameter("@Tabla", nombreTabla) });
-
-            // 2. Recalcula desde cero, como si cada fila se estuviera persistiendo por primera vez
-            List<DV.DVH_64PR> filas = CalcularDVHTabla(nombreTabla, columnasPK);
-            long total = 0;
-            foreach (DV.DVH_64PR fila in filas)
-            {
-                GuardarDVH(fila);
-                total += fila.Valor;
-            }
-
-            // 3. Inserta el nuevo DV de tabla
-            DAL_64PR.Acceso.Instancia.escribirQuery(
-                "INSERT INTO DV_64PR (Tabla, DV) VALUES (@Tabla, @DV)",
-                new SqlParameter[]
-                {
-            new SqlParameter("@Tabla", nombreTabla),
-            new SqlParameter("@DV", total)
-                });
-        }
         /// Compara el DVH calculado vs el guardado fila por fila.
         /// Clasifica cada anomalía en Insercion, Modificacion o Eliminacion.
         public List<DV.FilaInconsistente_64PR> ObtenerFilasInconsistentes(string nombreTabla, string[] columnasPK)
@@ -191,5 +130,75 @@ namespace DV
 
             return filasAfectadas;
         }
+        #endregion
+
+        #region Escritura
+        /// Upsert del DVH de una fila puntual
+        private void GuardarDVH(DV.DVH_64PR dvh)
+        {
+            string query = @"
+        IF EXISTS (SELECT 1 FROM DVH_64PR WHERE Tabla = @Tabla AND IdFila = @IdFila)
+            UPDATE DVH_64PR SET DVH = @Valor WHERE Tabla = @Tabla AND IdFila = @IdFila
+        ELSE
+            INSERT INTO DVH_64PR (Tabla, IdFila, DVH) VALUES (@Tabla, @IdFila, @Valor)";
+
+            SqlParameter[] parametros = new SqlParameter[]
+            {
+        new SqlParameter("@Tabla", dvh.Tabla),
+        new SqlParameter("@IdFila", dvh.IdFila),
+        new SqlParameter("@Valor", dvh.Valor)
+            };
+
+            DAL_64PR.Acceso.Instancia.escribirQuery(query, parametros);
+        }   
+
+        /// Fuerza la regeneración completa del DVH/DV de una tabla, descartando lo guardado previamente
+        public void RecalcularTabla(string nombreTabla, string[] columnasPK)
+        {
+            // 1. Borra todo lo que había guardado para esta tabla
+            DAL_64PR.Acceso.Instancia.escribirQuery(
+                "DELETE FROM DVH_64PR WHERE Tabla = @Tabla",
+                new SqlParameter[] { new SqlParameter("@Tabla", nombreTabla) });
+
+            DAL_64PR.Acceso.Instancia.escribirQuery(
+                "DELETE FROM DV_64PR WHERE Tabla = @Tabla",
+                new SqlParameter[] { new SqlParameter("@Tabla", nombreTabla) });
+
+            // 2. Recalcula desde cero, como si cada fila se estuviera persistiendo por primera vez
+            List<DV.DVH_64PR> filas = CalcularDVHTabla(nombreTabla, columnasPK);
+            long total = 0;
+            foreach (DV.DVH_64PR fila in filas)
+            {
+                GuardarDVH(fila);
+                total += fila.Valor;
+            }
+
+            // 3. Inserta el nuevo DV de tabla
+            DAL_64PR.Acceso.Instancia.escribirQuery(
+                "INSERT INTO DV_64PR (Tabla, DV) VALUES (@Tabla, @DV)",
+                new SqlParameter[]
+                {
+            new SqlParameter("@Tabla", nombreTabla),
+            new SqlParameter("@DV", total)
+                });
+        }
+        #endregion
+
+        #region Metodos privados
+        private long ValorHexDeCelda(object valor)
+        {
+            if (valor == null || valor == DBNull.Value)
+                return 0;
+
+            string texto = valor.ToString();
+            byte[] bytes = Encoding.UTF8.GetBytes(texto);
+
+            long suma = 0;
+            foreach (byte b in bytes)
+                suma += b;
+
+            return suma;
+        }
+        #endregion
     }
 }

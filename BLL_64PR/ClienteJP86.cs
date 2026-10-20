@@ -9,6 +9,7 @@ namespace BLL_64PR
 {
     public class ClienteJP86
     {
+        #region Campos
         Mapper.mpp_cliente mpp = new Mapper.mpp_cliente();
         Mapper.mpp_contrato mppContrato = new Mapper.mpp_contrato();
         private static readonly DV.DV_64PR recalculador = new DV.DV_64PR();
@@ -16,7 +17,9 @@ namespace BLL_64PR
         ///Unico lugar con las reglas de formato del cliente (antes estaban copiadas en FrmGenerarContratoJP86 y FrmGestionarClientesJP86)
         private static readonly Regex RegexDNI = new Regex(@"^\d{7,8}$");
         private static readonly Regex RegexTelefono = new Regex(@"^(\+?54)?0?\d{8,11}$");
+        #endregion
 
+        #region Consultas
         public List<BE.ClienteJP86> Listar()
         {
             return mpp.Listar();
@@ -27,7 +30,9 @@ namespace BLL_64PR
         {
             return mpp.Listar().Where(c => c.Activo).ToList();
         }
+        #endregion
 
+        #region Operaciones
         public void Crear(BE.ClienteJP86 c)
         {
             ///Las excepciones llevan como Message una clave de idioma
@@ -48,19 +53,6 @@ namespace BLL_64PR
 
             mpp.Modificar(c);
             recalculador.RecalcularTabla("ClienteJP86");
-        }
-
-        private void ValidarDatosPersonales(BE.ClienteJP86 c)
-        {
-            if (string.IsNullOrWhiteSpace(c.Nombre))
-                throw new InvalidOperationException("msg_NombreValido");
-            if (string.IsNullOrWhiteSpace(c.Apellido))
-                throw new InvalidOperationException("msg_ApellidoValido");
-
-            ///Se valida el telefono sin espacios ni guiones, pero se guarda tal como lo cargo el usuario
-            string telefonoNormalizado = Regex.Replace(c.Telefono ?? string.Empty, @"[\s\-]", "");
-            if (!RegexTelefono.IsMatch(telefonoNormalizado))
-                throw new InvalidOperationException("msg_TelefonoValido");
         }
 
         //si llega activo es una baja (se valida); si llega inactivo es una reactivacion
@@ -102,5 +94,21 @@ namespace BLL_64PR
 
             return clientes;
         }
+        #endregion
+
+        #region Validaciones
+        private void ValidarDatosPersonales(BE.ClienteJP86 c)
+        {
+            if (string.IsNullOrWhiteSpace(c.Nombre))
+                throw new InvalidOperationException("msg_NombreValido");
+            if (string.IsNullOrWhiteSpace(c.Apellido))
+                throw new InvalidOperationException("msg_ApellidoValido");
+
+            ///Se valida el telefono sin espacios ni guiones, pero se guarda tal como lo cargo el usuario
+            string telefonoNormalizado = Regex.Replace(c.Telefono ?? string.Empty, @"[\s\-]", "");
+            if (!RegexTelefono.IsMatch(telefonoNormalizado))
+                throw new InvalidOperationException("msg_TelefonoValido");
+        }
+        #endregion
     }
 }

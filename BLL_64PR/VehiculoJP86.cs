@@ -8,11 +8,14 @@ namespace BLL_64PR
 {
     public class VehiculoJP86
     {
+        #region Campos
         Mapper.mpp_vehiculo mpp = new Mapper.mpp_vehiculo();
         Mapper.mpp_contrato mppContrato = new Mapper.mpp_contrato();
         Mapper.mpp_reporte mppReporte = new Mapper.mpp_reporte();
         private static readonly DV.DV_64PR recalculador = new DV.DV_64PR();
+        #endregion
 
+        #region Operaciones
         public List<BE.VehiculoJP86> Listar()
         {
             return mpp.Listar();
@@ -58,6 +61,28 @@ namespace BLL_64PR
             CambiarEstado(patente, destino);
         }
 
+        ///si llega activo es una baja; si llega inactivo es una reactivacion
+        public void ActDesact(BE.VehiculoJP86 v)
+        {
+            if (v.Activo)
+            {
+                ///El estado se lee de la BD, no de la grilla (puede estar desactualizada)
+                BE.EstadoVehiculoJP86 origen = mpp.ObtenerEstado(v.Patente);
+
+                if (TieneContratoAbierto(v.Patente, origen))
+                    throw new InvalidOperationException("err_BajaVehiculo_ContratoActivo");
+
+                ///A diferencia del cambio de estado manual, bloquea la baja cualquiera sea el estado actual
+                if (TieneReporteAbierto(v.Patente))
+                    throw new InvalidOperationException("err_BajaVehiculo_ReporteAbierto");
+            }
+
+            mpp.ActDesact(v);
+            recalculador.RecalcularTabla("VehiculoJP86");
+        }
+        #endregion
+
+        #region Validaciones
         ///Restaurar una version historica (FrmBitacoraCambiosVehiculo) es un UPDATE completo del vehiculo:
         ///se le aplican las mismas reglas que al cambio de estado manual y a la baja, para que no sea un atajo.
         public void ValidarRestauracion(string patente, BE.EstadoVehiculoJP86 estadoDestino, bool activoDestino)
@@ -95,7 +120,9 @@ namespace BLL_64PR
                     throw new InvalidOperationException("err_BajaVehiculo_ReporteAbierto");
             }
         }
+        #endregion
 
+        #region Metodos privados
         ///Compartido por CambiarEstadoManual, ActDesact y ValidarRestauracion
         private bool TieneContratoAbierto(string patente, BE.EstadoVehiculoJP86 origen)
         {
@@ -107,25 +134,6 @@ namespace BLL_64PR
         {
             return mppReporte.ExisteAbiertoPorVehiculo(patente);
         }
-
-        ///si llega activo es una baja; si llega inactivo es una reactivacion
-        public void ActDesact(BE.VehiculoJP86 v)
-        {
-            if (v.Activo)
-            {
-                ///El estado se lee de la BD, no de la grilla (puede estar desactualizada)
-                BE.EstadoVehiculoJP86 origen = mpp.ObtenerEstado(v.Patente);
-
-                if (TieneContratoAbierto(v.Patente, origen))
-                    throw new InvalidOperationException("err_BajaVehiculo_ContratoActivo");
-
-                ///A diferencia del cambio de estado manual, bloquea la baja cualquiera sea el estado actual
-                if (TieneReporteAbierto(v.Patente))
-                    throw new InvalidOperationException("err_BajaVehiculo_ReporteAbierto");
-            }
-
-            mpp.ActDesact(v);
-            recalculador.RecalcularTabla("VehiculoJP86");
-        }
+        #endregion
     }
 }

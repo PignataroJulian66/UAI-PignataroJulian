@@ -9,10 +9,13 @@ namespace ProyectoIS_64PR
 {
     public partial class FrmBitacoraCambiosVehiculo : Form, Idioma.IObservadorIdioma_64PR
     {
+        #region Campos
         BLL_64PR.VehiculoBitacoraCambios bll = new BLL_64PR.VehiculoBitacoraCambios();
         List<BE.VehiculoBitacoraCambios> lst;
         Dictionary<string, string> textos;
+        #endregion
 
+        #region Constructor
         public FrmBitacoraCambiosVehiculo()
         {
             InitializeComponent();
@@ -42,43 +45,34 @@ namespace ProyectoIS_64PR
             if (textos.Count > 0)
                 ActualizarIdioma(textos);
         }
+        #endregion
 
+        #region Idioma (Observer)
+        public void ActualizarIdioma(Dictionary<string, string> textoss)
+        {
+            textos = textoss;
+            Traductor_64PR.Traducir(this, textos);
+        }
+
+        private void FrmBitacoraCambiosVehiculo_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this);
+        }
+        #endregion
+
+        #region Permisos
+        private void ConfigurarPermisos()
+        {
+            Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
+            btnActivar.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.VerBitacoraCambiosVehiculo);
+        }
+        #endregion
+
+        #region Carga de datos
         private void CargaData()
         {
             lst = bll.ObtenerBitacoraCambios(null, null, null, null);
             dgvBitacora.DataSource = lst;
-        }
-
-        private void LimpiarFiltros()
-        {
-            cbPatente.Checked = false;
-            txtPatente.Text = string.Empty;
-            txtPatente.Enabled = false;
-
-            cbMarcaModelo.Checked = false;
-            txtMarcaModelo.Text = string.Empty;
-            txtMarcaModelo.Enabled = false;
-
-            cbInicio.Checked = false;
-            dtpInicio.Enabled = false;
-
-            cbFin.Checked = false;
-            dtpFin.Enabled = false;
-
-            dgvBitacora.DataSource = null;
-            dgvBitacora.DataSource = lst;
-            ///Rebindear regenera las columnas (autogeneradas) y pisa cualquier traduccion previa: hay que reaplicarla
-            Traductor_64PR.TraducirGrilla(this, dgvBitacora, textos);
-        }
-
-        private void btnLimpiar_Click(object sender, EventArgs e)
-        {
-            LimpiarFiltros();
-        }
-
-        private void btnAplicar_Click(object sender, EventArgs e)
-        {
-            AplicarFiltros();
         }
 
         private void AplicarFiltros()
@@ -111,6 +105,23 @@ namespace ProyectoIS_64PR
             dgvBitacora.DataSource = resultado.ToList();
             ///Por las dudas: si el rebind regenera las columnas, hay que reaplicar la traduccion
             Traductor_64PR.TraducirGrilla(this, dgvBitacora, textos);
+        }
+        #endregion
+
+        #region Eventos
+        private void FrmBitacoraCambiosVehiculo_Load(object sender, EventArgs e)
+        {
+            ConfigurarPermisos();
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            LimpiarFiltros();
+        }
+
+        private void btnAplicar_Click(object sender, EventArgs e)
+        {
+            AplicarFiltros();
         }
 
         private void cbPatente_CheckedChanged(object sender, EventArgs e)
@@ -184,27 +195,30 @@ namespace ProyectoIS_64PR
         {
             this.Close();
         }
+        #endregion
 
-        private void FrmBitacoraCambiosVehiculo_Load(object sender, EventArgs e)
+        #region Metodos privados
+        private void LimpiarFiltros()
         {
-            ConfigurarPermisos();
-        }
+            cbPatente.Checked = false;
+            txtPatente.Text = string.Empty;
+            txtPatente.Enabled = false;
 
-        private void ConfigurarPermisos()
-        {
-            Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
-            btnActivar.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.VerBitacoraCambiosVehiculo);
-        }
+            cbMarcaModelo.Checked = false;
+            txtMarcaModelo.Text = string.Empty;
+            txtMarcaModelo.Enabled = false;
 
-        public void ActualizarIdioma(Dictionary<string, string> textoss)
-        {
-            textos = textoss;
-            Traductor_64PR.Traducir(this, textos);
-        }
+            cbInicio.Checked = false;
+            dtpInicio.Enabled = false;
 
-        private void FrmBitacoraCambiosVehiculo_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this);
+            cbFin.Checked = false;
+            dtpFin.Enabled = false;
+
+            dgvBitacora.DataSource = null;
+            dgvBitacora.DataSource = lst;
+            ///Rebindear regenera las columnas (autogeneradas) y pisa cualquier traduccion previa: hay que reaplicarla
+            Traductor_64PR.TraducirGrilla(this, dgvBitacora, textos);
         }
+        #endregion
     }
 }

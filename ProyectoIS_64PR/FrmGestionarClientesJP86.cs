@@ -12,6 +12,7 @@ namespace ProyectoIS_64PR
 {
     public partial class FrmGestionarClientesJP86 : Form, Idioma.IObservadorIdioma_64PR
     {
+        #region Campos
         Bitacora.Bitacora_64PR bita = new Bitacora.Bitacora_64PR();
         Bitacora.Evento_64PR ev;
 
@@ -27,7 +28,9 @@ namespace ProyectoIS_64PR
         object[] argsMensaje;
         Color colorMensaje;
         Color colorModoNormal;
+        #endregion
 
+        #region Constructor
         public FrmGestionarClientesJP86()
         {
             InitializeComponent();
@@ -79,7 +82,9 @@ namespace ProyectoIS_64PR
                 ActualizarIdioma(textos);
             lblModo.Text = textos["frmGestionClientes_lblModoConsulta"];
         }
+        #endregion
 
+        #region Idioma (Observer)
         public void ActualizarIdioma(Dictionary<string, string> textoss)
         {
             textos = textoss;
@@ -125,55 +130,44 @@ namespace ProyectoIS_64PR
             return Traductor_64PR.TraducirMensaje(textos, clave);
         }
 
-        #region Panel de mensajes
-
-        ///Los argumentos que sean claves de idioma (ej. el Message de una excepcion de la BLL) tambien se traducen
-        private void MostrarMensaje(string clave, Color color, params object[] args)
-        {
-            claveMensaje = clave;
-            argsMensaje = args;
-            colorMensaje = color;
-            MostrarMensajeActual();
-        }
-
-        private void MostrarMensajeActual()
-        {
-            if (string.IsNullOrEmpty(claveMensaje))
-            {
-                lblMensajes.Text = string.Empty;
-                return;
-            }
-
-            object[] traducidos = (argsMensaje ?? new object[0])
-                .Select(a => a is string s ? (object)Texto(s) : a)
-                .ToArray();
-            lblMensajes.ForeColor = colorMensaje;
-            lblMensajes.Text = string.Format(Texto(claveMensaje), traducidos);
-        }
-
-        private void LimpiarMensaje()
-        {
-            claveMensaje = null;
-            argsMensaje = null;
-            lblMensajes.Text = string.Empty;
-        }
-
-        ///pnlContenedor tambien aloja los uc de Crear/Modificar: al volver a modo consulta se vuelve a mostrar el panel de mensajes
-        private void MostrarPanelMensajes()
-        {
-            LimpiarMensaje();
-            if (!pnlContenedor.Controls.Contains(lblMensajes))
-                pnlContenedor.Controls.Add(lblMensajes);
-        }
-
-        #endregion
-
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
             Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this);
             base.OnFormClosed(e);
         }
 
+        private void FrmGestionarClientesJP86_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this);
+        }
+        #endregion
+
+        #region Permisos
+        private void ConfigurarPermisos()
+        {
+            Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
+
+            btnCrear.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearCliente);
+            btnModificar.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarCliente);
+            btnEliminar.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarCliente);
+
+            bool puedeSerializar = rolUsuario.TienePermiso(Sesion.Patentes_64PR.SerializarClientes);
+            btnSerializar.Visible = puedeSerializar;
+            txtRutaSerializar.Visible = puedeSerializar;
+            btnCarpetaSerializar.Visible = puedeSerializar;
+
+            bool puedeDeserializar = rolUsuario.TienePermiso(Sesion.Patentes_64PR.DeserializarClientes);
+            btnDeserializar.Visible = puedeDeserializar;
+            txtRutaDeserializar.Visible = puedeDeserializar;
+            btnCarpetaDeserializar.Visible = puedeDeserializar;
+
+            ///Limpiar solo tiene sentido si hay algo que limpiar de la franja de serializacion
+            btnLimpiar.Visible = puedeSerializar || puedeDeserializar;
+            pnlSeparador.Visible = btnLimpiar.Visible;
+        }
+        #endregion
+
+        #region Carga de datos
         private void CargaData()
         {
             lst = gclientes.Listar();
@@ -210,6 +204,13 @@ namespace ProyectoIS_64PR
 
             if (textos != null && textos.Count > 0)
                 lblCantidad.Text = textos["frmGestionClientes_lblCantidad"] + resultado.Count.ToString();
+        }
+        #endregion
+
+        #region Eventos
+        private void FrmGestionarClientesJP86_Load(object sender, EventArgs e)
+        {
+            ConfigurarPermisos();
         }
 
         private void btnCrear_Click(object sender, EventArgs e)
@@ -414,34 +415,50 @@ namespace ProyectoIS_64PR
         {
             AplicarFiltros();
         }
+        #endregion
 
-        private void FrmGestionarClientesJP86_Load(object sender, EventArgs e)
+        #region Panel de mensajes
+
+        ///Los argumentos que sean claves de idioma (ej. el Message de una excepcion de la BLL) tambien se traducen
+        private void MostrarMensaje(string clave, Color color, params object[] args)
         {
-            ConfigurarPermisos();
+            claveMensaje = clave;
+            argsMensaje = args;
+            colorMensaje = color;
+            MostrarMensajeActual();
         }
 
-        private void ConfigurarPermisos()
+        private void MostrarMensajeActual()
         {
-            Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
+            if (string.IsNullOrEmpty(claveMensaje))
+            {
+                lblMensajes.Text = string.Empty;
+                return;
+            }
 
-            btnCrear.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearCliente);
-            btnModificar.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarCliente);
-            btnEliminar.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarCliente);
-
-            bool puedeSerializar = rolUsuario.TienePermiso(Sesion.Patentes_64PR.SerializarClientes);
-            btnSerializar.Visible = puedeSerializar;
-            txtRutaSerializar.Visible = puedeSerializar;
-            btnCarpetaSerializar.Visible = puedeSerializar;
-
-            bool puedeDeserializar = rolUsuario.TienePermiso(Sesion.Patentes_64PR.DeserializarClientes);
-            btnDeserializar.Visible = puedeDeserializar;
-            txtRutaDeserializar.Visible = puedeDeserializar;
-            btnCarpetaDeserializar.Visible = puedeDeserializar;
-
-            ///Limpiar solo tiene sentido si hay algo que limpiar de la franja de serializacion
-            btnLimpiar.Visible = puedeSerializar || puedeDeserializar;
-            pnlSeparador.Visible = btnLimpiar.Visible;
+            object[] traducidos = (argsMensaje ?? new object[0])
+                .Select(a => a is string s ? (object)Texto(s) : a)
+                .ToArray();
+            lblMensajes.ForeColor = colorMensaje;
+            lblMensajes.Text = string.Format(Texto(claveMensaje), traducidos);
         }
+
+        private void LimpiarMensaje()
+        {
+            claveMensaje = null;
+            argsMensaje = null;
+            lblMensajes.Text = string.Empty;
+        }
+
+        ///pnlContenedor tambien aloja los uc de Crear/Modificar: al volver a modo consulta se vuelve a mostrar el panel de mensajes
+        private void MostrarPanelMensajes()
+        {
+            LimpiarMensaje();
+            if (!pnlContenedor.Controls.Contains(lblMensajes))
+                pnlContenedor.Controls.Add(lblMensajes);
+        }
+
+        #endregion
 
         #region Serializacion XML
 
@@ -636,10 +653,5 @@ namespace ProyectoIS_64PR
         }
 
         #endregion
-
-        private void FrmGestionarClientesJP86_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this);
-        }
     }
 }

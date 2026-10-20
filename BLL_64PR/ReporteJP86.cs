@@ -8,14 +8,37 @@ namespace BLL_64PR
 {
     public class ReporteJP86
     {
+        #region Campos
         Mapper.mpp_reporte mpp = new Mapper.mpp_reporte();
         private static readonly DV.DV_64PR recalculador = new DV.DV_64PR();
+        #endregion
 
+        #region Consultas
         public List<BE.VehiculoJP86> ListarVehiculosEnRevision()
         {
             return mpp.ListarVehiculosEnRevision();
         }
 
+        public List<BE.ReporteJP86> ListarPendientes()
+        {
+            return mpp.ListarPendientes();
+        }
+
+        public List<BE.ReporteJP86> ListarHistorialPorVehiculo(string patente, int? excluirNumeroReporte = null)
+        {
+            List<BE.ReporteJP86> lista = mpp.ListarPorVehiculo(patente);
+            if (excluirNumeroReporte.HasValue)
+                lista = lista.Where(r => r.NumeroReporte != excluirNumeroReporte.Value).ToList();
+            return lista;
+        }
+
+        public List<BE.ReporteJP86> ListarEnReparacion()
+        {
+            return mpp.ListarEnReparacion();
+        }
+        #endregion
+
+        #region Operaciones
         public BE.ReporteJP86 RegistrarReporte(BE.VehiculoJP86 vehiculo, string descripcionProblema, BE.FuenteReporteJP86 fuente)
         {
             ///Un vehiculo tiene a lo sumo un reporte abierto (PENDIENTE o EN_REPARACION): el nuevo
@@ -38,19 +61,6 @@ namespace BLL_64PR
             return r;
         }
 
-        public List<BE.ReporteJP86> ListarPendientes()
-        {
-            return mpp.ListarPendientes();
-        }
-
-        public List<BE.ReporteJP86> ListarHistorialPorVehiculo(string patente, int? excluirNumeroReporte = null)
-        {
-            List<BE.ReporteJP86> lista = mpp.ListarPorVehiculo(patente);
-            if (excluirNumeroReporte.HasValue)
-                lista = lista.Where(r => r.NumeroReporte != excluirNumeroReporte.Value).ToList();
-            return lista;
-        }
-
         ///CUN-06 "Asignar Criticidad" + CUN-07 "Determinar Modalidad Reparacion" (include obligatorio): una unica confirmacion.
         ///El SP registra criticidad y modalidad, pasa el Reporte (PENDIENTE -> EN_REPARACION) y el VehiculoJP86 (-> EN_REPARACION)
         ///en una unica transaccion, a diferencia de CUN-01/CUN-04 (que reutilizan BLL_64PR.VehiculoJP86.CambiarEstado en llamadas
@@ -69,11 +79,6 @@ namespace BLL_64PR
             reporte.ModalidadReparacion = modalidad;
             reporte.Estado = BE.EstadoReporteJP86.EN_REPARACION;
             reporte.Vehiculo.Estado = BE.EstadoVehiculoJP86.EN_REPARACION;
-        }
-
-        public List<BE.ReporteJP86> ListarEnReparacion()
-        {
-            return mpp.ListarEnReparacion();
         }
 
         ///CUN-08 "Registrar Acreditacion de Reparacion" + CUN-09 "Liberar Vehiculo" (incluido siempre en el paso 5).
@@ -95,5 +100,6 @@ namespace BLL_64PR
             reporte.Estado = BE.EstadoReporteJP86.ACREDITADO;
             reporte.Vehiculo.Estado = BE.EstadoVehiculoJP86.DISPONIBLE;
         }
+        #endregion
     }
 }

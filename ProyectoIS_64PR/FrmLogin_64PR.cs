@@ -12,8 +12,12 @@ namespace ProyectoIS_64PR
 {
     public partial class FrmLogin_64PR : Form, Idioma.IObservadorIdioma_64PR
     {
+        #region Campos
         Sesion.BLL_Usuario gusuarios = new Sesion.BLL_Usuario();
         Dictionary<string, string> textos;
+        #endregion
+
+        #region Constructor
         public FrmLogin_64PR()
         {
             InitializeComponent();
@@ -38,30 +42,9 @@ namespace ProyectoIS_64PR
                 ActualizarIdioma(textos);
             lblMensaje.Hide();
         }
-        private void CargarComboIdiomas()
-        {
-            cmbIdioma.Items.Clear();
+        #endregion
 
-            foreach (string codigo in Idioma.GestorIdioma_64PR.GetInstance.IdiomasDisponibles())
-                cmbIdioma.Items.Add(codigo.ToUpper()); /// "ES", "EN"
-
-            ///Seleccionar el idioma actual
-            string actual = Idioma.GestorIdioma_64PR.GetInstance.IdiomaActual.ToUpper();
-            int index = cmbIdioma.Items.IndexOf(actual);
-            if (index >= 0)
-                cmbIdioma.SelectedIndex = index;
-
-            cmbIdioma.DropDownStyle = ComboBoxStyle.DropDownList;
-        }
-
-        private void cmbIdioma_SelectedIndexChanged_1(object sender, EventArgs e)
-        {
-            if (cmbIdioma.SelectedItem == null) return;
-
-            string seleccionado = cmbIdioma.SelectedItem.ToString().ToLower(); ///"es" o "en"
-            Idioma.GestorIdioma_64PR.GetInstance.SetIdioma(seleccionado);
-            ///El Observer se encarga de actualizar el formulario automáticamente
-        }
+        #region Idioma (Observer)
         public void ActualizarIdioma(Dictionary<string, string> textoss)
         {
             ///Esto me actualiza los textos visibles
@@ -86,6 +69,41 @@ namespace ProyectoIS_64PR
                 lblMensaje.Text = etiqueta + ":" + contadorActual;
             }
         }
+
+        private void FrmLogin_64PR_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this); ///observer del cambio de idioma
+        }
+        #endregion
+
+        #region Carga de datos
+        private void CargarComboIdiomas()
+        {
+            cmbIdioma.Items.Clear();
+
+            foreach (string codigo in Idioma.GestorIdioma_64PR.GetInstance.IdiomasDisponibles())
+                cmbIdioma.Items.Add(codigo.ToUpper()); /// "ES", "EN"
+
+            ///Seleccionar el idioma actual
+            string actual = Idioma.GestorIdioma_64PR.GetInstance.IdiomaActual.ToUpper();
+            int index = cmbIdioma.Items.IndexOf(actual);
+            if (index >= 0)
+                cmbIdioma.SelectedIndex = index;
+
+            cmbIdioma.DropDownStyle = ComboBoxStyle.DropDownList;
+        }
+        #endregion
+
+        #region Eventos
+        private void cmbIdioma_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            if (cmbIdioma.SelectedItem == null) return;
+
+            string seleccionado = cmbIdioma.SelectedItem.ToString().ToLower(); ///"es" o "en"
+            Idioma.GestorIdioma_64PR.GetInstance.SetIdioma(seleccionado);
+            ///El Observer se encarga de actualizar el formulario automáticamente
+        }
+
         private void btnIniciarSesion_Click(object sender, EventArgs e)
         {
             var textos = Idioma.GestorIdioma_64PR.GetInstance.ObtenerTextos();
@@ -204,10 +222,6 @@ namespace ProyectoIS_64PR
                 MessageBox.Show(msgIncorrecta);
             }
         }
-
-        private void FrmLogin_64PR_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this); ///observer del cambio de idioma
-        }
+        #endregion
     }
 }

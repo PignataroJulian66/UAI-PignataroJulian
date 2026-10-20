@@ -12,6 +12,7 @@ namespace ProyectoIS_64PR
 {
     public partial class FrmGestionFamilias_64PR : Form, Idioma.IObservadorIdioma_64PR
     {
+        #region Campos
         Sesion.BLL_Rol_64PR bllRol = new Sesion.BLL_Rol_64PR();
         Sesion.BLL_Familia_64PR bllfamilia = new Sesion.BLL_Familia_64PR();
         Sesion.BLL_Permiso_64PR bllpermiso = new Sesion.BLL_Permiso_64PR();
@@ -22,7 +23,9 @@ namespace ProyectoIS_64PR
         private enum Modo { Crear, Modificar, Eliminar }
         private Modo modoActual = Modo.Crear;
         private int idFamiliaEnEdicion = -1; /// guarda el ID cuando estás modificando
+        #endregion
 
+        #region Constructor
         public FrmGestionFamilias_64PR()
         {
             InitializeComponent();
@@ -50,6 +53,9 @@ namespace ProyectoIS_64PR
             if (textos.Count > 0)
                 ActualizarIdioma(textos);
         }
+        #endregion
+
+        #region Idioma (Observer)
         public void ActualizarIdioma(Dictionary<string, string> textoss)
         {
             textos = textoss;
@@ -58,6 +64,24 @@ namespace ProyectoIS_64PR
             btnQuitar.Text += "<--";
         }
 
+        private void FrmGestionFamilias_64PR_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this); ///observer del cambio de idioma
+        }
+        #endregion
+
+        #region Permisos
+        private void ConfigurarPermisos()
+        {
+            Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
+
+            rbCrear.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearFamilias);
+            rbModificar.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarFamilias);
+            rbEliminar.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarFamilias);
+        }
+        #endregion
+
+        #region Carga de datos
         private void CargaPermisosYFamilias()
         {
             treeView1.Nodes.Clear();
@@ -70,6 +94,13 @@ namespace ProyectoIS_64PR
             }
 
             treeView1.ExpandAll();
+        }
+        #endregion
+
+        #region Eventos
+        private void FrmGestionFamilias_64PR_Load(object sender, EventArgs e)
+        {
+            ConfigurarPermisos();
         }
 
         private void rbCrear_CheckedChanged(object sender, EventArgs e)
@@ -128,20 +159,6 @@ namespace ProyectoIS_64PR
             treeView2.Visible = false;
         }
 
-
-        private TreeNode CrearNodoVisual(Sesion.Rol_64PR rol)
-        {
-            TreeNode tn = new TreeNode(rol.Nombre);
-            tn.Tag = rol; /// guardamos el objeto para usarlo después
-
-            foreach (var hijo in rol.Hijos)
-            {
-                tn.Nodes.Add(CrearNodoVisual(hijo)); /// recursivo
-            }
-
-            return tn;
-        }
-
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             if (treeView1.SelectedNode == null) return;
@@ -178,19 +195,6 @@ namespace ProyectoIS_64PR
             nodos2.Add(nodoSeleccionado);
             treeView2.Nodes.Add(CrearNodoVisual(nodoSeleccionado));
             treeView2.ExpandAll();
-        }
-
-        private bool EsHijo(Sesion.Rol_64PR padre, Sesion.Rol_64PR buscado)
-        {
-            foreach (var hijo in padre.Hijos)
-            {
-                if (hijo.GetType() == buscado.GetType() && hijo.Id == buscado.Id)
-                    return true;
-
-                if (EsHijo(hijo, buscado)) /// recursivo para subfamilias
-                    return true;
-            }
-            return false;
         }
 
         private void btnQuitar_Click(object sender, EventArgs e)
@@ -296,24 +300,6 @@ namespace ProyectoIS_64PR
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
-        private void FrmGestionFamilias_64PR_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this); ///observer del cambio de idioma
-        }
-
-        private void FrmGestionFamilias_64PR_Load(object sender, EventArgs e)
-        {
-            ConfigurarPermisos();
-        }
-
-        private void ConfigurarPermisos()
-        {
-            Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
-
-            rbCrear.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearFamilias);
-            rbModificar.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarFamilias);
-            rbEliminar.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarFamilias);
-        }
 
         private void treeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
@@ -337,5 +323,34 @@ namespace ProyectoIS_64PR
             }
             treeView2.ExpandAll();
         }
+        #endregion
+
+        #region Metodos privados
+        private TreeNode CrearNodoVisual(Sesion.Rol_64PR rol)
+        {
+            TreeNode tn = new TreeNode(rol.Nombre);
+            tn.Tag = rol; /// guardamos el objeto para usarlo después
+
+            foreach (var hijo in rol.Hijos)
+            {
+                tn.Nodes.Add(CrearNodoVisual(hijo)); /// recursivo
+            }
+
+            return tn;
+        }
+
+        private bool EsHijo(Sesion.Rol_64PR padre, Sesion.Rol_64PR buscado)
+        {
+            foreach (var hijo in padre.Hijos)
+            {
+                if (hijo.GetType() == buscado.GetType() && hijo.Id == buscado.Id)
+                    return true;
+
+                if (EsHijo(hijo, buscado)) /// recursivo para subfamilias
+                    return true;
+            }
+            return false;
+        }
+        #endregion
     }
 }

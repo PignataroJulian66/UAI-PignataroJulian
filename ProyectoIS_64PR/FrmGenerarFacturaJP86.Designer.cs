@@ -26,6 +26,8 @@ namespace ProyectoIS_64PR
             this.btnTransferencia = new System.Windows.Forms.Button();
             this.btnMercadoPago = new System.Windows.Forms.Button();
             this.btnImprimirFactura = new System.Windows.Forms.Button();
+            this.lblEstadoPago = new System.Windows.Forms.Label();
+            this.pbPago = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.dgvContratos)).BeginInit();
             this.SuspendLayout();
             //
@@ -126,10 +128,30 @@ namespace ProyectoIS_64PR
             this.btnImprimirFactura.UseVisualStyleBackColor = true;
             this.btnImprimirFactura.Click += new System.EventHandler(this.btnImprimirFactura_Click);
             //
+            // lblEstadoPago
+            //
+            this.lblEstadoPago.AutoSize = true;
+            this.lblEstadoPago.Location = new System.Drawing.Point(184, 462);
+            this.lblEstadoPago.Name = "lblEstadoPago";
+            this.lblEstadoPago.Size = new System.Drawing.Size(120, 16);
+            this.lblEstadoPago.TabIndex = 9;
+            this.lblEstadoPago.Text = "Procesando pago...";
+            this.lblEstadoPago.Visible = false;
+            //
+            // pbPago
+            //
+            this.pbPago.Location = new System.Drawing.Point(330, 458);
+            this.pbPago.Name = "pbPago";
+            this.pbPago.Size = new System.Drawing.Size(266, 24);
+            this.pbPago.TabIndex = 10;
+            this.pbPago.Visible = false;
+            //
             // FrmGenerarFacturaJP86
             //
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(700, 500);
+            this.Controls.Add(this.pbPago);
+            this.Controls.Add(this.lblEstadoPago);
             this.Controls.Add(this.btnImprimirFactura);
             this.Controls.Add(this.btnMercadoPago);
             this.Controls.Add(this.btnTransferencia);
@@ -160,5 +182,7 @@ namespace ProyectoIS_64PR
         private System.Windows.Forms.Button btnTransferencia;
         private System.Windows.Forms.Button btnMercadoPago;
         private System.Windows.Forms.Button btnImprimirFactura;
+        private System.Windows.Forms.Label lblEstadoPago;
+        private System.Windows.Forms.ProgressBar pbPago;
     }
 }

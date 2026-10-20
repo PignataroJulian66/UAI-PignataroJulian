@@ -14,6 +14,7 @@ namespace ProyectoIS_64PR
 {
     public partial class FrmGestionarVehiculosJP86 : Form, Idioma.IObservadorIdioma_64PR
     {
+        #region Campos
         Bitacora.Bitacora_64PR bita = new Bitacora.Bitacora_64PR();
         Bitacora.Evento_64PR ev;
 
@@ -25,7 +26,9 @@ namespace ProyectoIS_64PR
         List<BE.VehiculoJP86> lst;
 
         private static readonly Regex RegexPatente = new Regex(@"^([A-Z]{3}\d{3}|[A-Z]{2}\d{3}[A-Z]{2})$");
+        #endregion
 
+        #region Constructor
         public FrmGestionarVehiculosJP86()
         {
             InitializeComponent();
@@ -65,7 +68,9 @@ namespace ProyectoIS_64PR
                 ActualizarIdioma(textos);
             lblModo.Text = textos["frmGestionVehiculos_lblModoConsulta"];
         }
+        #endregion
 
+        #region Idioma (Observer)
         public void ActualizarIdioma(Dictionary<string, string> textoss)
         {
             textos = textoss;
@@ -95,6 +100,28 @@ namespace ProyectoIS_64PR
             base.OnFormClosed(e);
         }
 
+        private void FrmGestionarVehiculosJP86_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this);
+        }
+        #endregion
+
+        #region Permisos
+        private void ConfigurarPermisos()
+        {
+            Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
+
+            btnCrear.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearVehiculo);
+            btnModificar.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarVehiculo);
+            btnEliminar.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarVehiculo);
+
+            bool puedeCambiarEstado = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CambiarEstadoVehiculo);
+            cmbEstado.Visible = puedeCambiarEstado;
+            btnCambiarEstado.Visible = puedeCambiarEstado;
+        }
+        #endregion
+
+        #region Carga de datos
         private void CargaData()
         {
             lst = gvehiculos.Listar();
@@ -131,6 +158,13 @@ namespace ProyectoIS_64PR
 
             if (textos != null && textos.Count > 0)
                 lblCantidad.Text = textos["frmGestionVehiculos_lblCantidad"] + resultado.Count.ToString();
+        }
+        #endregion
+
+        #region Eventos
+        private void FrmGestionarVehiculosJP86_Load(object sender, EventArgs e)
+        {
+            ConfigurarPermisos();
         }
 
         private void btnCrear_Click(object sender, EventArgs e)
@@ -399,28 +433,6 @@ namespace ProyectoIS_64PR
         {
             AplicarFiltros();
         }
-
-        private void FrmGestionarVehiculosJP86_Load(object sender, EventArgs e)
-        {
-            ConfigurarPermisos();
-        }
-
-        private void ConfigurarPermisos()
-        {
-            Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
-
-            btnCrear.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearVehiculo);
-            btnModificar.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarVehiculo);
-            btnEliminar.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarVehiculo);
-
-            bool puedeCambiarEstado = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CambiarEstadoVehiculo);
-            cmbEstado.Visible = puedeCambiarEstado;
-            btnCambiarEstado.Visible = puedeCambiarEstado;
-        }
-
-        private void FrmGestionarVehiculosJP86_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this);
-        }
+        #endregion
     }
 }

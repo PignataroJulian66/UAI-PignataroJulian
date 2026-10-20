@@ -333,6 +333,7 @@
   "FrmGenerarFacturaJP86.btnTransferencia": "Transferencia",
   "FrmGenerarFacturaJP86.btnMercadoPago": "Mercado Pago",
   "FrmGenerarFacturaJP86.btnImprimirFactura": "Imprimir Factura",
+  "FrmGenerarFacturaJP86.lblEstadoPago": "Procesando pago...",
   "FrmGenerarFacturaJP86.dgvContratos.NumeroContrato": "Nro. contrato",
   "FrmGenerarFacturaJP86.dgvContratos.Cliente": "Cliente",
   "FrmGenerarFacturaJP86.dgvContratos.Vehiculo": "Vehiculo",

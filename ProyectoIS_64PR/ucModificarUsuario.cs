@@ -13,8 +13,12 @@ namespace ProyectoIS_64PR
 {
     public partial class ucModificarUsuario : UserControl, Idioma.IObservadorIdioma_64PR
     {
+        #region Campos
         Sesion.BLL_Rol_64PR groles = new Sesion.BLL_Rol_64PR();
         Dictionary<string, string> textos;
+        #endregion
+
+        #region Constructor
         public ucModificarUsuario()
         {
             InitializeComponent();
@@ -31,7 +35,9 @@ namespace ProyectoIS_64PR
             if (textos.Count > 0)
                 ActualizarIdioma(textos);
         }
+        #endregion
 
+        #region Datos del control
         /// <summary>
         /// Practicamente esta clase contiene todos metodos para poder
         /// volcar los valores en los controles y para poder
@@ -60,13 +66,15 @@ namespace ProyectoIS_64PR
             cmbRol.SelectedIndex = -1;
             txtEmail.Text = string.Empty;
         }
+        #endregion
 
+        #region Idioma (Observer)
         public void ActualizarIdioma(Dictionary<string, string> textoss)
         {
             textos = textoss;
             label4.Text = textos["ucModificarUsuario_lblRol"];
             label5.Text = textos["ucModificarUsuario_lblEmail"];
         }
-
+        #endregion
     }
 }

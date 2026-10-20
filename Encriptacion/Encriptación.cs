@@ -10,6 +10,7 @@ namespace Encriptacion
 {
     public class Encriptación
     {
+        #region Singleton
         /*
         Este encriptador fue sacado de un proyecto desarrollado en desarrollo y arquitectura
         de software, junto a jeremias gomez (comision de los miercoles a la mañana)
@@ -26,7 +27,9 @@ namespace Encriptacion
                 return _instancia;
             }
         }
+        #endregion
 
+        #region Encriptacion irreversible (hash)
         /// <summary>
         /// ENCRIPTACION IRREVERSIBLE
         /// Configuracion del Hash:
@@ -85,6 +88,7 @@ namespace Encriptacion
 
             return SlowEquals(storedPasswordHash, newHash); ///Comparo los dos hashes byte por byte 
         }
+
         private bool SlowEquals(byte[] a, byte[] b)
         {
             uint diff = (uint)a.Length ^ (uint)b.Length;
@@ -92,7 +96,9 @@ namespace Encriptacion
                 diff |= (uint)(a[i] ^ b[i]);
             return diff == 0;
         }
+        #endregion
 
+        #region Encriptacion reversible (AES)
         /// <summary>
         /// ENCRIPTACION REVERSIBLE
         /// 256 bits → clave
@@ -102,6 +108,7 @@ namespace Encriptacion
         private const int AesKeySize = 32; 
         private const int AesIvSize = 16;
         private static readonly byte[] MasterKey = Encoding.UTF8.GetBytes("Proyecto64PR_ClaveSecreta2026!!!"); 
+
         private byte[] EncriptarAES(string texto)
         {
             byte[] iv = new byte[AesIvSize];
@@ -160,6 +167,7 @@ namespace Encriptacion
                 }
             }
         }
+
         /// Estos son 2 metodos helper, son a los que realmente tenemos que llamar, 
         /// esto se hace asi para no tener que cambiar el tipo
         ///de dato en la base de datos de nvarchar a varbinary
@@ -174,5 +182,6 @@ namespace Encriptacion
             byte[] cifrado = Convert.FromBase64String(base64); // string → byte[]
             return DesencriptarAES(cifrado);
         }
+        #endregion
     }
 }

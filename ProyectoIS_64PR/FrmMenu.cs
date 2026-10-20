@@ -14,6 +14,7 @@ namespace ProyectoIS_64PR
 {
     public partial class FrmMenu : Form, Idioma.IObservadorIdioma_64PR
     {
+        #region Campos
         public Form formularioactual = null;
         Sesion.BLL_Usuario gusuarios = new Sesion.BLL_Usuario();
         Dictionary<string, string> textos;
@@ -37,7 +38,9 @@ namespace ProyectoIS_64PR
         private Button btnCategorias, btnVehiculos, btnClientes;
         private Button btnGenerarContrato, btnGenerarFactura, btnRegistrarDevolucion;
         private Button btnNuevoReporte, btnReportesPendientes, btnReparacionesEnCurso;
+        #endregion
 
+        #region Constructor
         public FrmMenu()
         {
             InitializeComponent();
@@ -66,10 +69,9 @@ namespace ProyectoIS_64PR
             if (textosIniciales.Count > 0)
                 ActualizarIdioma(textosIniciales);
         }
-        private void AjustarPanelPrincipal()
-        {
-            pnlMain.SetBounds(pnlSidebar.Width, 0, this.ClientSize.Width - pnlSidebar.Width, this.ClientSize.Height);
-        }
+        #endregion
+
+        #region Idioma (Observer)
         public void ActualizarIdioma(Dictionary<string, string> textoss)
         {
             textos = textoss;
@@ -77,6 +79,124 @@ namespace ProyectoIS_64PR
             ActualizarTextosSidebar();
             lblIdiomaPill.Text = Idioma.GestorIdioma_64PR.GetInstance.IdiomaActual.ToUpper();
         }
+
+        private void AgregarSelectorIdioma()
+        {
+            foreach (string codigo in Idioma.GestorIdioma_64PR.GetInstance.IdiomasDisponibles())
+            {
+                string codigoLocal = codigo; ///Captura para el delegado de abajo
+                string etiqueta = codigo.ToUpper(); /// Tipo "ES" / "EN"
+
+                var subBoton = CrearBotonNav(etiqueta, true);
+                subBoton.Padding = new Padding(52, 0, 0, 0);
+                subBoton.Click += (s, e) =>
+                {
+                    ///No guardamos en BD aca, ya que se guarda al hacer logout
+                    Idioma.GestorIdioma_64PR.GetInstance.SetIdioma(codigoLocal);
+                };
+                pnlIdiomaItems.Controls.Add(subBoton);
+            }
+        }
+
+        private void FrmMenu_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this); ///observer del cambio de idioma
+        }
+        #endregion
+
+        #region Permisos
+        private void ConfigurarPermisos()
+        {
+            Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
+
+            bool puedeGestionarUsuarios = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearUsuario) ||
+                                          rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarUsuario) ||
+                                          rolUsuario.TienePermiso(Sesion.Patentes_64PR.ActivarDesactivarUsuarios) ||
+                                          rolUsuario.TienePermiso(Sesion.Patentes_64PR.DesbloquearUsuario);
+            btnGestionarUsuarios.Visible = puedeGestionarUsuarios;
+
+            bool puedeGestionarFamilias = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearFamilias) ||
+                                          rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarFamilias) ||
+                                          rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarFamilias);
+            btnGestionarPermisos.Visible = puedeGestionarFamilias;
+
+            bool puedeGestionarRoles = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearRoles) ||
+                                       rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarRoles) ||
+                                       rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarRoles);
+            btnGestionarRoles.Visible = puedeGestionarRoles;
+
+            btnEventos.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.Bitacora);
+
+            btnBitacoraCambiosVehiculo.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.VerBitacoraCambiosVehiculo);
+
+            bool puedeSistema = btnGestionarUsuarios.Visible || btnGestionarPermisos.Visible || btnGestionarRoles.Visible ||
+                                 btnEventos.Visible || btnBitacoraCambiosVehiculo.Visible;
+            lblSeccionSistema.Visible = puedeSistema;
+
+            btnCambiarContrasena.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CambiarContra);
+
+            btnIdioma.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CambiarIdioma);
+            if (!btnIdioma.Visible) pnlIdiomaItems.Visible = false;
+
+            btnRespaldoBD.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.Respaldos);
+
+            btnRestaurarBD.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.Restauraciones);
+
+            bool puedeGestionarCategorias = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearCategoria) ||
+                                             rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarCategoria) ||
+                                             rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarCategoria);
+            btnCategorias.Visible = puedeGestionarCategorias;
+
+            bool puedeGestionarVehiculos = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearVehiculo) ||
+                                            rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarVehiculo) ||
+                                            rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarVehiculo) ||
+                                            rolUsuario.TienePermiso(Sesion.Patentes_64PR.CambiarEstadoVehiculo);
+            btnVehiculos.Visible = puedeGestionarVehiculos;
+
+            bool puedeGestionarClientes = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearCliente) ||
+                                           rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarCliente) ||
+                                           rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarCliente) ||
+                                           rolUsuario.TienePermiso(Sesion.Patentes_64PR.SerializarClientes) ||
+                                           rolUsuario.TienePermiso(Sesion.Patentes_64PR.DeserializarClientes);
+            btnClientes.Visible = puedeGestionarClientes;
+
+            pnlGrupoMaestros.Visible = puedeGestionarCategorias || puedeGestionarVehiculos || puedeGestionarClientes;
+            lblSeccionMaestros.Visible = pnlGrupoMaestros.Visible;
+
+            bool puedeGenerarContrato = rolUsuario.TienePermiso(Sesion.Patentes_64PR.GenerarContrato);
+            btnGenerarContrato.Visible = puedeGenerarContrato;
+
+            bool puedeGenerarFactura = rolUsuario.TienePermiso(Sesion.Patentes_64PR.GenerarFactura);
+            btnGenerarFactura.Visible = puedeGenerarFactura;
+
+            bool puedeRegistrarDevolucion = rolUsuario.TienePermiso(Sesion.Patentes_64PR.RegistrarDevolucion);
+            btnRegistrarDevolucion.Visible = puedeRegistrarDevolucion;
+
+            pnlGrupoAlquileres.Visible = puedeGenerarContrato || puedeGenerarFactura || puedeRegistrarDevolucion;
+
+            bool puedeRegistrarReporte = rolUsuario.TienePermiso(Sesion.Patentes_64PR.RegistrarReporte);
+            btnNuevoReporte.Visible = puedeRegistrarReporte;
+
+            bool puedeAsignarCriticidad = rolUsuario.TienePermiso(Sesion.Patentes_64PR.AsignarCriticidad);
+            bool puedeDeterminarModalidad = rolUsuario.TienePermiso(Sesion.Patentes_64PR.DeterminarModalidad);
+            ///CUN-07 es include obligatorio de CUN-06: "Reportes pendientes" requiere AMBAS patentes
+            bool puedeClasificarReporte = puedeAsignarCriticidad && puedeDeterminarModalidad;
+            btnReportesPendientes.Visible = puedeClasificarReporte;
+
+            bool puedeRegistrarAcreditacion = rolUsuario.TienePermiso(Sesion.Patentes_64PR.RegistrarAcreditacion);
+            btnReparacionesEnCurso.Visible = puedeRegistrarAcreditacion;
+
+            pnlGrupoMantenimiento.Visible = puedeRegistrarReporte || puedeClasificarReporte || puedeRegistrarAcreditacion;
+
+            lblSeccionOperacion.Visible = pnlGrupoAlquileres.Visible || pnlGrupoMantenimiento.Visible;
+
+            ///Footer: usuario logueado, avatar con iniciales y rol
+            string login = Sesion.SessionManager.GetInstance.Usuario?.Login ?? "";
+            lblUsuarioActual.Text = login;
+            lblRolActual.Text = Sesion.SessionManager.GetInstance.Usuario?.Rol?.Nombre ?? "";
+            lblAvatar.Text = ObtenerIniciales(login);
+        }
+        #endregion
 
         #region Construcción del sidebar (reemplaza al MenuStrip)
 
@@ -443,23 +563,7 @@ namespace ProyectoIS_64PR
 
         #endregion
 
-        private void AgregarSelectorIdioma()
-        {
-            foreach (string codigo in Idioma.GestorIdioma_64PR.GetInstance.IdiomasDisponibles())
-            {
-                string codigoLocal = codigo; ///Captura para el delegado de abajo
-                string etiqueta = codigo.ToUpper(); /// Tipo "ES" / "EN"
-
-                var subBoton = CrearBotonNav(etiqueta, true);
-                subBoton.Padding = new Padding(52, 0, 0, 0);
-                subBoton.Click += (s, e) =>
-                {
-                    ///No guardamos en BD aca, ya que se guarda al hacer logout
-                    Idioma.GestorIdioma_64PR.GetInstance.SetIdioma(codigoLocal);
-                };
-                pnlIdiomaItems.Controls.Add(subBoton);
-            }
-        }
+        #region Navegacion entre formularios
         public void AbrirFormularioHijo(Form f)
         {
             if (formularioactual != null)
@@ -506,6 +610,13 @@ namespace ProyectoIS_64PR
             formularioactual.Close();
             formularioactual.FormClosed -= alCerrar;
             return seCerro;
+        }
+        #endregion
+
+        #region Eventos
+        private void FrmMenu_Load(object sender, EventArgs e)
+        {
+            ConfigurarPermisos();
         }
 
         private void gestionarUsuariosToolStripMenuItem_Click(object sender, EventArgs e)
@@ -621,114 +732,6 @@ namespace ProyectoIS_64PR
         {
             AbrirFormularioHijo(new FrmReparacionesEnCursoJP86());
         }
-        private void FrmMenu_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this); ///observer del cambio de idioma
-        }
-        private void FrmMenu_Load(object sender, EventArgs e)
-        {
-            ConfigurarPermisos();
-        }
-        private void ConfigurarPermisos()
-        {
-            Sesion.Rol_64PR rolUsuario = Sesion.SessionManager.GetInstance.Usuario.Rol;
-
-            bool puedeGestionarUsuarios = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearUsuario) ||
-                                          rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarUsuario) ||
-                                          rolUsuario.TienePermiso(Sesion.Patentes_64PR.ActivarDesactivarUsuarios) ||
-                                          rolUsuario.TienePermiso(Sesion.Patentes_64PR.DesbloquearUsuario);
-            btnGestionarUsuarios.Visible = puedeGestionarUsuarios;
-
-            bool puedeGestionarFamilias = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearFamilias) ||
-                                          rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarFamilias) ||
-                                          rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarFamilias);
-            btnGestionarPermisos.Visible = puedeGestionarFamilias;
-
-            bool puedeGestionarRoles = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearRoles) ||
-                                       rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarRoles) ||
-                                       rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarRoles);
-            btnGestionarRoles.Visible = puedeGestionarRoles;
-
-            btnEventos.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.Bitacora);
-
-            btnBitacoraCambiosVehiculo.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.VerBitacoraCambiosVehiculo);
-
-            bool puedeSistema = btnGestionarUsuarios.Visible || btnGestionarPermisos.Visible || btnGestionarRoles.Visible ||
-                                 btnEventos.Visible || btnBitacoraCambiosVehiculo.Visible;
-            lblSeccionSistema.Visible = puedeSistema;
-
-            btnCambiarContrasena.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CambiarContra);
-
-            btnIdioma.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CambiarIdioma);
-            if (!btnIdioma.Visible) pnlIdiomaItems.Visible = false;
-
-            btnRespaldoBD.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.Respaldos);
-
-            btnRestaurarBD.Visible = rolUsuario.TienePermiso(Sesion.Patentes_64PR.Restauraciones);
-
-            bool puedeGestionarCategorias = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearCategoria) ||
-                                             rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarCategoria) ||
-                                             rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarCategoria);
-            btnCategorias.Visible = puedeGestionarCategorias;
-
-            bool puedeGestionarVehiculos = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearVehiculo) ||
-                                            rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarVehiculo) ||
-                                            rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarVehiculo) ||
-                                            rolUsuario.TienePermiso(Sesion.Patentes_64PR.CambiarEstadoVehiculo);
-            btnVehiculos.Visible = puedeGestionarVehiculos;
-
-            bool puedeGestionarClientes = rolUsuario.TienePermiso(Sesion.Patentes_64PR.CrearCliente) ||
-                                           rolUsuario.TienePermiso(Sesion.Patentes_64PR.ModificarCliente) ||
-                                           rolUsuario.TienePermiso(Sesion.Patentes_64PR.EliminarCliente) ||
-                                           rolUsuario.TienePermiso(Sesion.Patentes_64PR.SerializarClientes) ||
-                                           rolUsuario.TienePermiso(Sesion.Patentes_64PR.DeserializarClientes);
-            btnClientes.Visible = puedeGestionarClientes;
-
-            pnlGrupoMaestros.Visible = puedeGestionarCategorias || puedeGestionarVehiculos || puedeGestionarClientes;
-            lblSeccionMaestros.Visible = pnlGrupoMaestros.Visible;
-
-            bool puedeGenerarContrato = rolUsuario.TienePermiso(Sesion.Patentes_64PR.GenerarContrato);
-            btnGenerarContrato.Visible = puedeGenerarContrato;
-
-            bool puedeGenerarFactura = rolUsuario.TienePermiso(Sesion.Patentes_64PR.GenerarFactura);
-            btnGenerarFactura.Visible = puedeGenerarFactura;
-
-            bool puedeRegistrarDevolucion = rolUsuario.TienePermiso(Sesion.Patentes_64PR.RegistrarDevolucion);
-            btnRegistrarDevolucion.Visible = puedeRegistrarDevolucion;
-
-            pnlGrupoAlquileres.Visible = puedeGenerarContrato || puedeGenerarFactura || puedeRegistrarDevolucion;
-
-            bool puedeRegistrarReporte = rolUsuario.TienePermiso(Sesion.Patentes_64PR.RegistrarReporte);
-            btnNuevoReporte.Visible = puedeRegistrarReporte;
-
-            bool puedeAsignarCriticidad = rolUsuario.TienePermiso(Sesion.Patentes_64PR.AsignarCriticidad);
-            bool puedeDeterminarModalidad = rolUsuario.TienePermiso(Sesion.Patentes_64PR.DeterminarModalidad);
-            ///CUN-07 es include obligatorio de CUN-06: "Reportes pendientes" requiere AMBAS patentes
-            bool puedeClasificarReporte = puedeAsignarCriticidad && puedeDeterminarModalidad;
-            btnReportesPendientes.Visible = puedeClasificarReporte;
-
-            bool puedeRegistrarAcreditacion = rolUsuario.TienePermiso(Sesion.Patentes_64PR.RegistrarAcreditacion);
-            btnReparacionesEnCurso.Visible = puedeRegistrarAcreditacion;
-
-            pnlGrupoMantenimiento.Visible = puedeRegistrarReporte || puedeClasificarReporte || puedeRegistrarAcreditacion;
-
-            lblSeccionOperacion.Visible = pnlGrupoAlquileres.Visible || pnlGrupoMantenimiento.Visible;
-
-            ///Footer: usuario logueado, avatar con iniciales y rol
-            string login = Sesion.SessionManager.GetInstance.Usuario?.Login ?? "";
-            lblUsuarioActual.Text = login;
-            lblRolActual.Text = Sesion.SessionManager.GetInstance.Usuario?.Rol?.Nombre ?? "";
-            lblAvatar.Text = ObtenerIniciales(login);
-        }
-
-        private string ObtenerIniciales(string login)
-        {
-            if (string.IsNullOrWhiteSpace(login)) return "?";
-            var partes = login.Split(new[] { '.', '_', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            if (partes.Length >= 2)
-                return (partes[0][0].ToString() + partes[1][0].ToString()).ToUpper();
-            return login.Length >= 2 ? login.Substring(0, 2).ToUpper() : login.ToUpper();
-        }
 
         private void respaldoBaseDeDatosToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -821,5 +824,22 @@ namespace ProyectoIS_64PR
                 }
             }
         }
+        #endregion
+
+        #region Metodos privados
+        private void AjustarPanelPrincipal()
+        {
+            pnlMain.SetBounds(pnlSidebar.Width, 0, this.ClientSize.Width - pnlSidebar.Width, this.ClientSize.Height);
+        }
+
+        private string ObtenerIniciales(string login)
+        {
+            if (string.IsNullOrWhiteSpace(login)) return "?";
+            var partes = login.Split(new[] { '.', '_', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            if (partes.Length >= 2)
+                return (partes[0][0].ToString() + partes[1][0].ToString()).ToUpper();
+            return login.Length >= 2 ? login.Substring(0, 2).ToUpper() : login.ToUpper();
+        }
+        #endregion
     }
 }

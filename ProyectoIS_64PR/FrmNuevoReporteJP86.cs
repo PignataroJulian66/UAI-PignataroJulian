@@ -8,6 +8,7 @@ namespace ProyectoIS_64PR
 {
     public partial class FrmNuevoReporteJP86 : Form, Idioma.IObservadorIdioma_64PR
     {
+        #region Campos
         Bitacora.Bitacora_64PR bita = new Bitacora.Bitacora_64PR();
         Bitacora.Evento_64PR ev;
 
@@ -17,7 +18,9 @@ namespace ProyectoIS_64PR
         BE.VehiculoJP86 vehiculoSeleccionado;
         BE.ReporteJP86 reporteGenerado;
         bool hayVehiculos;
+        #endregion
 
+        #region Constructor
         public FrmNuevoReporteJP86()
         {
             InitializeComponent();
@@ -40,7 +43,9 @@ namespace ProyectoIS_64PR
 
             CargarVehiculos();
         }
+        #endregion
 
+        #region Idioma (Observer)
         public void ActualizarIdioma(Dictionary<string, string> textoss)
         {
             textos = textoss;
@@ -52,12 +57,9 @@ namespace ProyectoIS_64PR
             Idioma.GestorIdioma_64PR.GetInstance.Desuscribir(this);
             base.OnFormClosed(e);
         }
+        #endregion
 
-        private void FrmNuevoReporteJP86_Load(object sender, EventArgs e)
-        {
-            ConfigurarPermisos();
-        }
-
+        #region Permisos
         ///Descripcion y fuente solo se habilitan si hay permiso Y hay vehiculos para reportar.
         ///La llaman el Load y CargarVehiculos (cada recarga de la grilla), asi ninguna de las dos pisa a la otra.
         private void ConfigurarPermisos()
@@ -68,7 +70,9 @@ namespace ProyectoIS_64PR
             cmbFuente.Enabled = puedeRegistrar && hayVehiculos;
             btnConfirmar.Enabled = puedeRegistrar && vehiculoSeleccionado != null;
         }
+        #endregion
 
+        #region Carga de datos
         private void CargarVehiculos()
         {
             List<BE.VehiculoJP86> disponibles = greportes.ListarVehiculosEnRevision();
@@ -86,6 +90,13 @@ namespace ProyectoIS_64PR
 
             if (!hayVehiculos)
                 MessageBox.Show(textos["msg_sinVehiculosEnRevision"]);
+        }
+        #endregion
+
+        #region Eventos
+        private void FrmNuevoReporteJP86_Load(object sender, EventArgs e)
+        {
+            ConfigurarPermisos();
         }
 
         private void dgvVehiculos_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -148,7 +159,9 @@ namespace ProyectoIS_64PR
         {
             LimpiarFormulario();
         }
+        #endregion
 
+        #region Metodos privados
         private void LimpiarFormulario()
         {
             vehiculoSeleccionado = null;
@@ -158,5 +171,6 @@ namespace ProyectoIS_64PR
 
             CargarVehiculos();
         }
+        #endregion
     }
 }

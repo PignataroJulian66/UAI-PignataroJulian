@@ -13,6 +13,7 @@ namespace ProyectoIS_64PR
     public partial class ucCrearCategoria : UserControl, Idioma.IObservadorIdioma_64PR
     {
         Dictionary<string, string> textos;
+        #region Constructor
         public ucCrearCategoria()
         {
             InitializeComponent();
@@ -30,7 +31,9 @@ namespace ProyectoIS_64PR
             if (textos.Count > 0)
                 ActualizarIdioma(textos);
         }
+        #endregion
 
+        #region Datos del control
         public string Nombre()
         {
             return txtNombre.Text.Trim();
@@ -52,7 +55,9 @@ namespace ProyectoIS_64PR
             txtDescripcion.Text = string.Empty;
             numTarifaDiaria.Value = numTarifaDiaria.Minimum;
         }
+        #endregion
 
+        #region Idioma (Observer)
         public void ActualizarIdioma(Dictionary<string, string> textoss)
         {
             textos = textoss;
@@ -60,5 +65,6 @@ namespace ProyectoIS_64PR
             lblDescripcion.Text = textos["ucCategoria_lblDescripcion"];
             lblTarifaDiaria.Text = textos["ucCategoria_lblTarifaDiaria"];
         }
+        #endregion
     }
 }

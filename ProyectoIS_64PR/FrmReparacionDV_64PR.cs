@@ -13,9 +13,12 @@ namespace ProyectoIS_64PR
 {
     public partial class FrmReparacionDV_64PR : Form, Idioma.IObservadorIdioma_64PR
     {
+        #region Campos
         private Dictionary<string, List<DV.FilaInconsistente_64PR>> _tablasInconsistentes;
         Dictionary<string, string> textos;
+        #endregion
 
+        #region Constructor
         public FrmReparacionDV_64PR(Dictionary<string, List<DV.FilaInconsistente_64PR>> tablasInconsistentes)
         {
             InitializeComponent();
@@ -32,6 +35,18 @@ namespace ProyectoIS_64PR
             textBox1.ReadOnly = true;
             CargarTreeView();
         }
+        #endregion
+
+        #region Idioma (Observer)
+        public void ActualizarIdioma(Dictionary<string, string> textoss)
+        {
+            textos=textoss;
+            Traductor_64PR.Traducir(this, textos);
+            textBox1.Text = textos["msg_inconsistencia"];
+        }
+        #endregion
+
+        #region Carga de datos
         private void CargarComboIdiomas()
         {
             cmbIdioma.Items.Clear();
@@ -47,6 +62,7 @@ namespace ProyectoIS_64PR
 
             cmbIdioma.DropDownStyle = ComboBoxStyle.DropDownList;
         }
+
         private void CargarTreeView()
         {
             treeResultados.Nodes.Clear();
@@ -91,7 +107,9 @@ namespace ProyectoIS_64PR
 
             treeResultados.ExpandAll();
         }
+        #endregion
 
+        #region Eventos
         private void btnRecalcular_Click(object sender, EventArgs e)
         {
             var confirmacion = MessageBox.Show(
@@ -195,13 +213,6 @@ namespace ProyectoIS_64PR
             FrmContenedor_64PR.Instancia.MostrarHijo(new FrmLogin_64PR());
         }
 
-        public void ActualizarIdioma(Dictionary<string, string> textoss)
-        {
-            textos=textoss;
-            Traductor_64PR.Traducir(this, textos);
-            textBox1.Text = textos["msg_inconsistencia"];
-        }
-
         private void cmbIdioma_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbIdioma.SelectedItem == null) return;
@@ -210,5 +221,6 @@ namespace ProyectoIS_64PR
             Idioma.GestorIdioma_64PR.GetInstance.SetIdioma(seleccionado);
             ///El Observer se encarga de actualizar el formulario automáticamente
         }
+        #endregion
     }
 }
