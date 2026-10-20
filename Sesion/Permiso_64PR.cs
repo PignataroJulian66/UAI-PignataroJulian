@@ -8,9 +8,9 @@ namespace Sesion
 {
     public class Permiso_64PR : Rol_64PR
     {
-        public override bool TienePermiso(string nombre)
+        public override bool TienePermiso(Patentes_64PR id)
         {
-            return this.Nombre == nombre;
+            return this.Id == ((int)id);
         }
     }
 }

@@ -12,10 +12,10 @@ namespace Sesion
         public string Nombre { get; set; }
         public List<Rol_64PR> Hijos { get; set; } = new List<Rol_64PR>();
 
-        public virtual bool TienePermiso(string nombre)
+        public virtual bool TienePermiso(Patentes_64PR id)
         {
             foreach (var hijo in Hijos)
-                if (hijo.TienePermiso(nombre)) return true;
+                if (hijo.TienePermiso(id)) return true;
             return false;
         }
 

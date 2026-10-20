@@ -8,10 +8,10 @@ namespace Sesion
 {
     public class Familia_64PR : Rol_64PR
     {
-        public override bool TienePermiso(string nombre)
+        public override bool TienePermiso(Patentes_64PR id)
         {
             foreach (var hijo in Hijos)
-                if (hijo.TienePermiso(nombre)) return true;
+                if (hijo.TienePermiso(id)) return true;
             return false;
         }
     }

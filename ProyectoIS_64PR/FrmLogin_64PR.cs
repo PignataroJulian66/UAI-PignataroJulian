@@ -166,7 +166,7 @@ namespace ProyectoIS_64PR
 
                     if (tablasInconsistentes.Count > 0)
                     {
-                        bool esAdmin = Sesion.SessionManager.GetInstance.Usuario.Rol.TienePermiso("Reparar Integridad DV");
+                        bool esAdmin = Sesion.SessionManager.GetInstance.Usuario.Rol.TienePermiso(Sesion.Patentes_64PR.RepararIntegridadDV);
 
                         if (esAdmin)
                         {
