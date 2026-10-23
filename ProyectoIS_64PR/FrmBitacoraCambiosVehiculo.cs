@@ -187,7 +187,8 @@ namespace ProyectoIS_64PR
             }
             catch (SqlException ex)
             {
-                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ///RAISERROR del SP (IdBitacora inexistente / ya es la vigente, si la grilla quedo desactualizada)
+                MessageBox.Show(textos["msg_ErrorBaseDatos"] + ex.Message, textos["titulo_Error"], MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
