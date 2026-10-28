@@ -140,6 +140,12 @@
     <Compile Include="FrmReparacionesEnCursoJP86.Designer.cs">
       <DependentUpon>FrmReparacionesEnCursoJP86.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmReporteMantenimientoJP86.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmReporteMantenimientoJP86.Designer.cs">
+      <DependentUpon>FrmReporteMantenimientoJP86.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmGestionFamilias_64PR.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -57,6 +57,10 @@
     <Compile Include="CriticidadReporteJP86.cs" />
     <Compile Include="ModalidadReparacionJP86.cs" />
     <Compile Include="ResultadoPagoJP86.cs" />
+    <Compile Include="SemaforoMantenimientoJP86.cs" />
+    <Compile Include="RecomendacionMantenimientoJP86.cs" />
+    <Compile Include="ItemReporteMantenimientoJP86.cs" />
+    <Compile Include="ResumenReporteMantenimientoJP86.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

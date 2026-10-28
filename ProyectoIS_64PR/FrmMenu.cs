@@ -37,7 +37,7 @@ namespace ProyectoIS_64PR
         private Button btnGestionarUsuarios, btnGestionarPermisos, btnGestionarRoles, btnEventos, btnBitacoraCambiosVehiculo;
         private Button btnCategorias, btnVehiculos, btnClientes;
         private Button btnGenerarContrato, btnGenerarFactura, btnRegistrarDevolucion;
-        private Button btnNuevoReporte, btnReportesPendientes, btnReparacionesEnCurso;
+        private Button btnNuevoReporte, btnReportesPendientes, btnReparacionesEnCurso, btnReporteMantenimiento;
         #endregion
 
         #region Constructor
@@ -186,7 +186,10 @@ namespace ProyectoIS_64PR
             bool puedeRegistrarAcreditacion = rolUsuario.TienePermiso(Sesion.Patentes_64PR.RegistrarAcreditacion);
             btnReparacionesEnCurso.Visible = puedeRegistrarAcreditacion;
 
-            pnlGrupoMantenimiento.Visible = puedeRegistrarReporte || puedeClasificarReporte || puedeRegistrarAcreditacion;
+            bool puedeVerReporteMantenimiento = rolUsuario.TienePermiso(Sesion.Patentes_64PR.ReporteMantenimientoPreventivo);
+            btnReporteMantenimiento.Visible = puedeVerReporteMantenimiento;
+
+            pnlGrupoMantenimiento.Visible = puedeRegistrarReporte || puedeClasificarReporte || puedeRegistrarAcreditacion || puedeVerReporteMantenimiento;
 
             lblSeccionOperacion.Visible = pnlGrupoAlquileres.Visible || pnlGrupoMantenimiento.Visible;
 
@@ -264,6 +267,10 @@ namespace ProyectoIS_64PR
             btnReparacionesEnCurso = CrearBotonNav("Reparaciones en curso", true);
             EnlazarNav(btnReparacionesEnCurso, reparacionesEnCursoToolStripMenuItem_Click);
             itemsMantenimiento.Controls.Add(btnReparacionesEnCurso);
+
+            btnReporteMantenimiento = CrearBotonNav("Reporte preventivo", true);
+            EnlazarNav(btnReporteMantenimiento, reporteMantenimientoToolStripMenuItem_Click);
+            itemsMantenimiento.Controls.Add(btnReporteMantenimiento);
 
             pnlSidebarNav.Controls.Add(grupoMantenimiento);
 
@@ -537,6 +544,7 @@ namespace ProyectoIS_64PR
             if (textos.ContainsKey("frmMenu_navNuevoReporte")) btnNuevoReporte.Text = textos["frmMenu_navNuevoReporte"];
             if (textos.ContainsKey("frmMenu_navReportesPendientes")) btnReportesPendientes.Text = textos["frmMenu_navReportesPendientes"];
             if (textos.ContainsKey("frmMenu_navReparacionesEnCurso")) btnReparacionesEnCurso.Text = textos["frmMenu_navReparacionesEnCurso"];
+            if (textos.ContainsKey("frmMenu_navReporteMantenimiento")) btnReporteMantenimiento.Text = textos["frmMenu_navReporteMantenimiento"];
         }
 
         #endregion
@@ -731,6 +739,11 @@ namespace ProyectoIS_64PR
         private void reparacionesEnCursoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AbrirFormularioHijo(new FrmReparacionesEnCursoJP86());
+        }
+
+        private void reporteMantenimientoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbrirFormularioHijo(new FrmReporteMantenimientoJP86());
         }
 
         private void respaldoBaseDeDatosToolStripMenuItem_Click(object sender, EventArgs e)

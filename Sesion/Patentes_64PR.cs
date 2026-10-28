@@ -57,6 +57,9 @@ namespace Sesion
          RegistrarReporte = 31,
          AsignarCriticidad = 32,
          DeterminarModalidad = 33,
-         RegistrarAcreditacion = 34
+         RegistrarAcreditacion = 34,
+
+        ///Reporte de Mantenimiento Preventivo
+         ReporteMantenimientoPreventivo = 38
     }
 }

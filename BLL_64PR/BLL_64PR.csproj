@@ -48,6 +48,7 @@
     <Compile Include="SerializadorXmlJP86.cs" />
     <Compile Include="ContratoJP86.cs" />
     <Compile Include="ReporteJP86.cs" />
+    <Compile Include="ReporteMantenimientoJP86.cs" />
     <Compile Include="IEstrategiaPagoJP86.cs" />
     <Compile Include="PagoEfectivoJP86.cs" />
     <Compile Include="PagoTarjetaJP86.cs" />

@@ -46,6 +46,7 @@
     <Compile Include="GeneradorReciboContrato.cs" />
     <Compile Include="GeneradorFactura.cs" />
     <Compile Include="GeneradorReporteDesperfecto.cs" />
+    <Compile Include="GeneradorReporteMantenimiento.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -141,6 +141,52 @@ namespace ProyectoIS_64PR.UI
         }
 
         /// <summary>
+        /// Pinta el fondo de la fila entera con el color que devuelve colorPorItem para su DataBoundItem
+        /// (null = sin color). A diferencia de AplicarFilaCritica, es un tinte suave: el texto queda en
+        /// TextoPrincipal y la seleccion conserva su color.
+        /// </summary>
+        public static void AplicarFondoFila(DataGridView dgv, Func<object, Color?> colorPorItem)
+        {
+            dgv.CellFormatting += (s, e) =>
+            {
+                if (e.RowIndex < 0 || e.RowIndex >= dgv.Rows.Count) return;
+
+                Color? fondo = colorPorItem(dgv.Rows[e.RowIndex].DataBoundItem);
+                if (fondo.HasValue)
+                {
+                    e.CellStyle.BackColor = fondo.Value;
+                    e.CellStyle.ForeColor = TemaVisual.TextoPrincipal;
+                }
+            };
+        }
+
+        /// <summary>
+        /// Version suave (tinte sobre blanco) de un color de la paleta, para fondos de fila legibles.
+        /// </summary>
+        public static Color Suavizar(Color color, float proporcion = 0.18f)
+        {
+            return Color.FromArgb(
+                (int)(255 - (255 - color.R) * proporcion),
+                (int)(255 - (255 - color.G) * proporcion),
+                (int)(255 - (255 - color.B) * proporcion));
+        }
+
+        /// <summary>
+        /// Fondo de fila por valor de BE.SemaforoMantenimientoJP86 (Reporte de Mantenimiento Preventivo).
+        /// </summary>
+        public static Color ColorFondoSemaforo(string semaforo)
+        {
+            switch (semaforo)
+            {
+                case "ROJO": return Suavizar(TemaVisual.Peligro);
+                case "AMARILLO": return Suavizar(TemaVisual.Advertencia, 0.22f);
+                case "VERDE": return Suavizar(TemaVisual.Exito);
+                case "EN_TALLER": return Suavizar(TemaVisual.Info);
+                default: return Suavizar(TemaVisual.TextoSecundario, 0.14f);
+            }
+        }
+
+        /// <summary>
         /// Tarjeta blanca con esquinas redondeadas, dibujada por Paint (no Region) para que
         /// el borde quede antialiaseado. Los hijos del panel se pintan despues de este Paint,
         /// asi que no hay riesgo de taparlos con el borrado del fondo.
