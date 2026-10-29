@@ -273,6 +273,10 @@
     <None Include="idiomas\es.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Include="..\Documentacion\AyudaEnLinea\SIGAM_AyudaEnLinea.pdf">
+      <Link>Ayuda\SIGAM_AyudaEnLinea.pdf</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

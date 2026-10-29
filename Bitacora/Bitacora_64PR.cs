@@ -53,7 +53,9 @@ namespace Bitacora
             ErrorDeserializacionClientes = 39,
             RestauracionVersionVehiculo = 40,
             GenerarReporteMantenimiento = 41,
-            ImprimirReporteMantenimiento = 42
+            ImprimirReporteMantenimiento = 42,
+            ConsultaAyuda = 43,
+            ErrorAperturaAyuda = 44
         }
 
         public enum ModuloBitacora_64PR

@@ -28,6 +28,7 @@ namespace ProyectoIS_64PR
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pnlMain = new System.Windows.Forms.Panel();
             this.pnlContenidoMenu = new System.Windows.Forms.Panel();
             this.pnlTopbar = new System.Windows.Forms.Panel();
@@ -44,6 +45,8 @@ namespace ProyectoIS_64PR
             this.lblUsuarioActual = new System.Windows.Forms.Label();
             this.lblRolActual = new System.Windows.Forms.Label();
             this.btnCerrarSesionFooter = new System.Windows.Forms.Button();
+            this.btnAyudaFooter = new System.Windows.Forms.Button();
+            this.ttSidebar = new System.Windows.Forms.ToolTip(this.components);
             this.pnlMain.SuspendLayout();
             this.pnlTopbar.SuspendLayout();
             this.pnlSidebar.SuspendLayout();
@@ -223,6 +226,21 @@ namespace ProyectoIS_64PR
             this.btnCerrarSesionFooter.Text = "⏻";
             this.btnCerrarSesionFooter.UseVisualStyleBackColor = false;
             //
+            // btnAyudaFooter
+            //
+            this.btnAyudaFooter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAyudaFooter.BackColor = ProyectoIS_64PR.UI.TemaVisual.AzulOscuro;
+            this.btnAyudaFooter.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnAyudaFooter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAyudaFooter.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
+            this.btnAyudaFooter.ForeColor = System.Drawing.Color.FromArgb(200, 210, 225);
+            this.btnAyudaFooter.Location = new System.Drawing.Point(184, 17);
+            this.btnAyudaFooter.Name = "btnAyudaFooter";
+            this.btnAyudaFooter.Size = new System.Drawing.Size(30, 30);
+            this.btnAyudaFooter.TabIndex = 4;
+            this.btnAyudaFooter.Text = "?";
+            this.btnAyudaFooter.UseVisualStyleBackColor = false;
+            //
             // pnlSidebarFooter
             //
             this.pnlSidebarFooter.BackColor = ProyectoIS_64PR.UI.TemaVisual.AzulOscuro;
@@ -230,6 +248,7 @@ namespace ProyectoIS_64PR
             this.pnlSidebarFooter.Controls.Add(this.lblUsuarioActual);
             this.pnlSidebarFooter.Controls.Add(this.lblRolActual);
             this.pnlSidebarFooter.Controls.Add(this.btnCerrarSesionFooter);
+            this.pnlSidebarFooter.Controls.Add(this.btnAyudaFooter);
             this.pnlSidebarFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlSidebarFooter.Location = new System.Drawing.Point(0, 389);
             this.pnlSidebarFooter.Name = "pnlSidebarFooter";
@@ -263,11 +282,13 @@ namespace ProyectoIS_64PR
             ///automático no excluía el ancho de pnlSidebar. Ver comentario en FrmMenu.cs.
             this.Controls.Add(this.pnlSidebar);
             this.Controls.Add(this.pnlMain);
+            this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FrmMenu";
             this.Text = "SIGAM";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FrmMenu_FormClosed);
             this.Load += new System.EventHandler(this.FrmMenu_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmMenu_KeyDown);
             this.pnlMain.ResumeLayout(false);
             this.pnlTopbar.ResumeLayout(false);
             this.pnlTopbar.PerformLayout();
@@ -298,5 +319,7 @@ namespace ProyectoIS_64PR
         private System.Windows.Forms.Label lblUsuarioActual;
         private System.Windows.Forms.Label lblRolActual;
         private System.Windows.Forms.Button btnCerrarSesionFooter;
+        private System.Windows.Forms.Button btnAyudaFooter;
+        private System.Windows.Forms.ToolTip ttSidebar;
     }
 }

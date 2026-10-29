@@ -46,6 +46,7 @@
     <Compile Include="VehiculoBitacoraCambios.cs" />
     <Compile Include="ClienteJP86.cs" />
     <Compile Include="SerializadorXmlJP86.cs" />
+    <Compile Include="AyudaJP86.cs" />
     <Compile Include="ContratoJP86.cs" />
     <Compile Include="ReporteJP86.cs" />
     <Compile Include="ReporteMantenimientoJP86.cs" />

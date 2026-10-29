@@ -657,5 +657,10 @@
   "doc_ReporteMantenimiento_KmActual": "Current km:",
   "doc_ReporteMantenimiento_KmRestantes": "Km remaining:",
   "doc_ReporteMantenimiento_FechaEstimada": "Estimated date:",
-  "doc_ReporteMantenimiento_Pagina": "Page"
+  "doc_ReporteMantenimiento_Pagina": "Page",
+  "frmMenu_navAyuda": "Help",
+  "tt_Menu_Ayuda": "Open the system help manual (F1)",
+  "err_Ayuda_ArchivoInexistente": "The help manual was not found. Make sure the file is in the installation's 'Ayuda' folder.",
+  "err_Ayuda_SinVisor": "There is no program installed to open PDF files. Install a PDF viewer and try again.",
+  "err_Ayuda_ErrorApertura": "The help manual could not be opened."
 }

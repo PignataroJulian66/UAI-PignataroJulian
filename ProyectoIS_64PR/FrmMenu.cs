@@ -61,6 +61,15 @@ namespace ProyectoIS_64PR
             ConstruirNavegacion();
             AgregarSelectorIdioma();
             EstilosUI.AplicarBotonRedondeado(btnCerrarSesionFooter, TemaVisual.AzulOscuro, Color.FromArgb(40, 60, 85), Color.FromArgb(200, 210, 225), 6);
+            EstilosUI.AplicarBotonRedondeado(btnAyudaFooter, TemaVisual.AzulOscuro, Color.FromArgb(40, 60, 85), Color.FromArgb(200, 210, 225), 6);
+
+            ///El "?" de ayuda achica el espacio de usuario/rol en el footer: se recortan con "..." en vez de quedar debajo del boton
+            lblUsuarioActual.AutoSize = false;
+            lblRolActual.AutoSize = false;
+            lblUsuarioActual.AutoEllipsis = true;
+            lblRolActual.AutoEllipsis = true;
+            lblUsuarioActual.Size = new Size(btnAyudaFooter.Left - lblUsuarioActual.Left - 4, 17);
+            lblRolActual.Size = new Size(btnAyudaFooter.Left - lblRolActual.Left - 4, 15);
 
             Idioma.GestorIdioma_64PR.GetInstance.Suscribir(this);
 
@@ -347,8 +356,11 @@ namespace ProyectoIS_64PR
 
             pnlSidebarNav.Controls.Add(grupoConfig);
 
-            ///--- Footer: cerrar sesión siempre visible ---
+            ///--- Footer: cerrar sesión y ayuda siempre visibles (no dependen de patentes) ---
             btnCerrarSesionFooter.Click += cerrarSesionToolStripMenuItem1_Click;
+            btnAyudaFooter.Click += btnAyudaFooter_Click;
+            btnAyudaFooter.AccessibleName = "Ayuda";
+            ttSidebar.SetToolTip(btnAyudaFooter, "Ayuda (F1)");
         }
 
         /// <summary>
@@ -545,6 +557,10 @@ namespace ProyectoIS_64PR
             if (textos.ContainsKey("frmMenu_navReportesPendientes")) btnReportesPendientes.Text = textos["frmMenu_navReportesPendientes"];
             if (textos.ContainsKey("frmMenu_navReparacionesEnCurso")) btnReparacionesEnCurso.Text = textos["frmMenu_navReparacionesEnCurso"];
             if (textos.ContainsKey("frmMenu_navReporteMantenimiento")) btnReporteMantenimiento.Text = textos["frmMenu_navReporteMantenimiento"];
+
+            ///El boton de ayuda es solo el icono "?": el texto traducido va como nombre accesible y tooltip
+            if (textos.ContainsKey("frmMenu_navAyuda")) btnAyudaFooter.AccessibleName = textos["frmMenu_navAyuda"];
+            if (textos.ContainsKey("tt_Menu_Ayuda")) ttSidebar.SetToolTip(btnAyudaFooter, textos["tt_Menu_Ayuda"]);
         }
 
         #endregion
@@ -625,6 +641,23 @@ namespace ProyectoIS_64PR
         private void FrmMenu_Load(object sender, EventArgs e)
         {
             ConfigurarPermisos();
+        }
+
+        private void btnAyudaFooter_Click(object sender, EventArgs e)
+        {
+            AbrirAyuda();
+        }
+
+        ///F1 desde cualquier punto del menu (KeyPreview), incluidos los forms hijos embebidos en pnlContenidoMenu
+        private void FrmMenu_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.F1 || e.Modifiers != Keys.None)
+                return;
+
+            ///Handled: evita que el F1 siga como HelpRequested del control con foco
+            e.Handled = true;
+            e.SuppressKeyPress = true;
+            AbrirAyuda();
         }
 
         private void gestionarUsuariosToolStripMenuItem_Click(object sender, EventArgs e)
@@ -835,6 +868,27 @@ namespace ProyectoIS_64PR
                         this.Cursor = Cursors.Default;
                     }
                 }
+            }
+        }
+        #endregion
+
+        #region Ayuda
+        ///La apertura, la validacion y la bitacora viven en BLL_64PR.AyudaJP86; el form solo invoca y muestra el mensaje
+        private void AbrirAyuda()
+        {
+            try
+            {
+                BLL_64PR.AyudaJP86.AbrirAyuda(Application.StartupPath, Idioma.GestorIdioma_64PR.GetInstance.IdiomaActual);
+            }
+            catch (InvalidOperationException ex)
+            {
+                var textos = Idioma.GestorIdioma_64PR.GetInstance.ObtenerTextos();
+                string titulo = textos.ContainsKey("frmMenu_navAyuda") ? textos["frmMenu_navAyuda"] : "Ayuda";
+                MessageBox.Show(Traductor_64PR.TraducirMensaje(textos, ex.Message), titulo, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (Exception ex)
+            {
+                ManejadorErroresJP86.MostrarErrorInesperado(ex);
             }
         }
         #endregion
