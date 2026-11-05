@@ -31,6 +31,8 @@ namespace ProyectoIS_64PR
             ///Fila entera en rojo cuando Criticidad == CRITICA (secc. 8.1.b)
             UI.EstilosUI.AplicarFilaCritica(dgvReportes, "Criticidad", valor => valor.ToString().ToUpper() == "CRITICA");
             UI.EstilosUI.EstiloBotonPrimario(btnAcreditar);
+            ///Estado/Fuente/Criticidad/Modalidad se muestran traducidos; los valores de las celdas siguen siendo los enums
+            Traductor_64PR.TraducirColumnasReporte(dgvReportes, () => textos);
 
             Idioma.GestorIdioma_64PR.GetInstance.Suscribir(this);
 
@@ -47,6 +49,7 @@ namespace ProyectoIS_64PR
         {
             textos = textoss;
             Traductor_64PR.Traducir(this, textos);
+            dgvReportes.Invalidate();
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)

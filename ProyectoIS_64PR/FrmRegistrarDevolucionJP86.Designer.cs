@@ -33,6 +33,7 @@ namespace ProyectoIS_64PR
             // lblBuscar
             //
             this.lblBuscar.AutoSize = true;
+            this.lblBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.lblBuscar.Location = new System.Drawing.Point(12, 16);
             this.lblBuscar.Name = "lblBuscar";
             this.lblBuscar.Size = new System.Drawing.Size(55, 16);
@@ -41,6 +42,7 @@ namespace ProyectoIS_64PR
             //
             // txtBuscar
             //
+            this.txtBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.txtBuscar.Location = new System.Drawing.Point(73, 13);
             this.txtBuscar.Name = "txtBuscar";
             this.txtBuscar.Size = new System.Drawing.Size(250, 22);
@@ -50,6 +52,7 @@ namespace ProyectoIS_64PR
             // dgvContratos
             //
             this.dgvContratos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvContratos.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.dgvContratos.Location = new System.Drawing.Point(12, 42);
             this.dgvContratos.MultiSelect = false;
             this.dgvContratos.Name = "dgvContratos";
@@ -64,6 +67,7 @@ namespace ProyectoIS_64PR
             // lblKilometrajeRetorno
             //
             this.lblKilometrajeRetorno.AutoSize = true;
+            this.lblKilometrajeRetorno.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblKilometrajeRetorno.Location = new System.Drawing.Point(12, 320);
             this.lblKilometrajeRetorno.Name = "lblKilometrajeRetorno";
             this.lblKilometrajeRetorno.Size = new System.Drawing.Size(160, 16);
@@ -72,6 +76,7 @@ namespace ProyectoIS_64PR
             //
             // numKilometrajeRetorno
             //
+            this.numKilometrajeRetorno.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.numKilometrajeRetorno.Location = new System.Drawing.Point(180, 317);
             this.numKilometrajeRetorno.Maximum = new decimal(new int[] { 9999999, 0, 0, 0 });
             this.numKilometrajeRetorno.Name = "numKilometrajeRetorno";
@@ -81,6 +86,7 @@ namespace ProyectoIS_64PR
             // lblEstadoUnidad
             //
             this.lblEstadoUnidad.AutoSize = true;
+            this.lblEstadoUnidad.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblEstadoUnidad.Location = new System.Drawing.Point(12, 355);
             this.lblEstadoUnidad.Name = "lblEstadoUnidad";
             this.lblEstadoUnidad.Size = new System.Drawing.Size(160, 16);
@@ -91,6 +97,7 @@ namespace ProyectoIS_64PR
             //
             this.cmbEstadoUnidad.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbEstadoUnidad.FormattingEnabled = true;
+            this.cmbEstadoUnidad.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.cmbEstadoUnidad.Location = new System.Drawing.Point(180, 352);
             this.cmbEstadoUnidad.Name = "cmbEstadoUnidad";
             this.cmbEstadoUnidad.Size = new System.Drawing.Size(180, 24);
@@ -98,6 +105,7 @@ namespace ProyectoIS_64PR
             //
             // btnRegistrarDevolucion
             //
+            this.btnRegistrarDevolucion.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnRegistrarDevolucion.Location = new System.Drawing.Point(12, 390);
             this.btnRegistrarDevolucion.Name = "btnRegistrarDevolucion";
             this.btnRegistrarDevolucion.Size = new System.Drawing.Size(180, 30);
@@ -109,6 +117,7 @@ namespace ProyectoIS_64PR
             // btnImprimirRecibo
             //
             this.btnImprimirRecibo.Enabled = false;
+            this.btnImprimirRecibo.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnImprimirRecibo.Location = new System.Drawing.Point(200, 390);
             this.btnImprimirRecibo.Name = "btnImprimirRecibo";
             this.btnImprimirRecibo.Size = new System.Drawing.Size(180, 30);
@@ -120,6 +129,8 @@ namespace ProyectoIS_64PR
             // FrmRegistrarDevolucionJP86
             //
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScroll = true;
+            this.AutoScrollMinSize = new System.Drawing.Size(700, 440);
             this.ClientSize = new System.Drawing.Size(700, 440);
             this.Controls.Add(this.btnImprimirRecibo);
             this.Controls.Add(this.btnRegistrarDevolucion);

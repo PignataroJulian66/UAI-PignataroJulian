@@ -788,7 +788,9 @@ namespace ProyectoIS_64PR
                 string carpetaProyecto = @"C:\Backups_64PR";
                 gBackup.CrearCarpetaSiNoExiste(carpetaProyecto); /// SQL la crea si no existe, no rompe si ya existe
 
-                string nombreArchivo = $"BD_64PR_{DateTime.Now:yyyyMMdd_HHmmss}.bak";
+                // [INSTALADOR v2] código original:
+                // string nombreArchivo = $"BD_64PR_{DateTime.Now:yyyyMMdd_HHmmss}.bak";
+                string nombreArchivo = $"{gBackup.ObtenerNombreBaseDatos()}_{DateTime.Now:yyyyMMdd_HHmmss}.bak";
                 string rutaCompleta = System.IO.Path.Combine(carpetaProyecto, nombreArchivo);
 
                 gBackup.GenerarBackup(rutaCompleta);
@@ -845,8 +847,12 @@ namespace ProyectoIS_64PR
 
                         /// calcular dónde van a ir los archivos físicos
                         string rutaDefaultData = gBackup.ObtenerRutaDefaultData();
-                        string rutaDestinoMdf = System.IO.Path.Combine(rutaDefaultData, "BD_64PR.mdf");
-                        string rutaDestinoLdf = System.IO.Path.Combine(rutaDefaultData, "BD_64PR_log.ldf");
+                        // [INSTALADOR v2] código original:
+                        // string rutaDestinoMdf = System.IO.Path.Combine(rutaDefaultData, "BD_64PR.mdf");
+                        // string rutaDestinoLdf = System.IO.Path.Combine(rutaDefaultData, "BD_64PR_log.ldf");
+                        string nombreBD = gBackup.ObtenerNombreBaseDatos();
+                        string rutaDestinoMdf = System.IO.Path.Combine(rutaDefaultData, nombreBD + ".mdf");
+                        string rutaDestinoLdf = System.IO.Path.Combine(rutaDefaultData, nombreBD + "_log.ldf");
 
                         gBackup.RestaurarBackup(rutaBackup, logicalData, logicalLog, rutaDestinoMdf, rutaDestinoLdf);
 

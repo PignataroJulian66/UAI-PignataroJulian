@@ -175,8 +175,12 @@ namespace ProyectoIS_64PR
 
                         /// calcular dónde van a ir los archivos físicos
                         string rutaDefaultData = gBackup.ObtenerRutaDefaultData();
-                        string rutaDestinoMdf = System.IO.Path.Combine(rutaDefaultData, "BD_64PR.mdf");
-                        string rutaDestinoLdf = System.IO.Path.Combine(rutaDefaultData, "BD_64PR_log.ldf");
+                        // [INSTALADOR v2] código original:
+                        // string rutaDestinoMdf = System.IO.Path.Combine(rutaDefaultData, "BD_64PR.mdf");
+                        // string rutaDestinoLdf = System.IO.Path.Combine(rutaDefaultData, "BD_64PR_log.ldf");
+                        string nombreBD = gBackup.ObtenerNombreBaseDatos();
+                        string rutaDestinoMdf = System.IO.Path.Combine(rutaDefaultData, nombreBD + ".mdf");
+                        string rutaDestinoLdf = System.IO.Path.Combine(rutaDefaultData, nombreBD + "_log.ldf");
 
                         gBackup.RestaurarBackup(rutaBackup, logicalData, logicalLog, rutaDestinoMdf, rutaDestinoLdf);
 

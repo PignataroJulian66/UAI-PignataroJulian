@@ -26,8 +26,7 @@ namespace ProyectoIS_64PR
             //
             // dgvReportes
             //
-            this.dgvReportes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right))));
+            this.dgvReportes.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
             this.dgvReportes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvReportes.Location = new System.Drawing.Point(12, 12);
             this.dgvReportes.MultiSelect = false;
@@ -43,6 +42,7 @@ namespace ProyectoIS_64PR
             // lblDescripcionCierre
             //
             this.lblDescripcionCierre.AutoSize = true;
+            this.lblDescripcionCierre.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblDescripcionCierre.Location = new System.Drawing.Point(12, 244);
             this.lblDescripcionCierre.Name = "lblDescripcionCierre";
             this.lblDescripcionCierre.Size = new System.Drawing.Size(220, 16);
@@ -51,8 +51,7 @@ namespace ProyectoIS_64PR
             //
             // txtDescripcionCierre
             //
-            this.txtDescripcionCierre.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right))));
+            this.txtDescripcionCierre.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
             this.txtDescripcionCierre.Location = new System.Drawing.Point(12, 264);
             this.txtDescripcionCierre.Multiline = true;
             this.txtDescripcionCierre.Name = "txtDescripcionCierre";
@@ -61,6 +60,7 @@ namespace ProyectoIS_64PR
             //
             // btnAcreditar
             //
+            this.btnAcreditar.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnAcreditar.Location = new System.Drawing.Point(12, 355);
             this.btnAcreditar.Name = "btnAcreditar";
             this.btnAcreditar.Size = new System.Drawing.Size(220, 30);
@@ -72,6 +72,8 @@ namespace ProyectoIS_64PR
             // FrmReparacionesEnCursoJP86
             //
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScroll = true;
+            this.AutoScrollMinSize = new System.Drawing.Size(900, 400);
             this.ClientSize = new System.Drawing.Size(900, 400);
             this.Controls.Add(this.btnAcreditar);
             this.Controls.Add(this.txtDescripcionCierre);

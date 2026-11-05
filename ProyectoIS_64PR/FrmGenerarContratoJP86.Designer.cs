@@ -48,6 +48,7 @@ namespace ProyectoIS_64PR
             // lblFechaInicio
             //
             this.lblFechaInicio.AutoSize = true;
+            this.lblFechaInicio.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.lblFechaInicio.Location = new System.Drawing.Point(12, 15);
             this.lblFechaInicio.Name = "lblFechaInicio";
             this.lblFechaInicio.Size = new System.Drawing.Size(90, 16);
@@ -57,6 +58,7 @@ namespace ProyectoIS_64PR
             // dtpFechaInicio
             //
             this.dtpFechaInicio.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpFechaInicio.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.dtpFechaInicio.Location = new System.Drawing.Point(108, 12);
             this.dtpFechaInicio.Name = "dtpFechaInicio";
             this.dtpFechaInicio.Size = new System.Drawing.Size(110, 22);
@@ -65,6 +67,7 @@ namespace ProyectoIS_64PR
             // lblFechaFin
             //
             this.lblFechaFin.AutoSize = true;
+            this.lblFechaFin.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.lblFechaFin.Location = new System.Drawing.Point(230, 15);
             this.lblFechaFin.Name = "lblFechaFin";
             this.lblFechaFin.Size = new System.Drawing.Size(75, 16);
@@ -74,6 +77,7 @@ namespace ProyectoIS_64PR
             // dtpFechaFin
             //
             this.dtpFechaFin.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpFechaFin.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.dtpFechaFin.Location = new System.Drawing.Point(313, 12);
             this.dtpFechaFin.Name = "dtpFechaFin";
             this.dtpFechaFin.Size = new System.Drawing.Size(110, 22);
@@ -82,6 +86,7 @@ namespace ProyectoIS_64PR
             // lblCategoria
             //
             this.lblCategoria.AutoSize = true;
+            this.lblCategoria.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.lblCategoria.Location = new System.Drawing.Point(12, 46);
             this.lblCategoria.Name = "lblCategoria";
             this.lblCategoria.Size = new System.Drawing.Size(70, 16);
@@ -92,6 +97,7 @@ namespace ProyectoIS_64PR
             //
             this.cmbCategoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCategoria.FormattingEnabled = true;
+            this.cmbCategoria.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.cmbCategoria.Location = new System.Drawing.Point(108, 43);
             this.cmbCategoria.Name = "cmbCategoria";
             this.cmbCategoria.Size = new System.Drawing.Size(140, 24);
@@ -100,6 +106,7 @@ namespace ProyectoIS_64PR
             // lblMarca
             //
             this.lblMarca.AutoSize = true;
+            this.lblMarca.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.lblMarca.Location = new System.Drawing.Point(260, 46);
             this.lblMarca.Name = "lblMarca";
             this.lblMarca.Size = new System.Drawing.Size(51, 16);
@@ -108,6 +115,7 @@ namespace ProyectoIS_64PR
             //
             // txtMarca
             //
+            this.txtMarca.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.txtMarca.Location = new System.Drawing.Point(313, 43);
             this.txtMarca.Name = "txtMarca";
             this.txtMarca.Size = new System.Drawing.Size(110, 22);
@@ -116,6 +124,7 @@ namespace ProyectoIS_64PR
             // lblKilometraje
             //
             this.lblKilometraje.AutoSize = true;
+            this.lblKilometraje.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.lblKilometraje.Location = new System.Drawing.Point(12, 77);
             this.lblKilometraje.Name = "lblKilometraje";
             this.lblKilometraje.Size = new System.Drawing.Size(150, 16);
@@ -124,6 +133,7 @@ namespace ProyectoIS_64PR
             //
             // numKilometrajeMax
             //
+            this.numKilometrajeMax.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.numKilometrajeMax.Location = new System.Drawing.Point(168, 75);
             this.numKilometrajeMax.Maximum = new decimal(new int[] { 9999999, 0, 0, 0 });
             this.numKilometrajeMax.Name = "numKilometrajeMax";
@@ -132,6 +142,7 @@ namespace ProyectoIS_64PR
             //
             // btnBuscarUnidades
             //
+            this.btnBuscarUnidades.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.btnBuscarUnidades.Location = new System.Drawing.Point(313, 74);
             this.btnBuscarUnidades.Name = "btnBuscarUnidades";
             this.btnBuscarUnidades.Size = new System.Drawing.Size(110, 25);
@@ -142,8 +153,7 @@ namespace ProyectoIS_64PR
             //
             // dgvUnidades
             //
-            this.dgvUnidades.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right))));
+            this.dgvUnidades.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
             this.dgvUnidades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvUnidades.Location = new System.Drawing.Point(12, 106);
             this.dgvUnidades.MultiSelect = false;
@@ -159,6 +169,7 @@ namespace ProyectoIS_64PR
             // lblClientesTitulo
             //
             this.lblClientesTitulo.AutoSize = true;
+            this.lblClientesTitulo.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.lblClientesTitulo.Location = new System.Drawing.Point(12, 256);
             this.lblClientesTitulo.Name = "lblClientesTitulo";
             this.lblClientesTitulo.Size = new System.Drawing.Size(70, 16);
@@ -168,6 +179,7 @@ namespace ProyectoIS_64PR
             // dgvClientes
             //
             this.dgvClientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvClientes.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.dgvClientes.Location = new System.Drawing.Point(12, 276);
             this.dgvClientes.MultiSelect = false;
             this.dgvClientes.Name = "dgvClientes";
@@ -181,6 +193,7 @@ namespace ProyectoIS_64PR
             //
             // btnClienteNuevo
             //
+            this.btnClienteNuevo.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.btnClienteNuevo.Location = new System.Drawing.Point(560, 276);
             this.btnClienteNuevo.Name = "btnClienteNuevo";
             this.btnClienteNuevo.Size = new System.Drawing.Size(150, 25);
@@ -192,6 +205,7 @@ namespace ProyectoIS_64PR
             // lblClienteInfo
             //
             this.lblClienteInfo.AutoSize = true;
+            this.lblClienteInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.lblClienteInfo.Location = new System.Drawing.Point(560, 310);
             this.lblClienteInfo.Name = "lblClienteInfo";
             this.lblClienteInfo.Size = new System.Drawing.Size(0, 16);
@@ -199,6 +213,7 @@ namespace ProyectoIS_64PR
             //
             // pnlNuevoCliente
             //
+            this.pnlNuevoCliente.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.pnlNuevoCliente.Location = new System.Drawing.Point(560, 335);
             this.pnlNuevoCliente.Name = "pnlNuevoCliente";
             this.pnlNuevoCliente.Size = new System.Drawing.Size(300, 170);
@@ -207,6 +222,7 @@ namespace ProyectoIS_64PR
             //
             // btnGuardarCliente
             //
+            this.btnGuardarCliente.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.btnGuardarCliente.Location = new System.Drawing.Point(560, 511);
             this.btnGuardarCliente.Name = "btnGuardarCliente";
             this.btnGuardarCliente.Size = new System.Drawing.Size(180, 25);
@@ -219,6 +235,7 @@ namespace ProyectoIS_64PR
             // chkCargosAdicionales
             //
             this.chkCargosAdicionales.AutoSize = true;
+            this.chkCargosAdicionales.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.chkCargosAdicionales.Location = new System.Drawing.Point(12, 448);
             this.chkCargosAdicionales.Name = "chkCargosAdicionales";
             this.chkCargosAdicionales.Size = new System.Drawing.Size(240, 20);
@@ -231,6 +248,7 @@ namespace ProyectoIS_64PR
             //
             this.lblImporteTotal.AutoSize = true;
             this.lblImporteTotal.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.lblImporteTotal.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblImporteTotal.Location = new System.Drawing.Point(12, 476);
             this.lblImporteTotal.Name = "lblImporteTotal";
             this.lblImporteTotal.Size = new System.Drawing.Size(140, 20);
@@ -239,6 +257,7 @@ namespace ProyectoIS_64PR
             //
             // btnConfirmar
             //
+            this.btnConfirmar.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnConfirmar.Location = new System.Drawing.Point(12, 511);
             this.btnConfirmar.Name = "btnConfirmar";
             this.btnConfirmar.Size = new System.Drawing.Size(120, 28);
@@ -249,6 +268,7 @@ namespace ProyectoIS_64PR
             //
             // btnCancelar
             //
+            this.btnCancelar.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnCancelar.Location = new System.Drawing.Point(150, 511);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(120, 28);
@@ -260,6 +280,7 @@ namespace ProyectoIS_64PR
             // btnImprimirRecibo
             //
             this.btnImprimirRecibo.Enabled = false;
+            this.btnImprimirRecibo.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnImprimirRecibo.Location = new System.Drawing.Point(300, 511);
             this.btnImprimirRecibo.Name = "btnImprimirRecibo";
             this.btnImprimirRecibo.Size = new System.Drawing.Size(160, 28);
@@ -271,6 +292,8 @@ namespace ProyectoIS_64PR
             // FrmGenerarContratoJP86
             //
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScroll = true;
+            this.AutoScrollMinSize = new System.Drawing.Size(900, 560);
             this.ClientSize = new System.Drawing.Size(900, 560);
             this.Controls.Add(this.btnImprimirRecibo);
             this.Controls.Add(this.btnCancelar);

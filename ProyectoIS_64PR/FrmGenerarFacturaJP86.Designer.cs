@@ -34,6 +34,7 @@ namespace ProyectoIS_64PR
             // lblTitulo
             //
             this.lblTitulo.AutoSize = true;
+            this.lblTitulo.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.lblTitulo.Location = new System.Drawing.Point(12, 12);
             this.lblTitulo.Name = "lblTitulo";
             this.lblTitulo.Size = new System.Drawing.Size(220, 16);
@@ -43,6 +44,7 @@ namespace ProyectoIS_64PR
             // dgvContratos
             //
             this.dgvContratos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvContratos.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.dgvContratos.Location = new System.Drawing.Point(12, 34);
             this.dgvContratos.MultiSelect = false;
             this.dgvContratos.Name = "dgvContratos";
@@ -58,6 +60,7 @@ namespace ProyectoIS_64PR
             //
             this.lblImporte.AutoSize = true;
             this.lblImporte.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.lblImporte.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblImporte.Location = new System.Drawing.Point(12, 350);
             this.lblImporte.Name = "lblImporte";
             this.lblImporte.Size = new System.Drawing.Size(150, 20);
@@ -67,6 +70,7 @@ namespace ProyectoIS_64PR
             // lblMetodoPago
             //
             this.lblMetodoPago.AutoSize = true;
+            this.lblMetodoPago.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblMetodoPago.Location = new System.Drawing.Point(12, 390);
             this.lblMetodoPago.Name = "lblMetodoPago";
             this.lblMetodoPago.Size = new System.Drawing.Size(160, 16);
@@ -76,6 +80,7 @@ namespace ProyectoIS_64PR
             // btnEfectivo
             //
             this.btnEfectivo.Enabled = false;
+            this.btnEfectivo.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnEfectivo.Location = new System.Drawing.Point(12, 415);
             this.btnEfectivo.Name = "btnEfectivo";
             this.btnEfectivo.Size = new System.Drawing.Size(140, 30);
@@ -87,6 +92,7 @@ namespace ProyectoIS_64PR
             // btnTarjeta
             //
             this.btnTarjeta.Enabled = false;
+            this.btnTarjeta.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnTarjeta.Location = new System.Drawing.Point(160, 415);
             this.btnTarjeta.Name = "btnTarjeta";
             this.btnTarjeta.Size = new System.Drawing.Size(140, 30);
@@ -98,6 +104,7 @@ namespace ProyectoIS_64PR
             // btnTransferencia
             //
             this.btnTransferencia.Enabled = false;
+            this.btnTransferencia.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnTransferencia.Location = new System.Drawing.Point(308, 415);
             this.btnTransferencia.Name = "btnTransferencia";
             this.btnTransferencia.Size = new System.Drawing.Size(140, 30);
@@ -109,6 +116,7 @@ namespace ProyectoIS_64PR
             // btnMercadoPago
             //
             this.btnMercadoPago.Enabled = false;
+            this.btnMercadoPago.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnMercadoPago.Location = new System.Drawing.Point(456, 415);
             this.btnMercadoPago.Name = "btnMercadoPago";
             this.btnMercadoPago.Size = new System.Drawing.Size(140, 30);
@@ -120,6 +128,7 @@ namespace ProyectoIS_64PR
             // btnImprimirFactura
             //
             this.btnImprimirFactura.Enabled = false;
+            this.btnImprimirFactura.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnImprimirFactura.Location = new System.Drawing.Point(12, 455);
             this.btnImprimirFactura.Name = "btnImprimirFactura";
             this.btnImprimirFactura.Size = new System.Drawing.Size(160, 30);
@@ -131,6 +140,7 @@ namespace ProyectoIS_64PR
             // lblEstadoPago
             //
             this.lblEstadoPago.AutoSize = true;
+            this.lblEstadoPago.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblEstadoPago.Location = new System.Drawing.Point(184, 462);
             this.lblEstadoPago.Name = "lblEstadoPago";
             this.lblEstadoPago.Size = new System.Drawing.Size(120, 16);
@@ -140,6 +150,7 @@ namespace ProyectoIS_64PR
             //
             // pbPago
             //
+            this.pbPago.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.pbPago.Location = new System.Drawing.Point(330, 458);
             this.pbPago.Name = "pbPago";
             this.pbPago.Size = new System.Drawing.Size(266, 24);
@@ -149,6 +160,8 @@ namespace ProyectoIS_64PR
             // FrmGenerarFacturaJP86
             //
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScroll = true;
+            this.AutoScrollMinSize = new System.Drawing.Size(700, 500);
             this.ClientSize = new System.Drawing.Size(700, 500);
             this.Controls.Add(this.pbPago);
             this.Controls.Add(this.lblEstadoPago);

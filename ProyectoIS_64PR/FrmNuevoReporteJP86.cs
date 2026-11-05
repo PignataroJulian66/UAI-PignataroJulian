@@ -32,8 +32,10 @@ namespace ProyectoIS_64PR
             UI.EstilosUI.EstiloBotonPrimario(btnConfirmar);
             UI.EstilosUI.EstiloBotonSecundario(btnImprimirReporte);
             UI.EstilosUI.EstiloBotonPeligro(btnCancelar);
+            ///Estado del vehiculo (EN_REVISION) se muestra traducido; el valor de la celda sigue siendo el enum
+            Traductor_64PR.TraducirColumnaValores(dgvVehiculos, "Estado", Traductor_64PR.PrefijoEstadoVehiculo, () => textos);
 
-            cmbFuente.DataSource = Enum.GetValues(typeof(BE.FuenteReporteJP86));
+            CargarFuentes();
 
             Idioma.GestorIdioma_64PR.GetInstance.Suscribir(this);
 
@@ -50,6 +52,8 @@ namespace ProyectoIS_64PR
         {
             textos = textoss;
             Traductor_64PR.Traducir(this, textos);
+            CargarFuentes();
+            dgvVehiculos.Invalidate();
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
@@ -73,6 +77,12 @@ namespace ProyectoIS_64PR
         #endregion
 
         #region Carga de datos
+        ///El combo muestra el texto traducido ("fuenteReporte_<valor>") y guarda el enum como SelectedValue
+        private void CargarFuentes()
+        {
+            Traductor_64PR.CargarComboValores<BE.FuenteReporteJP86>(cmbFuente, textos, Traductor_64PR.PrefijoFuenteReporte);
+        }
+
         private void CargarVehiculos()
         {
             List<BE.VehiculoJP86> disponibles = greportes.ListarVehiculosEnRevision();
@@ -123,7 +133,7 @@ namespace ProyectoIS_64PR
                 return;
             }
 
-            BE.FuenteReporteJP86 fuente = (BE.FuenteReporteJP86)cmbFuente.SelectedItem;
+            BE.FuenteReporteJP86 fuente = (BE.FuenteReporteJP86)cmbFuente.SelectedValue;
 
             try
             {
@@ -152,7 +162,10 @@ namespace ProyectoIS_64PR
 
         private void btnImprimirReporte_Click(object sender, EventArgs e)
         {
-            Documentos.GeneradorReporteDesperfecto.Imprimir(reporteGenerado);
+            ///El documento recibe los textos visibles ya traducidos; el reporte (valores internos) no se modifica
+            Documentos.GeneradorReporteDesperfecto.Imprimir(reporteGenerado,
+                Traductor_64PR.TraducirValor(textos, Traductor_64PR.PrefijoFuenteReporte, reporteGenerado.Fuente),
+                Traductor_64PR.TraducirValor(textos, Traductor_64PR.PrefijoEstadoReporte, reporteGenerado.Estado));
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)

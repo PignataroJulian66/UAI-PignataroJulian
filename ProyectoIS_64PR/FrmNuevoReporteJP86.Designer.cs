@@ -31,6 +31,7 @@ namespace ProyectoIS_64PR
             // dgvVehiculos
             //
             this.dgvVehiculos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvVehiculos.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.dgvVehiculos.Location = new System.Drawing.Point(12, 12);
             this.dgvVehiculos.MultiSelect = false;
             this.dgvVehiculos.Name = "dgvVehiculos";
@@ -45,6 +46,7 @@ namespace ProyectoIS_64PR
             // lblDescripcion
             //
             this.lblDescripcion.AutoSize = true;
+            this.lblDescripcion.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblDescripcion.Location = new System.Drawing.Point(12, 204);
             this.lblDescripcion.Name = "lblDescripcion";
             this.lblDescripcion.Size = new System.Drawing.Size(180, 16);
@@ -53,6 +55,7 @@ namespace ProyectoIS_64PR
             //
             // txtDescripcion
             //
+            this.txtDescripcion.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.txtDescripcion.Location = new System.Drawing.Point(12, 224);
             this.txtDescripcion.Multiline = true;
             this.txtDescripcion.Name = "txtDescripcion";
@@ -62,6 +65,7 @@ namespace ProyectoIS_64PR
             // lblFuente
             //
             this.lblFuente.AutoSize = true;
+            this.lblFuente.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblFuente.Location = new System.Drawing.Point(12, 316);
             this.lblFuente.Name = "lblFuente";
             this.lblFuente.Size = new System.Drawing.Size(55, 16);
@@ -72,6 +76,7 @@ namespace ProyectoIS_64PR
             //
             this.cmbFuente.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbFuente.FormattingEnabled = true;
+            this.cmbFuente.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.cmbFuente.Location = new System.Drawing.Point(90, 313);
             this.cmbFuente.Name = "cmbFuente";
             this.cmbFuente.Size = new System.Drawing.Size(200, 24);
@@ -79,6 +84,7 @@ namespace ProyectoIS_64PR
             //
             // btnConfirmar
             //
+            this.btnConfirmar.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnConfirmar.Location = new System.Drawing.Point(12, 350);
             this.btnConfirmar.Name = "btnConfirmar";
             this.btnConfirmar.Size = new System.Drawing.Size(120, 28);
@@ -89,6 +95,7 @@ namespace ProyectoIS_64PR
             //
             // btnCancelar
             //
+            this.btnCancelar.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnCancelar.Location = new System.Drawing.Point(150, 350);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(120, 28);
@@ -100,6 +107,7 @@ namespace ProyectoIS_64PR
             // btnImprimirReporte
             //
             this.btnImprimirReporte.Enabled = false;
+            this.btnImprimirReporte.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnImprimirReporte.Location = new System.Drawing.Point(288, 350);
             this.btnImprimirReporte.Name = "btnImprimirReporte";
             this.btnImprimirReporte.Size = new System.Drawing.Size(160, 28);
@@ -111,6 +119,8 @@ namespace ProyectoIS_64PR
             // FrmNuevoReporteJP86
             //
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScroll = true;
+            this.AutoScrollMinSize = new System.Drawing.Size(900, 400);
             this.ClientSize = new System.Drawing.Size(900, 400);
             this.Controls.Add(this.btnImprimirReporte);
             this.Controls.Add(this.btnCancelar);

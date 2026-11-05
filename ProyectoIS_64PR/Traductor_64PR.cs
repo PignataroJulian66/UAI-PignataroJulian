@@ -127,5 +127,71 @@ namespace ProyectoIS_64PR
                 return textos[claveOMensaje];
             return claveOMensaje;
         }
+
+        ///Texto visible de un valor interno (enum / estado guardado en BD, ej. EN_REPARACION) SIN tocar el valor:
+        ///busca la clave de idioma "<prefijo>_<VALOR>" (ej. "estadoReporte_EN_REPARACION"). Si falta la clave,
+        ///la registra como faltante y muestra el valor con espacios en vez de "_", nunca el valor crudo.
+        public static string TraducirValor(Dictionary<string, string> textos, string prefijo, object valor)
+        {
+            if (valor == null) return string.Empty;
+
+            string clave = prefijo + "_" + valor;
+            if (textos != null && textos.ContainsKey(clave))
+                return textos[clave];
+
+            if (textos != null && textos.Count > 0)
+                Idioma.GestorIdioma_64PR.GetInstance.RegistrarClavesFaltantes(new List<string> { clave });
+            return valor.ToString().Replace('_', ' ');
+        }
+
+        ///Carga un ComboBox con los valores de un enum: muestra el texto traducido (TraducirValor) y guarda el enum
+        ///como SelectedValue (DisplayMember/ValueMember, mismo patron que FrmRegistrarDevolucionJP86). Conserva la
+        ///seleccion al recargar, asi se puede llamar desde ActualizarIdioma (Observer).
+        public static void CargarComboValores<TEnum>(ComboBox cmb, Dictionary<string, string> textos, string prefijo) where TEnum : struct
+        {
+            object seleccionado = cmb.SelectedValue;
+
+            cmb.DisplayMember = "Value";
+            cmb.ValueMember = "Key";
+            cmb.DataSource = Enum.GetValues(typeof(TEnum))
+                .Cast<TEnum>()
+                .Select(valor => new KeyValuePair<TEnum, string>(valor, TraducirValor(textos, prefijo, valor)))
+                .ToList();
+
+            if (seleccionado != null)
+                cmb.SelectedValue = seleccionado;
+        }
+
+        ///Muestra traducida una columna de valores internos de una grilla (solo presentacion, via CellFormatting):
+        ///el valor de la celda / DataBoundItem sigue siendo el enum original. obtenerTextos se evalua en cada pintado,
+        ///asi toma el idioma vigente; tras un cambio de idioma alcanza con Invalidate() de la grilla.
+        public static void TraducirColumnaValores(DataGridView dgv, string nombreColumna, string prefijo, Func<Dictionary<string, string>> obtenerTextos)
+        {
+            dgv.CellFormatting += (s, e) =>
+            {
+                if (e.RowIndex < 0 || e.ColumnIndex < 0 || e.ColumnIndex >= dgv.Columns.Count) return;
+                if (dgv.Columns[e.ColumnIndex].Name != nombreColumna) return;
+                if (e.Value == null) return;
+
+                e.Value = TraducirValor(obtenerTextos(), prefijo, e.Value);
+                e.FormattingApplied = true;
+            };
+        }
+
+        ///Prefijos de clave para TraducirValor (valores internos de RFN2: BE.EstadoReporteJP86, EstadoVehiculoJP86, ...)
+        public const string PrefijoEstadoReporte = "estadoReporte";
+        public const string PrefijoEstadoVehiculo = "estadoVehiculo";
+        public const string PrefijoFuenteReporte = "fuenteReporte";
+        public const string PrefijoCriticidadReporte = "criticidadReporte";
+        public const string PrefijoModalidadReparacion = "modalidadReparacion";
+
+        ///Columnas de valores internos de una grilla de BE.ReporteJP86 (CUN-06/07/08): se usa en las 3 grillas de reportes.
+        public static void TraducirColumnasReporte(DataGridView dgv, Func<Dictionary<string, string>> obtenerTextos)
+        {
+            TraducirColumnaValores(dgv, "Estado", PrefijoEstadoReporte, obtenerTextos);
+            TraducirColumnaValores(dgv, "Fuente", PrefijoFuenteReporte, obtenerTextos);
+            TraducirColumnaValores(dgv, "Criticidad", PrefijoCriticidadReporte, obtenerTextos);
+            TraducirColumnaValores(dgv, "ModalidadReparacion", PrefijoModalidadReparacion, obtenerTextos);
+        }
     }
 }

@@ -38,6 +38,7 @@ namespace ProyectoIS_64PR
             // lblBuscar
             //
             this.lblBuscar.AutoSize = true;
+            this.lblBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.lblBuscar.Location = new System.Drawing.Point(12, 16);
             this.lblBuscar.Name = "lblBuscar";
             this.lblBuscar.Size = new System.Drawing.Size(55, 16);
@@ -46,6 +47,7 @@ namespace ProyectoIS_64PR
             //
             // txtBuscar
             //
+            this.txtBuscar.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.txtBuscar.Location = new System.Drawing.Point(73, 13);
             this.txtBuscar.Name = "txtBuscar";
             this.txtBuscar.Size = new System.Drawing.Size(250, 22);
@@ -54,8 +56,7 @@ namespace ProyectoIS_64PR
             //
             // dgvVehiculos
             //
-            this.dgvVehiculos.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right))));
+            this.dgvVehiculos.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
             this.dgvVehiculos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvVehiculos.Location = new System.Drawing.Point(12, 42);
             this.dgvVehiculos.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -68,7 +69,7 @@ namespace ProyectoIS_64PR
             //
             // btnCrear
             //
-            this.btnCrear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCrear.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
             this.btnCrear.Location = new System.Drawing.Point(693, 42);
             this.btnCrear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCrear.Name = "btnCrear";
@@ -80,7 +81,7 @@ namespace ProyectoIS_64PR
             //
             // btnModificar
             //
-            this.btnModificar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnModificar.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
             this.btnModificar.Location = new System.Drawing.Point(693, 71);
             this.btnModificar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnModificar.Name = "btnModificar";
@@ -92,7 +93,7 @@ namespace ProyectoIS_64PR
             //
             // btnEliminar
             //
-            this.btnEliminar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEliminar.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
             this.btnEliminar.Location = new System.Drawing.Point(693, 100);
             this.btnEliminar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnEliminar.Name = "btnEliminar";
@@ -104,7 +105,7 @@ namespace ProyectoIS_64PR
             //
             // cmbEstado
             //
-            this.cmbEstado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbEstado.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
             this.cmbEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbEstado.FormattingEnabled = true;
             this.cmbEstado.Location = new System.Drawing.Point(693, 132);
@@ -114,7 +115,7 @@ namespace ProyectoIS_64PR
             //
             // btnCambiarEstado
             //
-            this.btnCambiarEstado.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCambiarEstado.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
             this.btnCambiarEstado.Location = new System.Drawing.Point(693, 160);
             this.btnCambiarEstado.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCambiarEstado.Name = "btnCambiarEstado";
@@ -126,7 +127,7 @@ namespace ProyectoIS_64PR
             //
             // btnGuardar
             //
-            this.btnGuardar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnGuardar.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right));
             this.btnGuardar.Location = new System.Drawing.Point(693, 215);
             this.btnGuardar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnGuardar.Name = "btnGuardar";
@@ -138,6 +139,7 @@ namespace ProyectoIS_64PR
             //
             // pnlContenedor
             //
+            this.pnlContenedor.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.pnlContenedor.Location = new System.Drawing.Point(12, 255);
             this.pnlContenedor.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnlContenedor.Name = "pnlContenedor";
@@ -147,6 +149,7 @@ namespace ProyectoIS_64PR
             // lblModo
             //
             this.lblModo.AutoSize = true;
+            this.lblModo.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblModo.Location = new System.Drawing.Point(365, 255);
             this.lblModo.Name = "lblModo";
             this.lblModo.Size = new System.Drawing.Size(42, 16);
@@ -156,6 +159,7 @@ namespace ProyectoIS_64PR
             // radioButton1
             //
             this.radioButton1.AutoSize = true;
+            this.radioButton1.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.radioButton1.Location = new System.Drawing.Point(369, 327);
             this.radioButton1.Margin = new System.Windows.Forms.Padding(4);
             this.radioButton1.Name = "radioButton1";
@@ -169,6 +173,7 @@ namespace ProyectoIS_64PR
             // radioButton2
             //
             this.radioButton2.AutoSize = true;
+            this.radioButton2.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.radioButton2.Location = new System.Drawing.Point(369, 356);
             this.radioButton2.Margin = new System.Windows.Forms.Padding(4);
             this.radioButton2.Name = "radioButton2";
@@ -182,6 +187,7 @@ namespace ProyectoIS_64PR
             // radioButton3
             //
             this.radioButton3.AutoSize = true;
+            this.radioButton3.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.radioButton3.Location = new System.Drawing.Point(369, 299);
             this.radioButton3.Margin = new System.Windows.Forms.Padding(4);
             this.radioButton3.Name = "radioButton3";
@@ -195,6 +201,7 @@ namespace ProyectoIS_64PR
             // lblCantidad
             //
             this.lblCantidad.AutoSize = true;
+            this.lblCantidad.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblCantidad.Location = new System.Drawing.Point(366, 403);
             this.lblCantidad.Name = "lblCantidad";
             this.lblCantidad.Size = new System.Drawing.Size(150, 16);
@@ -204,6 +211,8 @@ namespace ProyectoIS_64PR
             // FrmGestionarVehiculosJP86
             //
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScroll = true;
+            this.AutoScrollMinSize = new System.Drawing.Size(800, 450);
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.lblCantidad);
             this.Controls.Add(this.radioButton3);

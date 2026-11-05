@@ -27,6 +27,8 @@ namespace ProyectoIS_64PR
         public FrmGenerarContratoJP86()
         {
             InitializeComponent();
+            ///Dos grillas apiladas: el alto libre se reparte entre unidades y clientes (el panel de cliente nuevo acompaña a la inferior)
+            UI.EstilosUI.RepartirAltoEntreGrillas(this, dgvUnidades, dgvClientes, lblClientesTitulo, btnClienteNuevo, lblClienteInfo, pnlNuevoCliente, btnGuardarCliente);
 
             this.Font = UI.TemaVisual.FuenteTexto;
             this.BackColor = UI.TemaVisual.FondoPagina;

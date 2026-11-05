@@ -37,8 +37,7 @@ namespace ProyectoIS_64PR
             //
             // pnlResumen
             //
-            this.pnlResumen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlResumen.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
             this.pnlResumen.Controls.Add(this.lblResumenTitulo);
             this.pnlResumen.Controls.Add(this.lblResumenSemaforos);
             this.pnlResumen.Controls.Add(this.lblResumenCategoria);
@@ -75,6 +74,7 @@ namespace ProyectoIS_64PR
             // lblCategoria
             //
             this.lblCategoria.AutoSize = true;
+            this.lblCategoria.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.lblCategoria.Location = new System.Drawing.Point(12, 115);
             this.lblCategoria.Name = "lblCategoria";
             this.lblCategoria.Size = new System.Drawing.Size(69, 16);
@@ -84,6 +84,7 @@ namespace ProyectoIS_64PR
             // cmbCategoria
             //
             this.cmbCategoria.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCategoria.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.cmbCategoria.Location = new System.Drawing.Point(90, 112);
             this.cmbCategoria.Name = "cmbCategoria";
             this.cmbCategoria.Size = new System.Drawing.Size(160, 24);
@@ -93,6 +94,7 @@ namespace ProyectoIS_64PR
             // lblSemaforo
             //
             this.lblSemaforo.AutoSize = true;
+            this.lblSemaforo.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.lblSemaforo.Location = new System.Drawing.Point(266, 115);
             this.lblSemaforo.Name = "lblSemaforo";
             this.lblSemaforo.Size = new System.Drawing.Size(70, 16);
@@ -102,6 +104,7 @@ namespace ProyectoIS_64PR
             // cmbSemaforo
             //
             this.cmbSemaforo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbSemaforo.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.cmbSemaforo.Location = new System.Drawing.Point(342, 112);
             this.cmbSemaforo.Name = "cmbSemaforo";
             this.cmbSemaforo.Size = new System.Drawing.Size(140, 24);
@@ -111,6 +114,7 @@ namespace ProyectoIS_64PR
             // lblHorizonte
             //
             this.lblHorizonte.AutoSize = true;
+            this.lblHorizonte.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.lblHorizonte.Location = new System.Drawing.Point(498, 115);
             this.lblHorizonte.Name = "lblHorizonte";
             this.lblHorizonte.Size = new System.Drawing.Size(70, 16);
@@ -120,6 +124,7 @@ namespace ProyectoIS_64PR
             // cmbHorizonte
             //
             this.cmbHorizonte.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbHorizonte.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.cmbHorizonte.Location = new System.Drawing.Point(574, 112);
             this.cmbHorizonte.Name = "cmbHorizonte";
             this.cmbHorizonte.Size = new System.Drawing.Size(120, 24);
@@ -128,7 +133,7 @@ namespace ProyectoIS_64PR
             //
             // btnGenerar
             //
-            this.btnGenerar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnGenerar.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
             this.btnGenerar.Location = new System.Drawing.Point(712, 109);
             this.btnGenerar.Name = "btnGenerar";
             this.btnGenerar.Size = new System.Drawing.Size(160, 30);
@@ -141,9 +146,7 @@ namespace ProyectoIS_64PR
             //
             this.dgvReporte.AllowUserToAddRows = false;
             this.dgvReporte.AllowUserToDeleteRows = false;
-            this.dgvReporte.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvReporte.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
             this.dgvReporte.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvReporte.Location = new System.Drawing.Point(12, 152);
             this.dgvReporte.MultiSelect = false;
@@ -159,7 +162,7 @@ namespace ProyectoIS_64PR
             //
             // btnImprimir
             //
-            this.btnImprimir.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnImprimir.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnImprimir.Location = new System.Drawing.Point(12, 455);
             this.btnImprimir.Name = "btnImprimir";
             this.btnImprimir.Size = new System.Drawing.Size(220, 30);
@@ -170,7 +173,7 @@ namespace ProyectoIS_64PR
             //
             // btnEnviarRevision
             //
-            this.btnEnviarRevision.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnEnviarRevision.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnEnviarRevision.Location = new System.Drawing.Point(244, 455);
             this.btnEnviarRevision.Name = "btnEnviarRevision";
             this.btnEnviarRevision.Size = new System.Drawing.Size(220, 30);
@@ -182,6 +185,8 @@ namespace ProyectoIS_64PR
             // FrmReporteMantenimientoJP86
             //
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScroll = true;
+            this.AutoScrollMinSize = new System.Drawing.Size(884, 500);
             this.ClientSize = new System.Drawing.Size(884, 500);
             this.Controls.Add(this.btnEnviarRevision);
             this.Controls.Add(this.btnImprimir);

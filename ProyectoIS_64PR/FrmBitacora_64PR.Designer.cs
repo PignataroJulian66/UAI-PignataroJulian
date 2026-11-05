@@ -57,6 +57,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.label7.Location = new System.Drawing.Point(227, 383);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(63, 16);
@@ -66,6 +67,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.label6.Location = new System.Drawing.Point(241, 346);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(49, 16);
@@ -75,6 +77,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.label5.Location = new System.Drawing.Point(2, 380);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(52, 16);
@@ -84,6 +87,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.label4.Location = new System.Drawing.Point(334, 421);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(61, 16);
@@ -93,6 +97,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.label3.Location = new System.Drawing.Point(2, 417);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(79, 16);
@@ -102,6 +107,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.label2.Location = new System.Drawing.Point(2, 341);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(40, 16);
@@ -110,6 +116,7 @@
             // 
             // btnImprimir
             // 
+            this.btnImprimir.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnImprimir.Location = new System.Drawing.Point(722, 399);
             this.btnImprimir.Name = "btnImprimir";
             this.btnImprimir.Size = new System.Drawing.Size(75, 26);
@@ -120,6 +127,7 @@
             // 
             // btnAplicar
             // 
+            this.btnAplicar.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnAplicar.Location = new System.Drawing.Point(722, 367);
             this.btnAplicar.Name = "btnAplicar";
             this.btnAplicar.Size = new System.Drawing.Size(75, 26);
@@ -130,6 +138,7 @@
             // 
             // btnLimpiar
             // 
+            this.btnLimpiar.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnLimpiar.Location = new System.Drawing.Point(722, 336);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(75, 26);
@@ -140,8 +149,7 @@
             // 
             // dgvEventos
             // 
-            this.dgvEventos.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right))));
+            this.dgvEventos.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
             this.dgvEventos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvEventos.Location = new System.Drawing.Point(22, 30);
             this.dgvEventos.Name = "dgvEventos";
@@ -153,6 +161,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.label1.Location = new System.Drawing.Point(19, 11);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(127, 16);
@@ -161,6 +170,7 @@
             // 
             // dtpInicio
             // 
+            this.dtpInicio.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.dtpInicio.Location = new System.Drawing.Point(92, 416);
             this.dtpInicio.Name = "dtpInicio";
             this.dtpInicio.Size = new System.Drawing.Size(184, 22);
@@ -168,6 +178,7 @@
             // 
             // dtpFin
             // 
+            this.dtpFin.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.dtpFin.Location = new System.Drawing.Point(406, 416);
             this.dtpFin.Name = "dtpFin";
             this.dtpFin.Size = new System.Drawing.Size(184, 22);
@@ -176,6 +187,7 @@
             // cmbLogins
             // 
             this.cmbLogins.FormattingEnabled = true;
+            this.cmbLogins.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.cmbLogins.Location = new System.Drawing.Point(68, 338);
             this.cmbLogins.Name = "cmbLogins";
             this.cmbLogins.Size = new System.Drawing.Size(121, 24);
@@ -184,6 +196,7 @@
             // cmbModulos
             // 
             this.cmbModulos.FormattingEnabled = true;
+            this.cmbModulos.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.cmbModulos.Location = new System.Drawing.Point(68, 377);
             this.cmbModulos.Name = "cmbModulos";
             this.cmbModulos.Size = new System.Drawing.Size(121, 24);
@@ -192,6 +205,7 @@
             // cmbTipos
             // 
             this.cmbTipos.FormattingEnabled = true;
+            this.cmbTipos.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.cmbTipos.Location = new System.Drawing.Point(303, 341);
             this.cmbTipos.Name = "cmbTipos";
             this.cmbTipos.Size = new System.Drawing.Size(121, 24);
@@ -206,6 +220,7 @@
             "3",
             "4",
             "5"});
+            this.cmbCriticidad.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.cmbCriticidad.Location = new System.Drawing.Point(303, 379);
             this.cmbCriticidad.Name = "cmbCriticidad";
             this.cmbCriticidad.Size = new System.Drawing.Size(121, 24);
@@ -214,6 +229,7 @@
             // cbTipo
             // 
             this.cbTipo.AutoSize = true;
+            this.cbTipo.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.cbTipo.Location = new System.Drawing.Point(430, 345);
             this.cbTipo.Name = "cbTipo";
             this.cbTipo.Size = new System.Drawing.Size(18, 17);
@@ -224,6 +240,7 @@
             // cbCriticidad
             // 
             this.cbCriticidad.AutoSize = true;
+            this.cbCriticidad.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.cbCriticidad.Location = new System.Drawing.Point(430, 384);
             this.cbCriticidad.Name = "cbCriticidad";
             this.cbCriticidad.Size = new System.Drawing.Size(18, 17);
@@ -234,6 +251,7 @@
             // cbFin
             // 
             this.cbFin.AutoSize = true;
+            this.cbFin.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.cbFin.Location = new System.Drawing.Point(596, 419);
             this.cbFin.Name = "cbFin";
             this.cbFin.Size = new System.Drawing.Size(18, 17);
@@ -244,6 +262,7 @@
             // cbInicio
             // 
             this.cbInicio.AutoSize = true;
+            this.cbInicio.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.cbInicio.Location = new System.Drawing.Point(282, 418);
             this.cbInicio.Name = "cbInicio";
             this.cbInicio.Size = new System.Drawing.Size(18, 17);
@@ -254,6 +273,7 @@
             // cbModulo
             // 
             this.cbModulo.AutoSize = true;
+            this.cbModulo.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.cbModulo.Location = new System.Drawing.Point(195, 384);
             this.cbModulo.Name = "cbModulo";
             this.cbModulo.Size = new System.Drawing.Size(18, 17);
@@ -264,6 +284,7 @@
             // cbLogin
             // 
             this.cbLogin.AutoSize = true;
+            this.cbLogin.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.cbLogin.Location = new System.Drawing.Point(195, 340);
             this.cbLogin.Name = "cbLogin";
             this.cbLogin.Size = new System.Drawing.Size(18, 17);
@@ -274,6 +295,8 @@
             // FrmBitacora_64PR
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScroll = true;
+            this.AutoScrollMinSize = new System.Drawing.Size(800, 450);
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.cbLogin);
             this.Controls.Add(this.cbModulo);

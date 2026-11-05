@@ -60,25 +60,26 @@ namespace ProyectoIS_64PR.Properties {
             }
         }
         
-        /// <summary>
-        ///   Busca un recurso adaptado de tipo System.Resources.ResXFileRef.
-        /// </summary>
-        internal static System.Resources.ResXFileRef davinci {
-            get {
-                object obj = ResourceManager.GetObject("davinci", resourceCulture);
-                return ((System.Resources.ResXFileRef)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Gemini_Generated_Image_b8i13eb8i13eb8i1 {
-            get {
-                object obj = ResourceManager.GetObject("Gemini_Generated_Image_b8i13eb8i13eb8i1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
+        // [INSTALADOR v2] código original (recursos sin uso, quitados del ensamblado):
+        // /// <summary>
+        // ///   Busca un recurso adaptado de tipo System.Resources.ResXFileRef.
+        // /// </summary>
+        // internal static System.Resources.ResXFileRef davinci {
+        //     get {
+        //         object obj = ResourceManager.GetObject("davinci", resourceCulture);
+        //         return ((System.Resources.ResXFileRef)(obj));
+        //     }
+        // }
+        //
+        // /// <summary>
+        // ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        // /// </summary>
+        // internal static System.Drawing.Bitmap Gemini_Generated_Image_b8i13eb8i13eb8i1 {
+        //     get {
+        //         object obj = ResourceManager.GetObject("Gemini_Generated_Image_b8i13eb8i13eb8i1", resourceCulture);
+        //         return ((System.Drawing.Bitmap)(obj));
+        //     }
+        // }
 
         /// <summary>
         ///   Busca un recurso de icono con aspecto de System.Drawing.Icon.

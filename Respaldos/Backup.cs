@@ -35,5 +35,17 @@ namespace Respaldos
         {
             mpp.RestaurarBackup(rutaBackup, logicalData, logicalLog, rutaDestinoMdf, rutaDestinoLdf);
         }
+
+        ///[INSTALADOR v2] Nombre de la BD configurada (para nombrar el .bak y los .mdf/.ldf al restaurar)
+        public string ObtenerNombreBaseDatos()
+        {
+            return mpp.ObtenerNombreBaseDatos();
+        }
+
+        ///[INSTALADOR v2] Carpeta de backups por defecto de la instancia (la usa el configurador de BD)
+        public string ObtenerRutaDefaultBackup()
+        {
+            return mpp.ObtenerRutaDefaultBackup();
+        }
     }
 }

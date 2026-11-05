@@ -52,6 +52,7 @@ namespace ProyectoIS_64PR
             // lblTitulo
             //
             this.lblTitulo.AutoSize = true;
+            this.lblTitulo.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.lblTitulo.Location = new System.Drawing.Point(19, 11);
             this.lblTitulo.Name = "lblTitulo";
             this.lblTitulo.Size = new System.Drawing.Size(220, 16);
@@ -60,8 +61,7 @@ namespace ProyectoIS_64PR
             //
             // dgvBitacora
             //
-            this.dgvBitacora.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right))));
+            this.dgvBitacora.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
             this.dgvBitacora.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvBitacora.Location = new System.Drawing.Point(22, 30);
             this.dgvBitacora.Name = "dgvBitacora";
@@ -73,6 +73,7 @@ namespace ProyectoIS_64PR
             // lblPatente
             //
             this.lblPatente.AutoSize = true;
+            this.lblPatente.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblPatente.Location = new System.Drawing.Point(22, 301);
             this.lblPatente.Name = "lblPatente";
             this.lblPatente.Size = new System.Drawing.Size(53, 16);
@@ -81,6 +82,7 @@ namespace ProyectoIS_64PR
             //
             // txtPatente
             //
+            this.txtPatente.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.txtPatente.Location = new System.Drawing.Point(90, 298);
             this.txtPatente.Name = "txtPatente";
             this.txtPatente.Size = new System.Drawing.Size(120, 22);
@@ -90,6 +92,7 @@ namespace ProyectoIS_64PR
             // cbPatente
             //
             this.cbPatente.AutoSize = true;
+            this.cbPatente.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.cbPatente.Location = new System.Drawing.Point(216, 301);
             this.cbPatente.Name = "cbPatente";
             this.cbPatente.Size = new System.Drawing.Size(18, 17);
@@ -100,6 +103,7 @@ namespace ProyectoIS_64PR
             // lblMarcaModelo
             //
             this.lblMarcaModelo.AutoSize = true;
+            this.lblMarcaModelo.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblMarcaModelo.Location = new System.Drawing.Point(250, 301);
             this.lblMarcaModelo.Name = "lblMarcaModelo";
             this.lblMarcaModelo.Size = new System.Drawing.Size(90, 16);
@@ -108,6 +112,7 @@ namespace ProyectoIS_64PR
             //
             // txtMarcaModelo
             //
+            this.txtMarcaModelo.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.txtMarcaModelo.Location = new System.Drawing.Point(350, 298);
             this.txtMarcaModelo.Name = "txtMarcaModelo";
             this.txtMarcaModelo.Size = new System.Drawing.Size(140, 22);
@@ -117,6 +122,7 @@ namespace ProyectoIS_64PR
             // cbMarcaModelo
             //
             this.cbMarcaModelo.AutoSize = true;
+            this.cbMarcaModelo.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.cbMarcaModelo.Location = new System.Drawing.Point(496, 301);
             this.cbMarcaModelo.Name = "cbMarcaModelo";
             this.cbMarcaModelo.Size = new System.Drawing.Size(18, 17);
@@ -127,6 +133,7 @@ namespace ProyectoIS_64PR
             // lblFechaInicio
             //
             this.lblFechaInicio.AutoSize = true;
+            this.lblFechaInicio.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblFechaInicio.Location = new System.Drawing.Point(22, 341);
             this.lblFechaInicio.Name = "lblFechaInicio";
             this.lblFechaInicio.Size = new System.Drawing.Size(79, 16);
@@ -136,6 +143,7 @@ namespace ProyectoIS_64PR
             // dtpInicio
             //
             this.dtpInicio.Enabled = false;
+            this.dtpInicio.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.dtpInicio.Location = new System.Drawing.Point(110, 338);
             this.dtpInicio.Name = "dtpInicio";
             this.dtpInicio.Size = new System.Drawing.Size(140, 22);
@@ -144,6 +152,7 @@ namespace ProyectoIS_64PR
             // cbInicio
             //
             this.cbInicio.AutoSize = true;
+            this.cbInicio.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.cbInicio.Location = new System.Drawing.Point(256, 341);
             this.cbInicio.Name = "cbInicio";
             this.cbInicio.Size = new System.Drawing.Size(18, 17);
@@ -154,6 +163,7 @@ namespace ProyectoIS_64PR
             // lblFechaFin
             //
             this.lblFechaFin.AutoSize = true;
+            this.lblFechaFin.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblFechaFin.Location = new System.Drawing.Point(290, 341);
             this.lblFechaFin.Name = "lblFechaFin";
             this.lblFechaFin.Size = new System.Drawing.Size(61, 16);
@@ -163,6 +173,7 @@ namespace ProyectoIS_64PR
             // dtpFin
             //
             this.dtpFin.Enabled = false;
+            this.dtpFin.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.dtpFin.Location = new System.Drawing.Point(357, 338);
             this.dtpFin.Name = "dtpFin";
             this.dtpFin.Size = new System.Drawing.Size(140, 22);
@@ -171,6 +182,7 @@ namespace ProyectoIS_64PR
             // cbFin
             //
             this.cbFin.AutoSize = true;
+            this.cbFin.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.cbFin.Location = new System.Drawing.Point(503, 341);
             this.cbFin.Name = "cbFin";
             this.cbFin.Size = new System.Drawing.Size(18, 17);
@@ -180,6 +192,7 @@ namespace ProyectoIS_64PR
             //
             // btnLimpiar
             //
+            this.btnLimpiar.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnLimpiar.Location = new System.Drawing.Point(706, 296);
             this.btnLimpiar.Name = "btnLimpiar";
             this.btnLimpiar.Size = new System.Drawing.Size(75, 26);
@@ -190,6 +203,7 @@ namespace ProyectoIS_64PR
             //
             // btnAplicar
             //
+            this.btnAplicar.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnAplicar.Location = new System.Drawing.Point(706, 328);
             this.btnAplicar.Name = "btnAplicar";
             this.btnAplicar.Size = new System.Drawing.Size(75, 26);
@@ -200,6 +214,7 @@ namespace ProyectoIS_64PR
             //
             // btnActivar
             //
+            this.btnActivar.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnActivar.Location = new System.Drawing.Point(706, 360);
             this.btnActivar.Name = "btnActivar";
             this.btnActivar.Size = new System.Drawing.Size(75, 26);
@@ -210,6 +225,7 @@ namespace ProyectoIS_64PR
             //
             // btnSalir
             //
+            this.btnSalir.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnSalir.Location = new System.Drawing.Point(706, 392);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(75, 26);
@@ -221,6 +237,8 @@ namespace ProyectoIS_64PR
             // FrmBitacoraCambiosVehiculo
             //
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScroll = true;
+            this.AutoScrollMinSize = new System.Drawing.Size(800, 450);
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.btnActivar);

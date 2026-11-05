@@ -329,7 +329,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <!-- [INSTALADOR v2] valor original (recurso sin uso, quitado del ensamblado):
     <None Include="Resources\Gemini_Generated_Image_b8i13eb8i13eb8i1.png" />
+    -->
     <None Include="Resources\fleetdrive.ico" />
   </ItemGroup>
   <ItemGroup>

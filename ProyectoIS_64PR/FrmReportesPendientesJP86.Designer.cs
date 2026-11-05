@@ -32,8 +32,7 @@ namespace ProyectoIS_64PR
             //
             // dgvReportes
             //
-            this.dgvReportes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right))));
+            this.dgvReportes.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
             this.dgvReportes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvReportes.Location = new System.Drawing.Point(12, 12);
             this.dgvReportes.MultiSelect = false;
@@ -49,6 +48,7 @@ namespace ProyectoIS_64PR
             // lblHistorialTitulo
             //
             this.lblHistorialTitulo.AutoSize = true;
+            this.lblHistorialTitulo.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left));
             this.lblHistorialTitulo.Location = new System.Drawing.Point(12, 158);
             this.lblHistorialTitulo.Name = "lblHistorialTitulo";
             this.lblHistorialTitulo.Size = new System.Drawing.Size(280, 16);
@@ -57,8 +57,7 @@ namespace ProyectoIS_64PR
             //
             // dgvHistorial
             //
-            this.dgvHistorial.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right))));
+            this.dgvHistorial.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
             this.dgvHistorial.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvHistorial.Location = new System.Drawing.Point(12, 178);
             this.dgvHistorial.MultiSelect = false;
@@ -73,6 +72,7 @@ namespace ProyectoIS_64PR
             // lblCriticidad
             //
             this.lblCriticidad.AutoSize = true;
+            this.lblCriticidad.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblCriticidad.Location = new System.Drawing.Point(12, 300);
             this.lblCriticidad.Name = "lblCriticidad";
             this.lblCriticidad.Size = new System.Drawing.Size(75, 16);
@@ -84,6 +84,7 @@ namespace ProyectoIS_64PR
             //
             this.cmbCriticidad.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCriticidad.FormattingEnabled = true;
+            this.cmbCriticidad.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.cmbCriticidad.Location = new System.Drawing.Point(95, 297);
             this.cmbCriticidad.Name = "cmbCriticidad";
             this.cmbCriticidad.Size = new System.Drawing.Size(150, 24);
@@ -93,6 +94,7 @@ namespace ProyectoIS_64PR
             // lblModalidad
             //
             this.lblModalidad.AutoSize = true;
+            this.lblModalidad.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblModalidad.Location = new System.Drawing.Point(12, 336);
             this.lblModalidad.Name = "lblModalidad";
             this.lblModalidad.Size = new System.Drawing.Size(170, 16);
@@ -103,6 +105,7 @@ namespace ProyectoIS_64PR
             // rbInterna
             //
             this.rbInterna.AutoSize = true;
+            this.rbInterna.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.rbInterna.Location = new System.Drawing.Point(190, 335);
             this.rbInterna.Name = "rbInterna";
             this.rbInterna.Size = new System.Drawing.Size(90, 20);
@@ -115,6 +118,7 @@ namespace ProyectoIS_64PR
             // rbExterna
             //
             this.rbExterna.AutoSize = true;
+            this.rbExterna.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.rbExterna.Location = new System.Drawing.Point(290, 335);
             this.rbExterna.Name = "rbExterna";
             this.rbExterna.Size = new System.Drawing.Size(90, 20);
@@ -125,6 +129,7 @@ namespace ProyectoIS_64PR
             //
             // btnConfirmar
             //
+            this.btnConfirmar.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.btnConfirmar.Location = new System.Drawing.Point(12, 370);
             this.btnConfirmar.Name = "btnConfirmar";
             this.btnConfirmar.Size = new System.Drawing.Size(180, 28);
@@ -137,6 +142,8 @@ namespace ProyectoIS_64PR
             // FrmReportesPendientesJP86
             //
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScroll = true;
+            this.AutoScrollMinSize = new System.Drawing.Size(900, 410);
             this.ClientSize = new System.Drawing.Size(900, 410);
             this.Controls.Add(this.btnConfirmar);
             this.Controls.Add(this.rbExterna);

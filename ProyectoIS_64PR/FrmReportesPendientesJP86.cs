@@ -7,7 +7,7 @@ using System.Windows.Forms;
 namespace ProyectoIS_64PR
 {
     ///CUN-06 "Asignar Criticidad" + CUN-07 "Determinar Modalidad Reparacion" (include obligatorio: mismo actor, mismo form, mismo momento).
-    ///Una unica confirmacion registra criticidad + modalidad y pasa el reporte a EN_REPARACION; si no se confirma, no se guarda nada.
+    ///Una unica confirmacion registra criticidad + modalidad y pasa el reporte a EN_REPARACION (valor interno); si no se confirma, no se guarda nada.
     public partial class FrmReportesPendientesJP86 : Form, Idioma.IObservadorIdioma_64PR
     {
         #region Campos
@@ -24,6 +24,8 @@ namespace ProyectoIS_64PR
         public FrmReportesPendientesJP86()
         {
             InitializeComponent();
+            ///Dos grillas apiladas: el alto libre se reparte entre reportes pendientes e historial de la unidad
+            UI.EstilosUI.RepartirAltoEntreGrillas(this, dgvReportes, dgvHistorial, lblHistorialTitulo);
 
             this.Font = UI.TemaVisual.FuenteTexto;
             this.BackColor = UI.TemaVisual.FondoPagina;
@@ -35,8 +37,11 @@ namespace ProyectoIS_64PR
             UI.EstilosUI.AplicarFilaCritica(dgvReportes, "Criticidad", valor => valor.ToString().ToUpper() == "CRITICA");
             UI.EstilosUI.AplicarFilaCritica(dgvHistorial, "Criticidad", valor => valor.ToString().ToUpper() == "CRITICA");
             UI.EstilosUI.EstiloBotonPrimario(btnConfirmar);
+            ///Estado/Fuente/Criticidad/Modalidad se muestran traducidos; los valores de las celdas siguen siendo los enums
+            Traductor_64PR.TraducirColumnasReporte(dgvReportes, () => textos);
+            Traductor_64PR.TraducirColumnasReporte(dgvHistorial, () => textos);
 
-            cmbCriticidad.DataSource = Enum.GetValues(typeof(BE.CriticidadReporteJP86));
+            CargarCriticidades();
 
             Idioma.GestorIdioma_64PR.GetInstance.Suscribir(this);
 
@@ -53,6 +58,9 @@ namespace ProyectoIS_64PR
         {
             textos = textoss;
             Traductor_64PR.Traducir(this, textos);
+            CargarCriticidades();
+            dgvReportes.Invalidate();
+            dgvHistorial.Invalidate();
         }
 
         protected override void OnFormClosed(FormClosedEventArgs e)
@@ -83,6 +91,12 @@ namespace ProyectoIS_64PR
         #endregion
 
         #region Carga de datos
+        ///El combo muestra el texto traducido ("criticidadReporte_<valor>") y guarda el enum como SelectedValue
+        private void CargarCriticidades()
+        {
+            Traductor_64PR.CargarComboValores<BE.CriticidadReporteJP86>(cmbCriticidad, textos, Traductor_64PR.PrefijoCriticidadReporte);
+        }
+
         private void CargarReportesPendientes()
         {
             List<BE.ReporteJP86> pendientes = greportes.ListarPendientes();
@@ -131,7 +145,7 @@ namespace ProyectoIS_64PR
                 return;
             }
 
-            BE.CriticidadReporteJP86 criticidad = (BE.CriticidadReporteJP86)cmbCriticidad.SelectedItem;
+            BE.CriticidadReporteJP86 criticidad = (BE.CriticidadReporteJP86)cmbCriticidad.SelectedValue;
             BE.ModalidadReparacionJP86 modalidad = rbInterna.Checked ? BE.ModalidadReparacionJP86.INTERNA : BE.ModalidadReparacionJP86.EXTERNA;
 
             try

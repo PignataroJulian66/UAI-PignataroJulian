@@ -45,8 +45,7 @@
             // 
             // dgvUsuarios
             // 
-            this.dgvUsuarios.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right))));
+            this.dgvUsuarios.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
             this.dgvUsuarios.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvUsuarios.Location = new System.Drawing.Point(12, 12);
             this.dgvUsuarios.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -62,7 +61,7 @@
             // 
             // btnCrear
             // 
-            this.btnCrear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCrear.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
             this.btnCrear.Location = new System.Drawing.Point(693, 12);
             this.btnCrear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCrear.Name = "btnCrear";
@@ -74,7 +73,7 @@
             // 
             // btnDesbloquear
             // 
-            this.btnDesbloquear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDesbloquear.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
             this.btnDesbloquear.Location = new System.Drawing.Point(693, 41);
             this.btnDesbloquear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnDesbloquear.Name = "btnDesbloquear";
@@ -86,7 +85,7 @@
             // 
             // btnModificar
             // 
-            this.btnModificar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnModificar.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
             this.btnModificar.Location = new System.Drawing.Point(693, 70);
             this.btnModificar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnModificar.Name = "btnModificar";
@@ -98,7 +97,7 @@
             // 
             // btnActDesact
             // 
-            this.btnActDesact.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnActDesact.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right));
             this.btnActDesact.Location = new System.Drawing.Point(693, 98);
             this.btnActDesact.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnActDesact.Name = "btnActDesact";
@@ -110,7 +109,7 @@
             // 
             // btnGuardar
             // 
-            this.btnGuardar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnGuardar.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right));
             this.btnGuardar.Location = new System.Drawing.Point(693, 215);
             this.btnGuardar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnGuardar.Name = "btnGuardar";
@@ -122,6 +121,7 @@
             // 
             // pnlContenedor
             // 
+            this.pnlContenedor.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.pnlContenedor.Location = new System.Drawing.Point(12, 255);
             this.pnlContenedor.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnlContenedor.Name = "pnlContenedor";
@@ -131,6 +131,7 @@
             // lblModo
             // 
             this.lblModo.AutoSize = true;
+            this.lblModo.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblModo.Location = new System.Drawing.Point(365, 255);
             this.lblModo.Name = "lblModo";
             this.lblModo.Size = new System.Drawing.Size(42, 16);
@@ -140,6 +141,7 @@
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
+            this.radioButton1.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.radioButton1.Location = new System.Drawing.Point(369, 327);
             this.radioButton1.Margin = new System.Windows.Forms.Padding(4);
             this.radioButton1.Name = "radioButton1";
@@ -153,6 +155,7 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
+            this.radioButton2.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.radioButton2.Location = new System.Drawing.Point(369, 356);
             this.radioButton2.Margin = new System.Windows.Forms.Padding(4);
             this.radioButton2.Name = "radioButton2";
@@ -166,6 +169,7 @@
             // radioButton3
             // 
             this.radioButton3.AutoSize = true;
+            this.radioButton3.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.radioButton3.Location = new System.Drawing.Point(369, 299);
             this.radioButton3.Margin = new System.Windows.Forms.Padding(4);
             this.radioButton3.Name = "radioButton3";
@@ -179,6 +183,7 @@
             // lblCantidad
             // 
             this.lblCantidad.AutoSize = true;
+            this.lblCantidad.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left));
             this.lblCantidad.Location = new System.Drawing.Point(366, 403);
             this.lblCantidad.Name = "lblCantidad";
             this.lblCantidad.Size = new System.Drawing.Size(137, 16);
@@ -188,6 +193,8 @@
             // FrmGestionarUsuarios_64PR
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScroll = true;
+            this.AutoScrollMinSize = new System.Drawing.Size(800, 450);
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.lblCantidad);
             this.Controls.Add(this.radioButton3);

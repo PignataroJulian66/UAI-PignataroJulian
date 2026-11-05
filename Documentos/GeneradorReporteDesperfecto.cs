@@ -11,14 +11,16 @@ namespace Documentos
     {
         private const string NombreSistema = "SIGAM";
 
-        public static byte[] Generar(BE.ReporteJP86 reporte)
+        ///textoFuente / textoEstado: textos visibles ya traducidos por la UI (Traductor_64PR.TraducirValor).
+        ///Si no se pasan, se usa el valor interno sin "_". El reporte no se modifica.
+        public static byte[] Generar(BE.ReporteJP86 reporte, string textoFuente = null, string textoEstado = null)
         {
             using (Bitmap bmp = new Bitmap(850, 1100))
             {
                 using (Graphics g = Graphics.FromImage(bmp))
                 {
                     g.Clear(Color.White);
-                    Dibujar(g, new RectangleF(40, 40, bmp.Width - 80, bmp.Height - 80), reporte);
+                    Dibujar(g, new RectangleF(40, 40, bmp.Width - 80, bmp.Height - 80), reporte, textoFuente, textoEstado);
                 }
                 using (MemoryStream ms = new MemoryStream())
                 {
@@ -28,11 +30,11 @@ namespace Documentos
             }
         }
 
-        public static void Imprimir(BE.ReporteJP86 reporte)
+        public static void Imprimir(BE.ReporteJP86 reporte, string textoFuente = null, string textoEstado = null)
         {
             PrintDocument printDoc = new PrintDocument();
             printDoc.DocumentName = "Reporte de desperfecto " + reporte.NumeroReporte;
-            printDoc.PrintPage += (s, e) => Dibujar(e.Graphics, e.MarginBounds, reporte);
+            printDoc.PrintPage += (s, e) => Dibujar(e.Graphics, e.MarginBounds, reporte, textoFuente, textoEstado);
 
             PrintPreviewDialog preview = new PrintPreviewDialog();
             preview.Document = printDoc;
@@ -40,8 +42,11 @@ namespace Documentos
             preview.ShowDialog();
         }
 
-        private static void Dibujar(Graphics g, RectangleF bounds, BE.ReporteJP86 reporte)
+        private static void Dibujar(Graphics g, RectangleF bounds, BE.ReporteJP86 reporte, string textoFuente, string textoEstado)
         {
+            textoFuente = textoFuente ?? reporte.Fuente.ToString().Replace('_', ' ');
+            textoEstado = textoEstado ?? reporte.Estado.ToString().Replace('_', ' ');
+
             using (Font fontTitulo = new Font("Arial", 16, FontStyle.Bold))
             using (Font fontSubtitulo = new Font("Arial", 12, FontStyle.Bold))
             using (Font fontSeccion = new Font("Arial", 11, FontStyle.Bold))
@@ -77,14 +82,14 @@ namespace Documentos
 
                 g.DrawString("Detalle del Desperfecto", fontSeccion, brush, x, y);
                 y += lineH;
-                g.DrawString("Fuente: " + reporte.Fuente, fontTexto, brush, x, y);
+                g.DrawString("Fuente: " + textoFuente, fontTexto, brush, x, y);
                 y += lineH;
                 g.DrawString("Descripción del problema:", fontTexto, brush, x, y);
                 y += lineH;
                 g.DrawString(reporte.DescripcionProblema, fontTexto, brush, x + 10, y, new StringFormat() { });
                 y += lineH + 10;
 
-                g.DrawString("Estado: " + reporte.Estado, fontSeccion, brush, x, y);
+                g.DrawString("Estado: " + textoEstado, fontSeccion, brush, x, y);
                 y += lineH + 40;
 
                 float firmaY = Math.Max(y, bounds.Bottom - 60);

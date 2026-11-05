@@ -38,6 +38,62 @@ namespace ProyectoIS_64PR.UI
         }
 
         /// <summary>
+        /// Layout de pantallas con DOS grillas apiladas (embebidas en FrmMenu con Dock=Fill). Anchor solo puede
+        /// darle el alto extra a un control, asi que esto lo reparte en partes iguales entre ambas grillas.
+        /// Las dos grillas y los controles que acompañan a la inferior (titulo, panel lateral) los posiciona este
+        /// helper: en vertical reparte el alto; en horizontal respeta el Left/Right del Anchor del Designer
+        /// (Left|Right se estira a lo ancho, solo Left queda fijo). El resto de los controles se acomoda con su Anchor.
+        /// Llamar en el constructor, justo despues de InitializeComponent: toma las medidas de diseño como base,
+        /// por eso nunca achica por debajo de ellas (con AutoScrollMinSize, si no entra aparece scroll).
+        /// </summary>
+        public static void RepartirAltoEntreGrillas(Form form, DataGridView superior, DataGridView inferior, params Control[] acompananInferior)
+        {
+            Size diseno = form.ClientSize;
+            Control[] gestionados = new Control[acompananInferior.Length + 2];
+            gestionados[0] = superior;
+            gestionados[1] = inferior;
+            Array.Copy(acompananInferior, 0, gestionados, 2, acompananInferior.Length);
+
+            Rectangle[] boundsDiseno = new Rectangle[gestionados.Length];
+            AnchorStyles[] anchorDiseno = new AnchorStyles[gestionados.Length];
+            for (int i = 0; i < gestionados.Length; i++)
+            {
+                boundsDiseno[i] = gestionados[i].Bounds;
+                anchorDiseno[i] = gestionados[i].Anchor;
+                ///Top|Left: el motor de Anchor no los mueve; su posicion la define solo este helper
+                gestionados[i].Anchor = AnchorStyles.Top | AnchorStyles.Left;
+            }
+
+            form.Layout += (s, e) =>
+            {
+                ///Area de layout = la mayor entre lo visible y el minimo de diseño (AutoScrollMinSize).
+                ///No se usa DisplayRectangle porque incluye la extension de los hijos del layout anterior.
+                int ancho = Math.Max(form.ClientSize.Width, form.AutoScrollMinSize.Width);
+                int alto = Math.Max(form.ClientSize.Height, form.AutoScrollMinSize.Height);
+                int extraAncho = Math.Max(0, ancho - diseno.Width);
+                int extra = Math.Max(0, alto - diseno.Height);
+                int mitad = extra / 2;
+                Point scroll = form.AutoScrollPosition;
+
+                for (int i = 0; i < gestionados.Length; i++)
+                {
+                    Rectangle b = boundsDiseno[i];
+                    bool izq = (anchorDiseno[i] & AnchorStyles.Left) != 0;
+                    bool der = (anchorDiseno[i] & AnchorStyles.Right) != 0;
+
+                    int left = b.Left, anchoCtrl = b.Width;
+                    if (izq && der) anchoCtrl += extraAncho;
+                    else if (der) left += extraAncho;
+                    else if (!izq) left += extraAncho / 2;
+
+                    int top = b.Top + (i == 0 ? 0 : mitad);
+                    int altoCtrl = b.Height + (i == 0 ? mitad : i == 1 ? extra - mitad : 0);
+                    gestionados[i].SetBounds(scroll.X + left, scroll.Y + top, anchoCtrl, altoCtrl);
+                }
+            };
+        }
+
+        /// <summary>
         /// Arma el GraphicsPath de un rectangulo con esquinas redondeadas.
         /// </summary>
         private static GraphicsPath CrearPathRedondeado(Rectangle rect, int radio)
@@ -111,7 +167,10 @@ namespace ProyectoIS_64PR.UI
                 if (dgv.Columns[e.ColumnIndex].Name != nombreColumna) return;
                 if (e.Value == null) return;
 
-                var (fondo, texto) = colorPorValor(e.Value.ToString());
+                ///El color sale del valor real de la celda (enum), no de e.Value: otro CellFormatting
+                ///(Traductor_64PR.TraducirColumnaValores) puede haberlo reemplazado por el texto traducido.
+                object valorReal = e.RowIndex >= 0 ? dgv.Rows[e.RowIndex].Cells[e.ColumnIndex].Value : e.Value;
+                var (fondo, texto) = colorPorValor((valorReal ?? e.Value).ToString());
                 e.CellStyle.BackColor = fondo;
                 e.CellStyle.ForeColor = texto;
                 e.CellStyle.Font = TemaVisual.FuenteTextoNegrita;

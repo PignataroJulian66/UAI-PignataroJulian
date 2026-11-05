@@ -17,6 +17,12 @@ namespace DAL_64PR
     {
         private static Acceso _instancia;
         protected SqlConnection conexion = null;
+
+        ///[INSTALADOR v2] Cadenas fijas originales: se usan como respaldo si el config no trae la entrada
+        ///(o si todavia tiene el marcador #SQLINSTANCE# sin reemplazar), asi el comportamiento previo no cambia.
+        private const string CadenaFijaBD = @"Data Source=.;Initial Catalog=BD_64PR;Integrated Security=True;TrustServerCertificate=True";
+        private const string CadenaFijaMaster = @"Data Source=.;Initial Catalog=master;Integrated Security=True;TrustServerCertificate=True";
+        private const string MarcadorSinConfigurar = "#SQLINSTANCE#";
         SqlCommand comando = new SqlCommand();
         private Acceso()
         {
@@ -44,7 +50,9 @@ namespace DAL_64PR
                 if (conexion.State == System.Data.ConnectionState.Closed)
                 {
                     //conexion.ConnectionString = ConfigurationManager.ConnectionStrings["ConexionBD"].ConnectionString;
-                    conexion.ConnectionString = @"Data Source=.;Initial Catalog=BD_64PR;Integrated Security=True;TrustServerCertificate=True";
+                    // [INSTALADOR v2] código original:
+                    // conexion.ConnectionString = @"Data Source=.;Initial Catalog=BD_64PR;Integrated Security=True;TrustServerCertificate=True";
+                    conexion.ConnectionString = ObtenerCadena("ConexionBD", CadenaFijaBD);
                     conexion.Open();
                     Console.WriteLine("Conexión exitosa");
                 }
@@ -227,7 +235,9 @@ namespace DAL_64PR
         {
             ///Conexión independiente contra 'master'
             //string connStringMaster = ConfigurationManager.ConnectionStrings["ConexionMaster"].ConnectionString;
-            string connStringMaster = @"Data Source=.;Initial Catalog=master;Integrated Security=True;TrustServerCertificate=True";
+            // [INSTALADOR v2] código original:
+            // string connStringMaster = @"Data Source=.;Initial Catalog=master;Integrated Security=True;TrustServerCertificate=True";
+            string connStringMaster = ObtenerCadena("ConexionMaster", CadenaFijaMaster);
             using (SqlConnection conexionMaster = new SqlConnection(connStringMaster))
             {
                 conexionMaster.Open();
@@ -242,6 +252,44 @@ namespace DAL_64PR
                     return cmd.ExecuteNonQuery();
                 }
             }
+        }
+
+        ///[INSTALADOR v2] Igual que EjecutarComandoMaster pero devuelve un valor (ej: SELECT DB_ID(@nombre)).
+        ///A diferencia de leerEscalar, NO se traga la excepcion: quien llama necesita saber si fallo la conexion.
+        public object leerEscalarMaster(string query, SqlParameter[] parametros, int timeoutSegundos = 30)
+        {
+            string connStringMaster = ObtenerCadena("ConexionMaster", CadenaFijaMaster);
+            using (SqlConnection conexionMaster = new SqlConnection(connStringMaster))
+            {
+                conexionMaster.Open();
+                using (SqlCommand cmd = new SqlCommand(query, conexionMaster))
+                {
+                    cmd.CommandTimeout = timeoutSegundos;
+                    if (parametros != null)
+                    {
+                        foreach (SqlParameter p in parametros)
+                            cmd.Parameters.AddWithValue(p.ParameterName, p.Value);
+                    }
+                    return cmd.ExecuteScalar();
+                }
+            }
+        }
+
+        ///[INSTALADOR v2] Nombre de la BD de trabajo (Initial Catalog de ConexionBD), para no hardcodear "BD_64PR"
+        public string ObtenerNombreBaseDatos()
+        {
+            return new SqlConnectionStringBuilder(ObtenerCadena("ConexionBD", CadenaFijaBD)).InitialCatalog;
+        }
+
+        ///[INSTALADOR v2] Lee la cadena del config; si falta, esta vacia o sin configurar, usa la cadena fija original
+        private static string ObtenerCadena(string nombre, string cadenaRespaldo)
+        {
+            ConnectionStringSettings entrada = ConfigurationManager.ConnectionStrings[nombre];
+            if (entrada == null || string.IsNullOrWhiteSpace(entrada.ConnectionString)
+                || entrada.ConnectionString.Contains(MarcadorSinConfigurar))
+                return cadenaRespaldo;
+
+            return entrada.ConnectionString;
         }
     }
 }
