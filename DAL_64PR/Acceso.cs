@@ -18,8 +18,8 @@ namespace DAL_64PR
         private static Acceso _instancia;
         protected SqlConnection conexion = null;
 
-        ///[INSTALADOR v2] Cadenas fijas originales: se usan como respaldo si el config no trae la entrada
-        ///(o si todavia tiene el marcador #SQLINSTANCE# sin reemplazar), asi el comportamiento previo no cambia.
+        ///[INSTALADOR v2] Cadenas fijas originales: se usan como respaldo solo si el config no trae la entrada
+        ///o la trae vacia (desarrollo), asi el comportamiento previo no cambia. Con #SQLINSTANCE# no se usan (ver ObtenerCadena).
         private const string CadenaFijaBD = @"Data Source=.;Initial Catalog=BD_64PR;Integrated Security=True;TrustServerCertificate=True";
         private const string CadenaFijaMaster = @"Data Source=.;Initial Catalog=master;Integrated Security=True;TrustServerCertificate=True";
         private const string MarcadorSinConfigurar = "#SQLINSTANCE#";
@@ -281,15 +281,30 @@ namespace DAL_64PR
             return new SqlConnectionStringBuilder(ObtenerCadena("ConexionBD", CadenaFijaBD)).InitialCatalog;
         }
 
-        ///[INSTALADOR v2] Lee la cadena del config; si falta, esta vacia o sin configurar, usa la cadena fija original
+        ///[INSTALADOR v2] Mensaje que ve el usuario si el sistema instalado todavia no tiene BD configurada
+        public const string MensajeSinConfigurar = "La base de datos no está configurada. Ejecute 'Configurar base de datos'.";
+
+        ///[INSTALADOR v2] Lee la cadena del config.
+        /// - Si la entrada falta o esta vacia (caso desarrollo): usa la cadena fija original.
+        /// - Si todavia tiene el marcador #SQLINSTANCE# (sistema instalado sin configurar): NO conecta, lanza
+        ///   InvalidOperationException, asi nunca se cae en la cadena fija (la BD de desarrollo).
         private static string ObtenerCadena(string nombre, string cadenaRespaldo)
         {
             ConnectionStringSettings entrada = ConfigurationManager.ConnectionStrings[nombre];
-            if (entrada == null || string.IsNullOrWhiteSpace(entrada.ConnectionString)
-                || entrada.ConnectionString.Contains(MarcadorSinConfigurar))
+            if (entrada == null || string.IsNullOrWhiteSpace(entrada.ConnectionString))
                 return cadenaRespaldo;
 
+            if (entrada.ConnectionString.Contains(MarcadorSinConfigurar))
+                throw new InvalidOperationException(MensajeSinConfigurar);
+
             return entrada.ConnectionString;
+        }
+
+        ///[INSTALADOR v2] Lo usa el sistema al iniciar: lanza InvalidOperationException(MensajeSinConfigurar) si falta configurar la BD
+        public void VerificarConfiguracion()
+        {
+            ObtenerCadena("ConexionBD", CadenaFijaBD);
+            ObtenerCadena("ConexionMaster", CadenaFijaMaster);
         }
     }
 }

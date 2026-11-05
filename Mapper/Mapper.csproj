@@ -49,6 +49,7 @@
     <Compile Include="mpp_factura.cs" />
     <Compile Include="mpp_reporte.cs" />
     <Compile Include="mpp_ReporteMantenimientoJP86.cs" />
+    <Compile Include="mpp_configuracionSistemaJP86.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

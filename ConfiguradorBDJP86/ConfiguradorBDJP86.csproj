@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D17290E1-96A2-4D18-9D6E-DF4763EFC194}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>ConfiguradorBDJP86</RootNamespace>
+    <AssemblyName>ConfiguradorBDJP86</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>..\ProyectoIS_64PR\fleetdrive.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ConfiguracionConexionJP86.cs" />
+    <Compile Include="DiagnosticoBDJP86.cs" />
+    <Compile Include="EjecutorScriptSqlJP86.cs" />
+    <Compile Include="FrmConfiguradorJP86.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmConfiguradorJP86.Designer.cs">
+      <DependentUpon>FrmConfiguradorJP86.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmConfirmarEliminacionJP86.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmConfirmarEliminacionJP86.Designer.cs">
+      <DependentUpon>FrmConfirmarEliminacionJP86.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GestorInstalacionJP86.cs" />
+    <Compile Include="LogInstalacionJP86.cs" />
+    <Compile Include="LoteSqlJP86.cs" />
+    <Compile Include="ModoEjecucionJP86.cs" />
+    <Compile Include="ParametrosEjecucionJP86.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResultadoDiagnosticoJP86.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="app.manifest" />
+    <!-- El script de instalacion viaja junto al configurador en <directorio>\BaseDatos -->
+    <Content Include="..\Instalador\BaseDatos\SIGAM_Instalacion.sql">
+      <Link>BaseDatos\SIGAM_Instalacion.sql</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DAL_64PR\DAL_64PR.csproj">
+      <Project>{e990023a-fd21-4606-8fbe-e91ee7e8fd96}</Project>
+      <Name>DAL_64PR</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DV\DV.csproj">
+      <Project>{b4301447-7b78-4dd7-8209-dfb4b3b5fabb}</Project>
+      <Name>DV</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Respaldos\Respaldos.csproj">
+      <Project>{adad126c-639b-4d13-ba8d-fadfe7e5ddd8}</Project>
+      <Name>Respaldos</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

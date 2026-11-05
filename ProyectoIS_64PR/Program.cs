@@ -23,6 +23,19 @@ namespace ProyectoIS_64PR
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            ///[INSTALADOR v2] Sistema instalado sin BD configurada (config con #SQLINSTANCE#): se avisa y no se abre.
+            ///El texto no pasa por el JSON de idioma: el idioma es por usuario y se lee de la BD, que aca no esta disponible.
+            try
+            {
+                BLL_64PR.ConfiguracionSistemaJP86.VerificarConfiguracion();
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(ex.Message, "SIGAM", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             Application.Run(new FrmContenedor_64PR());
             /*Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

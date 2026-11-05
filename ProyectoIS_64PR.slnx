@@ -2,6 +2,7 @@
   <Project Path="BE/BE_64PR.csproj" Id="5617d18d-5092-478a-b619-b3adb88bbfc2" />
   <Project Path="Bitacora/Bitacora.csproj" Id="958952e0-4119-415d-a393-8a202df2d22f" />
   <Project Path="BLL_64PR/BLL_64PR.csproj" Id="a744f8d5-c890-4362-89e0-b603579a601c" />
+  <Project Path="ConfiguradorBDJP86/ConfiguradorBDJP86.csproj" Id="d17290e1-96a2-4d18-9d6e-df4763efc194" />
   <Project Path="DAL_64PR/DAL_64PR.csproj" Id="e990023a-fd21-4606-8fbe-e91ee7e8fd96" />
   <Project Path="Documentos/Documentos.csproj" Id="1e7a5123-f8e5-40c5-b750-79f6fb64ceb5" />
   <Project Path="DV/DV.csproj" Id="b4301447-7b78-4dd7-8209-dfb4b3b5fabb" />
